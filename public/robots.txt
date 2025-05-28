@@ -1,0 +1,27 @@
+# Robots.txt para String Art Generator
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://tu-dominio.com/sitemap.xml
+
+# Optimizaciones de crawling
+Crawl-delay: 1
+
+# Bloquear archivos que no deben ser indexados
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /assets/
+Disallow: /node_modules/
+Disallow: /.git/
+
+# Permitir archivos de imágenes importantes
+Allow: /og-image.jpg
+Allow: /twitter-image.jpg
+Allow: /favicon*
+Allow: /apple-touch-icon.png
+Allow: /android-chrome*
+
+# Información adicional
+# Sitio web: https://tu-dominio.com
+# Última actualización: 2025-05-28
