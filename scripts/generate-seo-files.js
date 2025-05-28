@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 // CONFIGURACIÓN GLOBAL
 // ==========================================
 
-const baseURL = 'https://tu-dominio.com'; // 🔄 CAMBIAR por tu dominio real
+const baseURL = 'https://string-art-generator-three.vercel.app'; // 🔄 CAMBIAR por tu dominio real
 
 const config = {
   // Configuración del sitemap
@@ -94,7 +94,7 @@ function generateSitemap() {
 
   try {
     // Validar configuración
-    if (!baseURL || baseURL === 'https://tu-dominio.com') {
+    if (!baseURL || baseURL === 'https://string-art-generator-three.vercel.app') {
       console.warn('⚠️  Recuerda actualizar baseURL con tu dominio real');
     }
 

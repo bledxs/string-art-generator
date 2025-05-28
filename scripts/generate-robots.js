@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 
-const baseURL = 'https://tu-dominio.com'; // 🔄 CAMBIAR por tu dominio real
+const baseURL = 'https://string-art-generator-three.vercel.app'; // 🔄 CAMBIAR por tu dominio real
 
 export function generateRobotsTxt() {
   const robotsContent = `# Robots.txt para String Art Generator

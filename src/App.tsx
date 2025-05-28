@@ -206,8 +206,8 @@ function App() {
         'nail art',
         'generador',
       ]}
-      image='https://tu-dominio.com/og-image.jpg'
-      url='https://tu-dominio.com'>
+      image='https://string-art-generator-three.vercel.app/og-image.jpg'
+      url='https://string-art-generator-three.vercel.app'>
       <div className='min-h-screen bg-background text-foreground flex flex-col items-center p-4'>
         {/* Header crítico para LCP */}
         <Suspense fallback={<ComponentSkeleton className='h-24 w-xl' />}>
