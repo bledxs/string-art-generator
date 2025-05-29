@@ -1,3 +1,5 @@
+import { ResponsiveAdBlock } from '@/components/ads/responsive-ad-block';
+
 export function StringArtHeader() {
   return (
     <header className='mb-8 text-center w-full'>
@@ -7,6 +9,9 @@ export function StringArtHeader() {
       <p className='text-md sm:text-lg text-muted-foreground mt-2'>
         Transforma tus fotos en arte con hilos
       </p>
+      <div className='mt-4'>
+        <ResponsiveAdBlock position='header' className='w-full' />
+      </div>
     </header>
   );
 }

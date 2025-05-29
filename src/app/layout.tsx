@@ -4,6 +4,7 @@ import './globals.css';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import { Toaster } from '@/components/ui/sonner';
+import Script from 'next/script';
 import { AdSenseProvider } from '@/providers/adsense-provider';
 
 const geistSans = Geist({
@@ -157,6 +158,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const adsenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+
   return (
     <html lang='es'>
       <head>
@@ -164,6 +167,14 @@ export default function RootLayout({
         <link rel='dns-prefetch' href='//fonts.googleapis.com' />
         <link rel='dns-prefetch' href='//fonts.gstatic.com' />
         <link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
+
+        {/* AdSense DNS Prefetch */}
+        {adsenseClientId && (
+          <>
+            <link rel='dns-prefetch' href='//pagead2.googlesyndication.com' />
+            <link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+          </>
+        )}
 
         {/* Preconnect */}
         <link
@@ -183,7 +194,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <main className='grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-4 sm:p-8 md:p-12 lg:p-16'>
           <AdSenseProvider />
-
           {children}
           <Toaster position='top-right' richColors closeButton />
         </main>
