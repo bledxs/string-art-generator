@@ -20,6 +20,8 @@ export function ExportPanel() {
   const { parametersManager, errorManager } = managers;
   const { isGenerating } = state;
 
+  const { pinShape } = parametersManager.config;
+
   const { threadsToDraw: generatedThreads, actualPins: pins } = canvasProps;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -95,7 +97,7 @@ export function ExportPanel() {
     }
 
     try {
-      ExportService.exportInstructions(generatedThreads, pins.length);
+      ExportService.exportInstructions(generatedThreads, pins.length, pinShape);
       toast.success('Instrucciones Exportadas', {
         description: 'El archivo TXT se ha descargado exitosamente.',
       });

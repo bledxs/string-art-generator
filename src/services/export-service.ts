@@ -1,4 +1,4 @@
-import type { Thread, Pin } from '../types/string-art';
+import type { Thread, Pin, PinPlacementShape } from '../types/string-art';
 
 export class ExportService {
   static exportImage(canvasRef: HTMLCanvasElement): void {
@@ -28,10 +28,21 @@ export class ExportService {
     this.downloadBlob(blob, 'string_art_sequence.json');
   }
 
-  static exportInstructions(threads: Thread[], totalPins: number): void {
+  static exportInstructions(
+    threads: Thread[],
+    totalPins: number,
+    pinShape: PinPlacementShape,
+  ): void {
     let instructions = `Instrucciones para String Art\n\n`;
     instructions += `Total de Puntillas: ${totalPins}\n`;
     instructions += `Total de Hilos: ${threads.length}\n`;
+
+    if (pinShape === 'square') {
+      instructions += `--------------------------------------------------\n`;
+      instructions += `NOTA PARA TABLERO CUADRADO:\n`;
+      instructions += `La "Puntilla 1" es la de la esquina superior izquierda.\n`;
+      instructions += `Numere las siguientes puntillas en el sentido de las agujas del reloj alrededor del perímetro.\n`;
+    }
     instructions += `--------------------------------------------------\n\n`;
 
     if (threads.length > 0) {
