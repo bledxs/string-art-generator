@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configuración del sitemap
-const baseURL = 'https://string-art-generator-three.vercel.app'; // 🔄 CAMBIAR por tu dominio real
+const baseURL = 'https://www.stringartgenerator.app'; // 🔄 CAMBIAR por tu dominio real
 const pages = [
   {
     url: '',
@@ -81,7 +81,7 @@ async function generateSitemap() {
     console.log(`   Script: ${__filename}\n`);
 
     // Validar configuración
-    if (!baseURL || baseURL === 'https://string-art-generator-three.vercel.app') {
+    if (!baseURL || baseURL === 'https://www.stringartgenerator.app') {
       console.warn('⚠️  Recuerda actualizar baseURL con tu dominio real');
     }
 

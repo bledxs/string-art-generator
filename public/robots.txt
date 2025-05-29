@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://string-art-generator-three.vercel.app/sitemap.xml
+Sitemap: https://www.stringartgenerator.app/sitemap.xml
 
 # Optimizaciones de crawling
 Crawl-delay: 1
@@ -23,5 +23,5 @@ Allow: /apple-touch-icon.png
 Allow: /android-chrome*
 
 # Información adicional
-# Sitio web: https://string-art-generator-three.vercel.app
-# Última actualización: 2025-05-28
+# Sitio web: https://www.stringartgenerator.app
+# Última actualización: 2025-05-29

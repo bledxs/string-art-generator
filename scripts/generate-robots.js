@@ -1,7 +1,7 @@
-import path from "path";
-import fs from "fs";
+import path from 'path';
+import fs from 'fs';
 
-const baseURL = 'https://string-art-generator-three.vercel.app'; // 🔄 CAMBIAR por tu dominio real
+const baseURL = 'https://www.stringartgenerator.app'; // 🔄 CAMBIAR por tu dominio real
 
 export function generateRobotsTxt() {
   const robotsContent = `# Robots.txt para String Art Generator
@@ -34,7 +34,7 @@ Allow: /android-chrome*
 `;
 
   const robotsPath = path.resolve(__dirname, '../public/robots.txt');
-  
+
   try {
     fs.writeFileSync(robotsPath, robotsContent, 'utf8');
     console.log('✅ robots.txt generado exitosamente!');
