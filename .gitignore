@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Editors
+# JetBrains
+.idea
+# Visual Studio Code
+.vscode
+
+.qodo

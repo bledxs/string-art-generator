@@ -1,0 +1,39 @@
+{
+  "name": "StringArt Pro - Generador de String Art",
+  "short_name": "StringArt Pro",
+  "description": "Herramienta profesional para generar String Art",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["design", "graphics", "productivity"],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-main.jpg",
+      "type": "image/jpeg",
+      "sizes": "1280x720",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/mobile-main.jpg",
+      "type": "image/jpeg",
+      "sizes": "750x1334",
+      "form_factor": "narrow"
+    }
+  ]
+}
