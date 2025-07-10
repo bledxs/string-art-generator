@@ -6,7 +6,18 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:seo": "pnpm run build && pnpm run generate:sitemap",
+    "generate:sitemap": "node scripts/generate-sitemap.js",
+    "generate:robots": "node scripts/generate-robots.js",
+    "generate:seo": "node scripts/generate-seo-files.js",
+    "validate:sitemap": "node -e \"import('./scripts/generate-sitemap.js').then(m => m.validateSitemap())\"",
+    "dev:seo": "npm run generate:seo && npm run dev",
+    "build:icons": "pnpm run generate:icons && pnpm run build",
+    "dev:icons": "pnpm run generate:icons && pnpm run dev",
+    "generate:icons": "node scripts/generate-icons.js",
+    "preview:seo": "pnpm run build && pnpm run preview",
+    "audit:seo": "lighthouse http://localhost:4173 --output=html --output-path=./lighthouse-report.html --only-categories=seo,accessibility,performance"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -52,6 +63,7 @@
     "react-hook-form": "^7.56.4",
     "react-resizable-panels": "^3.0.2",
     "recharts": "^2.15.3",
+    "sharp": "^0.34.3",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.3.0",
     "vaul": "^1.1.2",
