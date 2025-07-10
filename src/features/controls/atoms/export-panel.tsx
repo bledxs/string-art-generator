@@ -46,12 +46,17 @@ export function ExportPanel() {
     }
 
     try {
-      ExportService.exportImage(canvas as HTMLCanvasElement);
+      ExportService.exportImage(canvas);
       // 🆕 Mostrar éxito usando el error manager (podríamos crear un success manager)
       toast.success('Imagen Exportada', {
         description: 'La imagen se ha descargado exitosamente.',
       });
     } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error al exportar la imagen:', error.message);
+      } else {
+        console.error('Error desconocido al exportar la imagen:', error);
+      }
       errorManager.showError('Error al exportar la imagen.');
       toast.error('Error de Exportación', {
         description: 'Error al exportar la imagen.',
@@ -77,6 +82,7 @@ export function ExportPanel() {
         description: 'El archivo JSON se ha descargado exitosamente.',
       });
     } catch (error) {
+      console.error('Error al exportar la secuencia:', error);
       errorManager.showError('Error al exportar la secuencia.');
       toast.error('Error de Exportación', {
         description: 'Error al exportar la secuencia.',
@@ -102,6 +108,7 @@ export function ExportPanel() {
         description: 'El archivo TXT se ha descargado exitosamente.',
       });
     } catch (error) {
+      console.error('Error al exportar las instrucciones:', error);
       errorManager.showError('Error al exportar las instrucciones.');
       toast.error('Error de Exportación', {
         description: 'Error al exportar las instrucciones.',

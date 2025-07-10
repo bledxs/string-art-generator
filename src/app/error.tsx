@@ -1,15 +1,17 @@
 'use client';
 
+import { AlertCircle, Home, RefreshCw } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect } from 'react';
+
 import { Button } from '@/components/ui/button';
-import { RefreshCw, Home, AlertCircle } from 'lucide-react';
 
 interface ErrorProps {
   error: Error & { digest?: string };
   reset: () => void;
 }
 
-export default function Error({ error, reset }: ErrorProps) {
+export default function Error({ error, reset }: Readonly<ErrorProps>) {
   useEffect(() => {
     // Log del error para debugging
     console.error('Error en la aplicación:', error);
@@ -56,10 +58,10 @@ export default function Error({ error, reset }: ErrorProps) {
           </Button>
 
           <Button variant='outline' asChild className='w-full'>
-            <a href='/'>
+            <Link href='/'>
               <Home className='w-4 h-4 mr-2' />
               Ir al Inicio
-            </a>
+            </Link>
           </Button>
         </div>
 
