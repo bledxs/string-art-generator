@@ -4,7 +4,6 @@ import './globals.css';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import { Toaster } from '@/components/ui/sonner';
-import Script from 'next/script';
 import { AdSenseProvider } from '@/providers/adsense-provider';
 
 const geistSans = Geist({
@@ -192,7 +191,7 @@ export default function RootLayout({
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <main className='grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-4 sm:p-8 md:p-12 lg:p-16'>
+        <main className='grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen'>
           <AdSenseProvider />
           {children}
           <Toaster position='top-right' richColors closeButton />

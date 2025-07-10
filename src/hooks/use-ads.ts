@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface UseAdsOptions {
   enabled?: boolean;
@@ -8,7 +8,8 @@ interface UseAdsOptions {
 }
 
 export function useAds(options: UseAdsOptions = {}) {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isScriptLoaded, setIsScriptLoaded] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const {
@@ -21,53 +22,56 @@ export function useAds(options: UseAdsOptions = {}) {
       return;
     }
 
-    // Verificar si AdSense ya está cargado
     if (window.adsbygoogle) {
-      setIsLoaded(true);
+      setIsScriptLoaded(true);
       return;
     }
 
-    const loadAdSense = async () => {
-      try {
-        // Cargar script de AdSense
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`;
-        script.crossOrigin = 'anonymous';
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`;
+    script.crossOrigin = 'anonymous';
+    script.onload = () => {
+      window.adsbygoogle = window.adsbygoogle || [];
+      setIsScriptLoaded(true);
+    };
+    script.onerror = () => setError('Error al cargar AdSense');
+    document.head.appendChild(script);
 
-        script.onload = () => {
-          window.adsbygoogle = window.adsbygoogle || [];
-          setIsLoaded(true);
-        };
-
-        script.onerror = () => {
-          setError('Error al cargar AdSense');
-        };
-
-        document.head.appendChild(script);
-      } catch (err) {
-        setError('Error al inicializar AdSense');
-        console.error('AdSense loading error:', err);
+    return () => {
+      // Clean up script if component unmounts
+      const existingScript = document.querySelector(`script[src*="${clientId}"]`);
+      if (existingScript) {
+        document.head.removeChild(existingScript);
       }
     };
-
-    loadAdSense();
   }, [enabled, clientId]);
 
-  const refreshAd = (adSlot: string) => {
-    if (window.adsbygoogle && isLoaded) {
+  useEffect(() => {
+    if (isScriptLoaded) {
+      // Delay to ensure content is rendered before showing ads
+      const timer = setTimeout(() => {
+        setIsReady(true);
+      }, 500); // 500ms delay
+
+      return () => clearTimeout(timer);
+    }
+  }, [isScriptLoaded]);
+
+  const refreshAd = useCallback(() => {
+    if (window.adsbygoogle && isReady) {
       try {
         window.adsbygoogle.push({});
-      } catch (error) {
-        console.error('Error refreshing ad:', error);
+      } catch (e) {
+        console.error('Error refreshing ad:', e);
       }
     }
-  };
+  }, [isReady]);
 
   return {
-    isLoaded,
+    isLoaded: isReady,
     error,
     refreshAd,
-    canShowAds: enabled && !!clientId && isLoaded,
+    canShowAds: enabled && !!clientId && isReady,
   };
 }

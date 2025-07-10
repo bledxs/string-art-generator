@@ -1,8 +1,6 @@
 import { Metadata } from 'next';
 
 import { StructuredData } from '@/components/seo/structured-data';
-import { StringArtFooter } from '@/features/footer/string-art-footer';
-import { StringArtHeader } from '@/features/header/string-art-header';
 import { StringArtToolContainer } from '@/features/string-art-tool/string-art-tool-container';
 
 export const metadata: Metadata = {
@@ -21,9 +19,7 @@ export default function StringArtPage() {
   return (
     <>
       <StructuredData />
-      <StringArtHeader />
       <StringArtToolContainer />
-      <StringArtFooter />
     </>
   );
 }

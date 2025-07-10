@@ -11,11 +11,11 @@ export function StringArtProvider({
   children,
   canvasWidth,
   canvasHeight,
-}: {
+}: Readonly<{
   children: React.ReactNode;
   canvasWidth: number;
   canvasHeight: number;
-}) {
+}>) {
   const state = useStringArtState(canvasWidth, canvasHeight);
 
   return (
