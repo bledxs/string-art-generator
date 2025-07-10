@@ -8,11 +8,13 @@ export function AdSenseProvider() {
 
   useEffect(() => {
     // Inicializar AdSense después de cargar
-    if (typeof window !== 'undefined' && (window as any).adsbygoogle) {
+    if (typeof window !== 'undefined' && 'adsbygoogle' in window) {
       try {
-        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push(
-          {},
-        );
+        // TypeScript safe access
+        const adsbygoogle = (window as typeof window & { adsbygoogle: unknown }).adsbygoogle;
+        if (Array.isArray(adsbygoogle)) {
+          adsbygoogle.push({});
+        }
       } catch (err) {
         console.error('AdSense error:', err);
       }

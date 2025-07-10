@@ -25,7 +25,7 @@ import {
 import { useStringArtContext } from '@/context/string-art-context';
 
 export function PresetsPanel() {
-  const { managers, state, actions } = useStringArtContext();
+  const { managers, state } = useStringArtContext();
   const { parametersManager, presetsManager, errorManager } = managers;
   const { isGenerating } = state;
 

@@ -14,7 +14,7 @@ interface AdBlockProps {
 
 declare global {
   interface Window {
-    adsbygoogle?: any[];
+    adsbygoogle?: unknown[];
   }
 }
 
@@ -26,7 +26,7 @@ export function AdBlock({
   className = '',
   minHeight = '100px',
   style = {},
-}: AdBlockProps) {
+}: Readonly<AdBlockProps>) {
   const adRef = useRef<HTMLModElement>(null);
   const isAdPushed = useRef(false);
 
@@ -57,7 +57,8 @@ export function AdBlock({
       // Push del anuncio
       if (!isAdPushed.current && adRef.current) {
         try {
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
+          window.adsbygoogle = window.adsbygoogle || [];
+          window.adsbygoogle.push({});
           isAdPushed.current = true;
         } catch (error) {
           console.error('Error pushing ad:', error);

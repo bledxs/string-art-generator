@@ -2,7 +2,6 @@
 
 import { useRef } from 'react';
 import { StringArtCanvas } from '@/features/canvas/string-art-canvas';
-import { useStringArtState } from '@/hooks/use-string-art-state';
 import { useStringArtContext } from '@/context/string-art-context';
 
 interface StringArtToolClientProps {
@@ -13,7 +12,7 @@ interface StringArtToolClientProps {
 export function StringArtToolClient({
   canvasWidth,
   canvasHeight,
-}: StringArtToolClientProps) {
+}: Readonly<StringArtToolClientProps>) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const state = useStringArtContext();
 
