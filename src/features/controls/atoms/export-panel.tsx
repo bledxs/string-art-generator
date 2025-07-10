@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronDown, Download, FileJson, FileText, Image } from 'lucide-react';
+import { ChevronDown, Download, FileJson, FileText, Image as ImageIcon } from 'lucide-react';
 import React, { useRef } from 'react';
 import { toast } from 'sonner';
 
@@ -131,7 +131,7 @@ export function ExportPanel() {
         </DropdownMenuTrigger>
         <DropdownMenuContent className='w-56' align='end'>
           <DropdownMenuItem onClick={handleExportImage} disabled={!canExport}>
-            <Image className='w-4 h-4 mr-2' />
+            <ImageIcon className='w-4 h-4 mr-2'/>
             Exportar Imagen (PNG)
           </DropdownMenuItem>
           <DropdownMenuSeparator />

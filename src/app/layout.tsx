@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Inter } from 'next/font/google';
 
 import { Toaster } from '@/components/ui/sonner';
 import { AdSenseProvider } from '@/providers/adsense-provider';
@@ -13,6 +13,11 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
+  subsets: ['latin'],
+});
+
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
 });
 
@@ -181,16 +186,10 @@ export default function RootLayout({
           href='https://fonts.gstatic.com'
           crossOrigin=''
         />
-
-        {/* Google Fonts */}
-        <link
-          href='https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap'
-          rel='stylesheet'
-        />
       </head>
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}>
         <main className='grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen'>
           <AdSenseProvider />
           {children}
