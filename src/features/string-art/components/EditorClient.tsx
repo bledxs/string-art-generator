@@ -4,6 +4,7 @@ import { ImageUploader } from './ImageUploader';
 import { ParametersPanel } from './ParametersPanel';
 import { Canvas } from './Canvas';
 import { ExportControls } from './ExportControls';
+import { PhysicalSettings } from './PhysicalSettings';
 import { useStringArtStore } from '../store/stringArtStore';
 import { useStringArt } from '../hooks/useStringArt';
 import { Button } from '@/components/ui/button';
@@ -36,9 +37,15 @@ export function EditorClient() {
           <ParametersPanel />
         </div>
 
+        {/* Physical Settings */}
+        <div>
+          <h2 className='text-xl font-semibold mb-3'>3. Physical Dimensions</h2>
+          <PhysicalSettings />
+        </div>
+
         {/* Generate Button */}
         <div>
-          <h2 className='text-xl font-semibold mb-3'>3. Generate</h2>
+          <h2 className='text-xl font-semibold mb-3'>4. Generate</h2>
           <Card className='p-4'>
             {!isProcessing ? (
               <Button
@@ -79,7 +86,7 @@ export function EditorClient() {
 
         {/* Export Controls */}
         <div>
-          <h2 className='text-xl font-semibold mb-3'>4. Export</h2>
+          <h2 className='text-xl font-semibold mb-3'>5. Export</h2>
           <ExportControls />
         </div>
 

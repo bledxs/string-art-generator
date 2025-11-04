@@ -23,7 +23,7 @@ import type { ExportFormat } from '../types';
 
 export function ExportControls() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { result, parameters, exportFormat, setExportFormat } =
+  const { result, parameters, exportFormat, setExportFormat, physicalConfig } =
     useStringArtStore();
 
   const canExport = !!result;
@@ -160,14 +160,28 @@ export function ExportControls() {
   const exportTXT = () => {
     if (!result) return;
 
-    // TODO: Add physical size configuration (cm/inches) for real-world builds
-    // This would require additional UI controls for:
-    // - Circle diameter (e.g., 50cm, 100cm)
-    // - Pin spacing calculation
-    // - String length estimation
-
     const totalPins = result.metadata.parameters.pins;
     const totalLines = result.paths.length;
+
+    // Calculate physical dimensions
+    const diameter = physicalConfig.diameter;
+    const unit = physicalConfig.unit;
+    const circumference =
+      physicalConfig.unit === 'cm'
+        ? Math.PI * diameter
+        : Math.PI * diameter * 2.54; // Convert to cm for calculation
+    const pinSpacing = circumference / totalPins;
+
+    // Estimate string length
+    // Each line is approximately the diameter (simplified)
+    const avgLineLength = diameter * 0.7; // Average chord length
+    const totalStringLength = avgLineLength * totalLines;
+    const totalStringLengthMeters = Number(
+      (totalStringLength / 100).toFixed(2),
+    ); // Convert cm to meters
+    const totalStringLengthYards = Number(
+      (totalStringLength / 91.44).toFixed(2),
+    ); // Convert cm to yards
 
     let instructions = `STRING ART INSTRUCTIONS
 ${'='.repeat(50)}
@@ -183,27 +197,60 @@ PROJECT INFORMATION:
 
 ${'='.repeat(50)}
 
+PHYSICAL DIMENSIONS:
+- Circle Diameter: ${diameter} ${unit}
+- Circumference: ${(physicalConfig.unit === 'cm'
+      ? circumference
+      : circumference / 2.54
+    ).toFixed(2)} ${unit}
+- Pin Spacing: ${(physicalConfig.unit === 'cm'
+      ? pinSpacing
+      : pinSpacing / 2.54
+    ).toFixed(2)} ${unit}
+- Angle Between Pins: ${(360 / totalPins).toFixed(2)}°
+- Pin Height: ${physicalConfig.pinHeight} ${unit}
+
+ESTIMATED MATERIALS:
+- String Length Required: ~${totalStringLengthMeters}m (~${totalStringLengthYards} yards)
+  (Recommend ordering 2x for safety: ${(totalStringLengthMeters * 2).toFixed(
+    0,
+  )}m or ${(totalStringLengthYards * 2).toFixed(0)} yards)
+- Board Size: Minimum ${(diameter * 1.1).toFixed(1)} ${unit} square
+- ${totalPins} pins/nails (evenly spaced)
+
+${'='.repeat(50)}
+
 MATERIALS NEEDED:
-- Circular board or backing material
+- Circular board or backing material (${(diameter * 1.1).toFixed(
+      1,
+    )} ${unit} square minimum)
 - ${totalPins} pins/nails (evenly spaced around circle)
-- Dark string/thread (black recommended)
+- Dark string/thread: ${(totalStringLengthMeters * 2).toFixed(0)}m (~${(
+      totalStringLengthYards * 2
+    ).toFixed(0)} yards)
 - Hammer and ruler for precise pin placement
 - Protractor or angle guide
+- Pencil for marking
 
 ${'='.repeat(50)}
 
 SETUP INSTRUCTIONS:
 
 1. PREPARE THE BOARD:
-   - Choose a circular board (recommended size: 50-100cm diameter)
+   - Choose a circular board (${diameter} ${unit} diameter)
    - Mark the center point
-   - Draw a circle slightly smaller than the board edge
+   - Draw a circle with radius ${(diameter / 2).toFixed(1)} ${unit}
 
 2. PLACE THE PINS:
    - Divide the circle into ${totalPins} equal segments
    - Angle between pins: ${(360 / totalPins).toFixed(2)}°
+   - Pin spacing: ${(physicalConfig.unit === 'cm'
+     ? pinSpacing
+     : pinSpacing / 2.54
+   ).toFixed(2)} ${unit}
    - Number each pin from 0 to ${totalPins - 1} clockwise
-   - Ensure pins are at equal height (about 1cm above board)
+   - Ensure pins are ${physicalConfig.pinHeight} ${unit} above board
+   - Tip: Create a paper template with marked positions
 
 3. STRINGING SEQUENCE:
    Follow this exact order for best results:
@@ -230,12 +277,19 @@ SETUP INSTRUCTIONS:
     instructions += `
 ${'='.repeat(50)}
 
-TIPS:
+CONSTRUCTION TIPS:
 - Maintain consistent tension on the string
 - Don't pull too tight - pins may bend
 - Work in good lighting
 - Take breaks every 500-1000 lines
 - You can adjust opacity by varying string passes
+- Mark every 50th pin with a colored sticker for reference
+- Use a continuous string without cutting (tie new thread when needed)
+
+ESTIMATED TIME:
+- Pin placement: ~${Math.ceil(totalPins / 20)} hours (at ~20 pins/hour)
+- Stringing: ~${Math.ceil(totalLines / 500)} hours (at ~500 lines/hour)
+- Total: ~${Math.ceil(totalPins / 20 + totalLines / 500)} hours
 
 ${'='.repeat(50)}
 

@@ -5,6 +5,7 @@ import type {
   ImageData,
   StringArtResult,
   ExportFormat,
+  PhysicalConfig,
 } from '../types';
 
 interface StringArtState {
@@ -33,6 +34,10 @@ interface StringArtState {
   exportFormat: ExportFormat;
   setExportFormat: (format: ExportFormat) => void;
 
+  // Physical configuration for real-world builds
+  physicalConfig: PhysicalConfig;
+  setPhysicalConfig: (config: Partial<PhysicalConfig>) => void;
+
   // Reset all
   reset: () => void;
 }
@@ -43,6 +48,12 @@ const defaultParameters: StringArtParameters = {
   lineWeight: 0.5,
   lineOpacity: 0.15,
   backgroundColor: '#ffffff',
+};
+
+const defaultPhysicalConfig: PhysicalConfig = {
+  diameter: 50, // 50cm default
+  unit: 'cm',
+  pinHeight: 1,
 };
 
 export const useStringArtStore = create<StringArtState>()(
@@ -82,6 +93,13 @@ export const useStringArtStore = create<StringArtState>()(
       exportFormat: 'png',
       setExportFormat: (exportFormat) => set({ exportFormat }),
 
+      // Physical configuration
+      physicalConfig: defaultPhysicalConfig,
+      setPhysicalConfig: (config) =>
+        set((state) => ({
+          physicalConfig: { ...state.physicalConfig, ...config },
+        })),
+
       // Reset
       reset: () =>
         set({
@@ -91,6 +109,7 @@ export const useStringArtStore = create<StringArtState>()(
           isProcessing: false,
           progress: 0,
           exportFormat: 'png',
+          physicalConfig: defaultPhysicalConfig,
         }),
     }),
     {
@@ -99,6 +118,7 @@ export const useStringArtStore = create<StringArtState>()(
         // Only persist these fields
         parameters: state.parameters,
         exportFormat: state.exportFormat,
+        physicalConfig: state.physicalConfig,
       }),
     },
   ),

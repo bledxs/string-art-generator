@@ -65,3 +65,12 @@ export interface ExportOptions {
   quality?: number;
   scale?: number;
 }
+
+// Physical configuration for real-world builds
+export type PhysicalUnit = 'cm' | 'inches';
+
+export interface PhysicalConfig {
+  diameter: number; // Circle diameter in selected unit
+  unit: PhysicalUnit;
+  pinHeight: number; // How far pins stick out from board
+}
