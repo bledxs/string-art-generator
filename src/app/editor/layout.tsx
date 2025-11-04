@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: 'Editor - String Art Generator',
@@ -7,6 +8,14 @@ export const metadata: Metadata = {
   robots: {
     index: false, // Editor no necesita indexación
     follow: true,
+  },
+  alternates: {
+    canonical: `${siteConfig.url}/editor`,
+  },
+  openGraph: {
+    title: 'String Art Editor',
+    description: 'Create string art patterns from your images',
+    url: `${siteConfig.url}/editor`,
   },
 };
 
