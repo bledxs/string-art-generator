@@ -1,6 +1,5 @@
 // Server Component - SSR-first pattern
 import { EditorClient } from '@/features/string-art/components/EditorClient';
-import { Sparkles } from 'lucide-react';
 
 export default function EditorPage() {
   return (
