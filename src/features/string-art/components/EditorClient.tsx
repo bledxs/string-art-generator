@@ -12,7 +12,8 @@ import { Progress } from '@/components/ui/progress';
 import { Loader2, Sparkles, StopCircle } from 'lucide-react';
 
 export function EditorClient() {
-  const { image, isProcessing, progress, result } = useStringArtStore();
+  const { image, isProcessing, progress, result, partialResult } =
+    useStringArtStore();
   const { generate, cancel } = useStringArt();
 
   const canGenerate = image && !isProcessing;
@@ -91,15 +92,7 @@ export function EditorClient() {
               <p className='text-lg'>Upload an image to get started</p>
               <p className='text-sm mt-2'>Your string art will appear here</p>
             </div>
-          ) : isProcessing ? (
-            <div className='text-center'>
-              <Loader2 className='h-16 w-16 mx-auto mb-4 animate-spin text-primary' />
-              <p className='text-lg font-medium'>Generating String Art</p>
-              <p className='text-sm text-muted-foreground mt-2'>
-                This may take a few moments...
-              </p>
-            </div>
-          ) : result ? (
+          ) : result || partialResult ? (
             <div className='w-full h-full flex items-center justify-center p-4'>
               <Canvas width={600} height={600} />
             </div>
