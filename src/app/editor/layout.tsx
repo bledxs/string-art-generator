@@ -24,5 +24,5 @@ export default function EditorLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return <div className='h-screen overflow-hidden'>{children}</div>;
 }
