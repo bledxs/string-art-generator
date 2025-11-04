@@ -42,11 +42,22 @@ export function AdUnitClient({
     return null;
   }
 
+  // Reserve space based on format to prevent layout shift
+  const minHeight =
+    format === 'horizontal'
+      ? 'min-h-[90px]'
+      : format === 'vertical'
+      ? 'min-h-[600px]'
+      : format === 'rectangle'
+      ? 'min-h-[250px]'
+      : 'min-h-[50px]';
+
   return (
-    <div className={className}>
+    <div
+      className={`${className} ${minHeight} flex items-center justify-center bg-muted/20`}>
       <ins
         className='adsbygoogle'
-        style={{ display: 'block' }}
+        style={{ display: 'block', minHeight: 'inherit' }}
         data-ad-client={publisherId}
         data-ad-slot={slotId}
         data-ad-format={format}
