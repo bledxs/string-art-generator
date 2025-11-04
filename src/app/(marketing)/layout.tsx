@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { siteConfig } from '@/lib/config';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: {
@@ -116,5 +118,11 @@ export default function MarketingLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+      <Footer />
+    </>
+  );
 }
