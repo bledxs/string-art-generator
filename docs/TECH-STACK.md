@@ -4,10 +4,12 @@
 
 ### Framework Principal
 
-- **Next.js 15 (App Router)**
+- **Next.js 16 (Beta)**
   - SSR + React Server Components para SEO
   - CSR (Client-Side Rendering) para herramienta interactiva
-  - Edge-ready para deployment en Cloudflare
+  - Edge-ready para deployment en Vercel
+  - **Beta features:** Mejor performance en App Router, Turbopack mejorado
+  - **Nota:** Versión beta estable para testing en producción
 
 ### Lenguaje
 
