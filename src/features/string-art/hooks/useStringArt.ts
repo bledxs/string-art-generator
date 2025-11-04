@@ -14,6 +14,7 @@ export function useStringArt() {
     setProcessing,
     setProgress,
     setResult,
+    setPartialResult,
   } = useStringArtStore();
 
   // Initialize worker
@@ -41,9 +42,24 @@ export function useStringArt() {
             }
             break;
 
+          case 'PARTIAL_PATHS':
+            // Update partial result for progressive rendering
+            if (payload?.partialPaths) {
+              setPartialResult({
+                paths: payload.partialPaths,
+                metadata: {
+                  totalLines: payload.partialPaths.length,
+                  processingTime: 0,
+                  parameters,
+                },
+              });
+            }
+            break;
+
           case 'COMPLETE':
             if (payload?.result) {
               setResult(payload.result);
+              setPartialResult(null); // Clear partial result
               setProcessing(false);
             }
             break;
@@ -51,6 +67,7 @@ export function useStringArt() {
           case 'ERROR':
             console.error('Worker error:', payload?.error);
             setProcessing(false);
+            setPartialResult(null);
             break;
         }
       };
@@ -58,6 +75,7 @@ export function useStringArt() {
       workerRef.current.onerror = (error) => {
         console.error('Worker error:', error);
         setProcessing(false);
+        setPartialResult(null);
       };
     } catch (error) {
       console.error('Failed to create worker:', error);
@@ -70,7 +88,7 @@ export function useStringArt() {
         workerRef.current = null;
       }
     };
-  }, [setProgress, setResult, setProcessing]);
+  }, [setProgress, setResult, setProcessing, setPartialResult, parameters]);
 
   // Generate string art
   const generate = useCallback(() => {

@@ -48,9 +48,10 @@ export interface WorkerRequest {
 }
 
 export interface WorkerResponse {
-  type: 'PROGRESS' | 'COMPLETE' | 'ERROR';
+  type: 'PROGRESS' | 'PARTIAL_PATHS' | 'COMPLETE' | 'ERROR';
   payload?: {
     progress?: number;
+    partialPaths?: Path[]; // Paths generados hasta ahora
     result?: StringArtResult;
     error?: string;
   };

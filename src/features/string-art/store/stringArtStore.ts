@@ -20,6 +20,8 @@ interface StringArtState {
   // Result state
   result: StringArtResult | null;
   setResult: (result: StringArtResult | null) => void;
+  partialResult: StringArtResult | null; // For progressive rendering
+  setPartialResult: (result: StringArtResult | null) => void;
 
   // Processing state
   isProcessing: boolean;
@@ -62,12 +64,18 @@ export const useStringArtStore = create<StringArtState>()(
       // Result
       result: null,
       setResult: (result) => set({ result }),
+      partialResult: null,
+      setPartialResult: (partialResult) => set({ partialResult }),
 
       // Processing
       isProcessing: false,
       progress: 0,
       setProcessing: (isProcessing) =>
-        set({ isProcessing, progress: isProcessing ? 0 : 100 }),
+        set({
+          isProcessing,
+          progress: isProcessing ? 0 : 100,
+          partialResult: null,
+        }),
       setProgress: (progress) => set({ progress }),
 
       // Export

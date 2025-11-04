@@ -15,6 +15,7 @@ export function generateStringArt(
   image: ProcessedImage,
   params: StringArtParameters,
   onProgress?: (progress: number) => void,
+  onPartialPaths?: (paths: Path[]) => void,
 ): StringArtResult {
   const startTime = performance.now();
 
@@ -22,9 +23,15 @@ export function generateStringArt(
   const pins = calculatePinPositions(params.pins, image.width);
 
   // Generate paths using greedy algorithm (70% of progress)
-  const rawPaths = generatePaths(image, pins, params, (p) => {
-    if (onProgress) onProgress(p * 0.7);
-  });
+  const rawPaths = generatePaths(
+    image,
+    pins,
+    params,
+    (p) => {
+      if (onProgress) onProgress(p * 0.7);
+    },
+    onPartialPaths,
+  );
 
   // Optimize paths (30% of progress)
   if (onProgress) onProgress(70);
@@ -70,6 +77,7 @@ function generatePaths(
   pins: PinPosition[],
   params: StringArtParameters,
   onProgress?: (progress: number) => void,
+  onPartialPaths?: (paths: Path[]) => void,
 ): Path[] {
   const paths: Path[] = [];
   const minDistance = Math.floor(pins.length * 0.1); // Skip nearby pins
@@ -82,6 +90,11 @@ function generatePaths(
     // Report progress every 100 lines
     if (i % 100 === 0 && onProgress) {
       onProgress((i / params.lines) * 100);
+    }
+
+    // Send partial paths every 50 lines for progressive rendering
+    if (i % 50 === 0 && onPartialPaths && paths.length > 0) {
+      onPartialPaths([...paths]); // Send copy of current paths
     }
 
     let bestPin = -1;

@@ -3,6 +3,7 @@ import type {
   WorkerRequest,
   WorkerResponse,
   StringArtParameters,
+  Path,
 } from '../types';
 import { loadImage, extractBrightness } from '../algorithms/imageProcessor';
 import { generateStringArt as generateArt } from '../algorithms/stringArtEngine';
@@ -88,12 +89,20 @@ async function generateStringArt(
     // Generate string art with progress callback
     sendProgress(30);
     console.log('Worker: Generating string art...');
-    const result = generateArt(processedImage, parameters, (progress) => {
-      // Map algorithm progress (0-100) to overall progress (30-95)
-      // 30-80: Greedy algorithm (70% of work)
-      // 80-95: Path optimization (30% of work)
-      sendProgress(30 + progress * 0.65);
-    });
+    const result = generateArt(
+      processedImage,
+      parameters,
+      (progress) => {
+        // Map algorithm progress (0-100) to overall progress (30-95)
+        // 30-80: Greedy algorithm (70% of work)
+        // 80-95: Path optimization (30% of work)
+        sendProgress(30 + progress * 0.65);
+      },
+      (partialPaths) => {
+        // Send partial paths for progressive rendering
+        sendPartialPaths(partialPaths);
+      },
+    );
     console.log('Worker: Generation complete', {
       paths: result.paths.length,
       optimization: result.metadata.optimization,
@@ -125,6 +134,14 @@ function sendProgress(progress: number) {
   const response: WorkerResponse = {
     type: 'PROGRESS',
     payload: { progress },
+  };
+  self.postMessage(response);
+}
+
+function sendPartialPaths(paths: Path[]) {
+  const response: WorkerResponse = {
+    type: 'PARTIAL_PATHS',
+    payload: { partialPaths: paths },
   };
   self.postMessage(response);
 }

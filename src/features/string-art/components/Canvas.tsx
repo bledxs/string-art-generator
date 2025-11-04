@@ -11,10 +11,14 @@ interface CanvasProps {
 
 export function Canvas({ width = 800, height = 800 }: CanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { result, parameters } = useStringArtStore();
+  const { result, partialResult, parameters, isProcessing } =
+    useStringArtStore();
+
+  // Use partial result while processing, final result when complete
+  const displayResult = isProcessing && partialResult ? partialResult : result;
 
   useEffect(() => {
-    if (!canvasRef.current || !result) return;
+    if (!canvasRef.current || !displayResult) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -27,13 +31,13 @@ export function Canvas({ width = 800, height = 800 }: CanvasProps) {
     // Draw string art
     drawStringArt(
       ctx,
-      result,
+      displayResult,
       width,
       height,
       parameters.lineWeight,
       parameters.lineOpacity,
     );
-  }, [result, parameters, width, height]);
+  }, [displayResult, parameters, width, height, isProcessing]);
 
   return (
     <canvas
