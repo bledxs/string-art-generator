@@ -79,10 +79,22 @@ pnpm build
 
 ### Generate Images & Icons
 
-See [IMAGE-GENERATION-GUIDE.md](./docs/IMAGE-GENERATION-GUIDE.md) for detailed
-instructions on generating all required images and icons for SEO/PWA.
+**Automated Script (Recommended):**
 
-**Quick links:**
+Generate all SEO/PWA images automatically from your logo:
+
+```bash
+# 1. Place your logo.png in the project root
+# 2. Run the generator
+pnpm generate:images
+```
+
+This creates 10+ optimized images: favicons, PWA icons, Open Graph, Twitter
+Cards, and screenshots.
+
+📚 Full guide: [GENERATE-SEO-IMAGES.md](./docs/GENERATE-SEO-IMAGES.md)
+
+**Manual alternatives:**
 
 - Favicon Generator: https://realfavicongenerator.net/
 - Open Graph Images: https://www.opengraph.xyz/
