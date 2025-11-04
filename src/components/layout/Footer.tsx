@@ -35,16 +35,23 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href='/#features'
+                  href='/how-it-works'
                   className='hover:text-foreground transition-colors'>
-                  Features
+                  How It Works
                 </Link>
               </li>
               <li>
                 <Link
-                  href='/#how-it-works'
+                  href='/about'
                   className='hover:text-foreground transition-colors'>
-                  How It Works
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/#features'
+                  className='hover:text-foreground transition-colors'>
+                  Features
                 </Link>
               </li>
             </ul>
