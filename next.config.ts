@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
 
   // Cloudflare/Vercel Edge compatibility
-  output: 'standalone',
+  // output: 'standalone', // Comentado por error de permisos en Windows - Vercel lo maneja automáticamente
 };
 
 export default nextConfig;
