@@ -2,6 +2,7 @@
 
 import { ImageUploader } from './ImageUploader';
 import { ParametersPanel } from './ParametersPanel';
+import { Canvas } from './Canvas';
 import { useStringArtStore } from '../store/stringArtStore';
 import { useStringArt } from '../hooks/useStringArt';
 import { Button } from '@/components/ui/button';
@@ -10,7 +11,7 @@ import { Progress } from '@/components/ui/progress';
 import { Loader2, Sparkles, StopCircle } from 'lucide-react';
 
 export function EditorClient() {
-  const { image, isProcessing, progress } = useStringArtStore();
+  const { image, isProcessing, progress, result } = useStringArtStore();
   const { generate, cancel } = useStringArt();
 
   const canGenerate = image && !isProcessing;
@@ -90,6 +91,10 @@ export function EditorClient() {
               <p className='text-sm text-muted-foreground mt-2'>
                 This may take a few moments...
               </p>
+            </div>
+          ) : result ? (
+            <div className='w-full h-full flex items-center justify-center p-4'>
+              <Canvas width={600} height={600} />
             </div>
           ) : (
             <div className='text-center text-muted-foreground'>
