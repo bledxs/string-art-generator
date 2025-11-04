@@ -22,6 +22,13 @@ export interface StringArtResult {
     totalLines: number;
     processingTime: number;
     parameters: StringArtParameters;
+    optimization?: {
+      originalCrossings: number;
+      optimizedCrossings: number;
+      crossingsReduced: number;
+      pathsSimplified: number;
+      processingTime: number;
+    };
   };
 }
 

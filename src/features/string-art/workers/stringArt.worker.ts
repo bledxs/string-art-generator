@@ -89,10 +89,15 @@ async function generateStringArt(
     sendProgress(30);
     console.log('Worker: Generating string art...');
     const result = generateArt(processedImage, parameters, (progress) => {
-      // Map algorithm progress (0-100) to overall progress (30-90)
-      sendProgress(30 + progress * 0.6);
+      // Map algorithm progress (0-100) to overall progress (30-95)
+      // 30-80: Greedy algorithm (70% of work)
+      // 80-95: Path optimization (30% of work)
+      sendProgress(30 + progress * 0.65);
     });
-    console.log('Worker: Generation complete', { paths: result.paths.length });
+    console.log('Worker: Generation complete', {
+      paths: result.paths.length,
+      optimization: result.metadata.optimization,
+    });
 
     sendProgress(95);
 

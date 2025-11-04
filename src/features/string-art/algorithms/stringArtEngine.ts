@@ -1,7 +1,7 @@
 // Main string art generation algorithm
 import type { StringArtParameters, Path, StringArtResult } from '../types';
 import type { ProcessedImage } from './imageProcessor';
-import { getBrightness } from './imageProcessor';
+import { optimizePaths } from './pathOptimizer';
 
 interface PinPosition {
   x: number;
@@ -21,17 +21,26 @@ export function generateStringArt(
   // Calculate pin positions in a circle
   const pins = calculatePinPositions(params.pins, image.width);
 
-  // Generate paths using greedy algorithm
-  const paths = generatePaths(image, pins, params, onProgress);
+  // Generate paths using greedy algorithm (70% of progress)
+  const rawPaths = generatePaths(image, pins, params, (p) => {
+    if (onProgress) onProgress(p * 0.7);
+  });
+
+  // Optimize paths (30% of progress)
+  if (onProgress) onProgress(70);
+  const optimizationResult = optimizePaths(rawPaths, params.pins, (p) => {
+    if (onProgress) onProgress(70 + p * 0.3);
+  });
 
   const endTime = performance.now();
 
   return {
-    paths,
+    paths: optimizationResult.paths,
     metadata: {
-      totalLines: paths.length,
+      totalLines: optimizationResult.paths.length,
       processingTime: endTime - startTime,
       parameters: params,
+      optimization: optimizationResult.metrics,
     },
   };
 }
