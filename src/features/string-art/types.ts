@@ -50,7 +50,7 @@ export interface WorkerResponse {
 }
 
 // Export formats
-export type ExportFormat = 'png' | 'svg' | 'json';
+export type ExportFormat = 'png' | 'svg' | 'json' | 'txt';
 
 export interface ExportOptions {
   format: ExportFormat;

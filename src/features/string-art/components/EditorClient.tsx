@@ -3,6 +3,7 @@
 import { ImageUploader } from './ImageUploader';
 import { ParametersPanel } from './ParametersPanel';
 import { Canvas } from './Canvas';
+import { ExportControls } from './ExportControls';
 import { useStringArtStore } from '../store/stringArtStore';
 import { useStringArt } from '../hooks/useStringArt';
 import { Button } from '@/components/ui/button';
@@ -71,6 +72,12 @@ export function EditorClient() {
               </p>
             )}
           </Card>
+        </div>
+
+        {/* Export Controls */}
+        <div>
+          <h2 className='text-xl font-semibold mb-3'>4. Export</h2>
+          <ExportControls />
         </div>
       </div>
 
