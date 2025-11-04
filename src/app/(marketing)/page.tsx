@@ -16,6 +16,8 @@ import {
   OrganizationSchema,
   HowToSchema,
 } from '@/components/seo/StructuredData';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
 
 export default function LandingPage() {
   return (
@@ -25,6 +27,8 @@ export default function LandingPage() {
       <WebSiteSchema />
       <OrganizationSchema />
       <HowToSchema />
+
+      <Header />
 
       <div className='min-h-screen bg-background'>
         {/* Hero Section */}
@@ -228,25 +232,9 @@ export default function LandingPage() {
             </Link>
           </div>
         </section>
-
-        {/* Footer */}
-        <footer className='border-t py-8 px-4'>
-          <div className='container mx-auto max-w-6xl'>
-            <div className='flex flex-col md:flex-row justify-between items-center gap-4'>
-              <p className='text-sm text-muted-foreground'>
-                © 2025 String Art Generator. Built with Next.js 16.
-              </p>
-              <div className='flex gap-6'>
-                <Link
-                  href='/editor'
-                  className='text-sm text-muted-foreground hover:text-foreground'>
-                  Editor
-                </Link>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
+
+      <Footer />
     </>
   );
 }

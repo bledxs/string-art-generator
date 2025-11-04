@@ -1,18 +1,12 @@
 // Server Component - SSR-first pattern
 import { EditorClient } from '@/features/string-art/components/EditorClient';
+import { Header } from '@/components/layout/Header';
 
 export default function EditorPage() {
   return (
     <div className='h-screen flex flex-col bg-background'>
-      {/* Header - Server Component (SEO) */}
-      <header className='border-b'>
-        <div className='container mx-auto px-4 py-6'>
-          <h1 className='text-4xl font-bold mb-2'>String Art Generator</h1>
-          <p className='text-muted-foreground'>
-            Transform your images into beautiful string art patterns
-          </p>
-        </div>
-      </header>
+      {/* Header - Shared Navigation */}
+      <Header />
 
       {/* Main Content - Fixed height with internal scroll */}
       <main className='flex-1 overflow-hidden'>
