@@ -56,6 +56,7 @@ NEXT_PUBLIC_SITE_NAME="String Art Generator"
 NEXT_PUBLIC_SITE_DESCRIPTION="Transform images into beautiful string art patterns"
 NEXT_PUBLIC_TWITTER_HANDLE=@stringartgen
 NEXT_PUBLIC_SUPPORT_EMAIL=support@stringartgenerator.app
+NEXT_PUBLIC_ENABLE_ADS=false  # Set to 'true' in production to enable Google AdSense
 ```
 
 ### Development

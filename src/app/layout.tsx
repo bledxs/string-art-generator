@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { siteConfig } from '@/lib/config';
+import { AdSenseScript } from '@/components/ads/AdSenseScript';
+import { adsConfig } from '@/lib/ads-config';
 import './globals.css';
 
 const geistSans = Geist({
@@ -44,6 +46,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
+        <meta name='google-adsense-account' content={adsConfig.publisherId} />
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link
           rel='preconnect'
@@ -53,6 +56,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <AdSenseScript />
         {children}
       </body>
     </html>

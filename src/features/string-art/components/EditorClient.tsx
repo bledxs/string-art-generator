@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Loader2, Sparkles, StopCircle } from 'lucide-react';
+import { AdUnitClient } from '@/components/ads/AdUnitClient';
+import { adsConfig } from '@/lib/ads-config';
 
 export function EditorClient() {
   const { image, isProcessing, progress, result, partialResult } =
@@ -79,6 +81,16 @@ export function EditorClient() {
         <div>
           <h2 className='text-xl font-semibold mb-3'>4. Export</h2>
           <ExportControls />
+        </div>
+
+        {/* Sidebar Ad */}
+        <div className='hidden lg:block'>
+          <AdUnitClient
+            publisherId={adsConfig.publisherId}
+            slotId={adsConfig.slots.sidebar}
+            format='vertical'
+            className='sticky top-4'
+          />
         </div>
       </div>
 

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { siteConfig } from '@/lib/config';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { HeaderAd } from '@/components/ads';
 
 export const metadata: Metadata = {
   title: {
@@ -121,6 +122,7 @@ export default function MarketingLayout({
   return (
     <>
       <Header />
+      <HeaderAd />
       <main>{children}</main>
       <Footer />
     </>

@@ -16,6 +16,7 @@ import {
   OrganizationSchema,
   HowToSchema,
 } from '@/components/seo/StructuredData';
+import { InlineAd } from '@/components/ads';
 
 export default function LandingPage() {
   return (
@@ -155,6 +156,11 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* Inline Ad between sections */}
+      <div className='container mx-auto max-w-6xl px-4'>
+        <InlineAd />
+      </div>
 
       {/* Benefits */}
       <section className='py-12 md:py-20 px-4 bg-muted/50'>

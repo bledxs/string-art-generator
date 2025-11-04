@@ -2,12 +2,18 @@
 import Link from 'next/link';
 import { Sparkles, Github, Twitter } from 'lucide-react';
 import { siteConfig } from '@/lib/config';
+import { FooterAd } from '@/components/ads';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className='border-t bg-background'>
+      {/* Ad above footer content */}
+      <div className='container mx-auto pt-8'>
+        <FooterAd />
+      </div>
+
       <div className='container mx-auto py-8 md:py-12 lg:py-16 px-4'>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8'>
           {/* Brand */}
