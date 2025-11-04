@@ -4,6 +4,8 @@ import type {
   WorkerResponse,
   StringArtParameters,
 } from '../types';
+import { loadImage, extractBrightness } from '../algorithms/imageProcessor';
+import { generateStringArt as generateArt } from '../algorithms/stringArtEngine';
 
 let isProcessing = false;
 
@@ -20,6 +22,16 @@ self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
 
       if (!payload) {
         sendError('No payload provided');
+        return;
+      }
+
+      if (!payload.imageData) {
+        sendError('Image data is missing');
+        return;
+      }
+
+      if (!payload.parameters) {
+        sendError('Parameters are missing');
         return;
       }
 
@@ -48,36 +60,59 @@ async function generateStringArt(
   imageDataUrl: string,
   parameters: StringArtParameters,
 ) {
-  // Send initial progress
-  sendProgress(0);
+  console.log('Worker: Starting generation', {
+    imageUrlLength: imageDataUrl?.length,
+    parameters,
+  });
 
-  // TODO: Implement actual algorithm
-  // For now, simulate processing with progress updates
-  for (let i = 0; i <= 100; i += 10) {
-    if (!isProcessing) {
-      return; // Cancelled
-    }
+  const startTime = performance.now();
 
-    sendProgress(i);
-    await sleep(200); // Simulate work
+  try {
+    // Send initial progress
+    sendProgress(0);
+
+    // Load and process image
+    sendProgress(10);
+    console.log('Worker: Loading image...');
+    const img = await loadImage(imageDataUrl);
+    console.log('Worker: Image loaded', {
+      width: img.width,
+      height: img.height,
+    });
+
+    sendProgress(20);
+    console.log('Worker: Extracting brightness...');
+    const processedImage = extractBrightness(img);
+    console.log('Worker: Brightness extracted', { size: processedImage.width });
+
+    // Generate string art with progress callback
+    sendProgress(30);
+    console.log('Worker: Generating string art...');
+    const result = generateArt(processedImage, parameters, (progress) => {
+      // Map algorithm progress (0-100) to overall progress (30-90)
+      sendProgress(30 + progress * 0.6);
+    });
+    console.log('Worker: Generation complete', { paths: result.paths.length });
+
+    sendProgress(95);
+
+    // Calculate total time
+    const endTime = performance.now();
+    result.metadata.processingTime = endTime - startTime;
+
+    // Send complete result
+    sendProgress(100);
+    const response: WorkerResponse = {
+      type: 'COMPLETE',
+      payload: { result },
+    };
+
+    self.postMessage(response);
+    console.log('Worker: Result sent to main thread');
+  } catch (error) {
+    console.error('Worker: Error during generation', error);
+    sendError(error instanceof Error ? error.message : 'Processing failed');
   }
-
-  // Send complete result
-  const response: WorkerResponse = {
-    type: 'COMPLETE',
-    payload: {
-      result: {
-        paths: [],
-        metadata: {
-          totalLines: parameters.lines,
-          processingTime: 0,
-          parameters,
-        },
-      },
-    },
-  };
-
-  self.postMessage(response);
 }
 
 // Helper functions
@@ -95,10 +130,6 @@ function sendError(error: string) {
     payload: { error },
   };
   self.postMessage(response);
-}
-
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export {};

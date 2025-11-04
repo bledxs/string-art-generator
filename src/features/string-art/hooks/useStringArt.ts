@@ -75,8 +75,23 @@ export function useStringArt() {
   // Generate string art
   const generate = useCallback(() => {
     if (!image || !workerRef.current || isProcessing) {
+      console.log('Generate blocked:', {
+        image: !!image,
+        worker: !!workerRef.current,
+        isProcessing,
+      });
       return;
     }
+
+    if (!image.url) {
+      console.error('Image URL is missing');
+      return;
+    }
+
+    console.log('Sending to worker:', {
+      imageUrl: image.url.substring(0, 50) + '...',
+      parameters,
+    });
 
     setProcessing(true);
     setProgress(0);
