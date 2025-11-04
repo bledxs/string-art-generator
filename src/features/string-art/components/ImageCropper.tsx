@@ -92,9 +92,9 @@ export function ImageCropper({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='max-w-3xl h-[80vh] flex flex-col'>
         <DialogHeader>
-          <DialogTitle>Recortar Imagen</DialogTitle>
+          <DialogTitle>Crop Image</DialogTitle>
           <DialogDescription>
-            Ajusta el área de recorte, zoom y rotación de tu imagen
+            Adjust the crop area, zoom and rotation of your image
           </DialogDescription>
         </DialogHeader>
 
@@ -141,7 +141,7 @@ export function ImageCropper({
           {/* Rotation Control */}
           <div className='space-y-2'>
             <div className='flex justify-between items-center'>
-              <Label className='text-sm font-medium'>Rotación</Label>
+              <Label className='text-sm font-medium'>Rotation</Label>
               <span className='text-sm text-muted-foreground'>{rotation}°</span>
             </div>
             <Slider
@@ -160,10 +160,10 @@ export function ImageCropper({
             variant='outline'
             onClick={handleCancel}
             disabled={isProcessing}>
-            Cancelar
+            Cancel
           </Button>
           <Button onClick={handleCrop} disabled={isProcessing}>
-            {isProcessing ? 'Procesando...' : 'Aplicar Recorte'}
+            {isProcessing ? 'Processing...' : 'Apply Crop'}
           </Button>
         </DialogFooter>
       </DialogContent>

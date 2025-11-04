@@ -129,7 +129,7 @@ export function Footer() {
           </p>
           <div className='flex gap-4 md:gap-6 text-xs md:text-sm text-muted-foreground'>
             <a
-              href='mailto:${siteConfig.contact.support}'
+              href={`mailto:${siteConfig.contact.support}`}
               className='hover:text-foreground transition-colors'>
               Contact
             </a>

@@ -51,7 +51,7 @@ export interface WorkerResponse {
   type: 'PROGRESS' | 'PARTIAL_PATHS' | 'COMPLETE' | 'ERROR';
   payload?: {
     progress?: number;
-    partialPaths?: Path[]; // Paths generados hasta ahora
+    partialPaths?: Path[]; // Paths generated so far
     result?: StringArtResult;
     error?: string;
   };

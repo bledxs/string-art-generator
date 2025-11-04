@@ -75,14 +75,14 @@ export function ImageUploader() {
               variant='secondary'
               size='icon'
               onClick={openCropper}
-              title='Recortar imagen'>
+              title='Crop image'>
               <Crop className='h-4 w-4' />
             </Button>
             <Button
               variant='destructive'
               size='icon'
               onClick={removeImage}
-              title='Eliminar imagen'>
+              title='Remove image'>
               <X className='h-4 w-4' />
             </Button>
           </div>
@@ -120,13 +120,13 @@ export function ImageUploader() {
         <div className='flex flex-col items-center justify-center p-12 text-center'>
           <Upload className='h-12 w-12 text-muted-foreground mb-4' />
           <p className='text-lg font-medium mb-2'>
-            {isDragActive ? 'Suelta la imagen aquí' : 'Subir imagen'}
+            {isDragActive ? 'Drop the image here' : 'Upload image'}
           </p>
           <p className='text-sm text-muted-foreground'>
-            Arrastra y suelta o haz clic para seleccionar
+            Drag and drop or click to select
           </p>
           <p className='text-xs text-muted-foreground mt-2'>
-            Soporta PNG, JPG, JPEG, WebP
+            Supports PNG, JPG, JPEG, WebP
           </p>
         </div>
       </Card>

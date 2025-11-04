@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     'Create your string art pattern. Upload an image, adjust parameters, and generate beautiful string art patterns.',
   robots: {
-    index: false, // Editor no necesita indexación
+    index: false, // Editor doesn't need indexing
     follow: true,
   },
   alternates: {
