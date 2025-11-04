@@ -104,7 +104,7 @@ export function EditorClient() {
       {/* Right Column - Preview with internal scroll */}
       <div className='lg:col-span-2 flex flex-col h-full'>
         <h2 className='text-xl font-semibold mb-3'>Preview</h2>
-        <Card className='flex-1 p-6 flex items-center justify-center overflow-auto'>
+        <Card className='flex-1 p-6 flex items-center justify-center overflow-hidden'>
           {!image ? (
             <div className='text-center text-muted-foreground'>
               <Sparkles className='h-16 w-16 mx-auto mb-4 opacity-20' />
@@ -112,7 +112,7 @@ export function EditorClient() {
               <p className='text-sm mt-2'>Your string art will appear here</p>
             </div>
           ) : result || partialResult ? (
-            <div className='w-full h-full flex items-center justify-center p-4'>
+            <div className='w-full h-full flex items-center justify-center overflow-hidden'>
               <Canvas width={600} height={600} />
             </div>
           ) : (
