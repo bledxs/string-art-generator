@@ -24,16 +24,16 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className='relative py-20 px-4 border-b'>
+      <section className='relative py-12 md:py-20 px-4 border-b'>
         <div className='container mx-auto max-w-4xl text-center'>
-          <div className='inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6'>
+          <div className='inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4 md:mb-6'>
             <Sparkles className='h-4 w-4 text-primary' />
             <span className='text-sm font-medium'>About Us</span>
           </div>
-          <h1 className='text-4xl md:text-6xl font-bold mb-6'>
+          <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 px-4'>
             Transforming Art Through Technology
           </h1>
-          <p className='text-xl text-muted-foreground max-w-2xl mx-auto'>
+          <p className='text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4'>
             We're building the future of generative art, making complex string
             art patterns accessible to everyone.
           </p>
@@ -41,29 +41,29 @@ export default function AboutPage() {
       </section>
 
       {/* Mission Section */}
-      <section className='py-16 px-4'>
+      <section className='py-12 md:py-16 px-4'>
         <div className='container mx-auto max-w-6xl'>
-          <div className='grid md:grid-cols-2 gap-12 items-center'>
-            <div>
-              <h2 className='text-3xl md:text-4xl font-bold mb-6'>
+          <div className='grid md:grid-cols-2 gap-8 md:gap-12 items-center'>
+            <div className='px-4'>
+              <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6'>
                 Our Mission
               </h2>
-              <p className='text-lg text-muted-foreground mb-4'>
+              <p className='text-base md:text-lg text-muted-foreground mb-3 md:mb-4'>
                 String art is a beautiful form of expression that combines
                 mathematics, creativity, and craftsmanship. However, creating
                 complex patterns manually can take hours or even days.
               </p>
-              <p className='text-lg text-muted-foreground mb-4'>
+              <p className='text-base md:text-lg text-muted-foreground mb-3 md:mb-4'>
                 We built String Art Generator to democratize this art form,
                 using advanced algorithms to transform any image into stunning
                 string art patterns in seconds.
               </p>
-              <p className='text-lg text-muted-foreground'>
+              <p className='text-base md:text-lg text-muted-foreground'>
                 Whether you're an artist, educator, hobbyist, or just curious,
                 our tool makes string art creation accessible to everyone.
               </p>
             </div>
-            <div className='space-y-4'>
+            <div className='space-y-3 md:space-y-4'>
               <Card>
                 <CardContent className='p-6 flex gap-4'>
                   <Target className='h-8 w-8 text-primary shrink-0' />
@@ -106,19 +106,19 @@ export default function AboutPage() {
       </section>
 
       {/* Technology Section */}
-      <section className='py-16 px-4 bg-muted/50'>
+      <section className='py-12 md:py-16 px-4 bg-muted/50'>
         <div className='container mx-auto max-w-6xl'>
-          <div className='text-center mb-12'>
-            <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+          <div className='text-center mb-8 md:mb-12 px-4'>
+            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4'>
               Built with Modern Technology
             </h2>
-            <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
+            <p className='text-base md:text-lg text-muted-foreground max-w-2xl mx-auto'>
               We leverage cutting-edge web technologies to deliver a fast,
               reliable, and powerful experience.
             </p>
           </div>
 
-          <div className='grid md:grid-cols-3 gap-6'>
+          <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6'>
             <Card>
               <CardContent className='p-6'>
                 <div className='font-mono text-sm text-primary mb-2'>
@@ -160,30 +160,31 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section */}
-      <section className='py-16 px-4'>
+      <section className='py-12 md:py-16 px-4'>
         <div className='container mx-auto max-w-4xl text-center'>
-          <Users className='h-12 w-12 text-primary mx-auto mb-6' />
-          <h2 className='text-3xl md:text-4xl font-bold mb-6'>
+          <Users className='h-10 w-10 md:h-12 md:w-12 text-primary mx-auto mb-4 md:mb-6' />
+          <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 px-4'>
             Built by Creators, for Creators
           </h2>
-          <p className='text-lg text-muted-foreground mb-8 max-w-2xl mx-auto'>
+          <p className='text-base md:text-lg text-muted-foreground mb-6 md:mb-8 max-w-2xl mx-auto px-4'>
             We're a team of developers, designers, and artists passionate about
             making creative tools accessible to everyone. This project started
             as a personal experiment and grew into something we're proud to
             share with the world.
           </p>
-          <div className='flex flex-col sm:flex-row gap-4 justify-center'>
+          <div className='flex flex-col sm:flex-row gap-3 md:gap-4 justify-center px-4'>
             <a
               href='https://github.com/bledxs/string-art-generator'
               target='_blank'
-              rel='noopener noreferrer'>
-              <Button variant='outline' size='lg'>
+              rel='noopener noreferrer'
+              className='w-full sm:w-auto'>
+              <Button variant='outline' size='lg' className='w-full'>
                 <Code className='mr-2 h-4 w-4' />
                 View on GitHub
               </Button>
             </a>
-            <Link href='/editor'>
-              <Button size='lg'>
+            <Link href='/editor' className='w-full sm:w-auto'>
+              <Button size='lg' className='w-full'>
                 <Sparkles className='mr-2 h-4 w-4' />
                 Try the Editor
               </Button>
@@ -193,24 +194,31 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className='py-16 px-4 bg-primary/5'>
+      <section className='py-12 md:py-16 px-4 bg-primary/5'>
         <div className='container mx-auto max-w-4xl text-center'>
-          <h2 className='text-3xl md:text-4xl font-bold mb-6'>
+          <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 px-4'>
             Join Our Community
           </h2>
-          <p className='text-lg text-muted-foreground mb-8'>
+          <p className='text-base md:text-lg text-muted-foreground mb-6 md:mb-8 px-4'>
             Have questions, suggestions, or want to contribute? We'd love to
             hear from you!
           </p>
-          <div className='flex flex-col sm:flex-row gap-4 justify-center'>
+          <div className='flex flex-col sm:flex-row gap-3 md:gap-4 justify-center px-4'>
             <a
               href='https://github.com/bledxs/string-art-generator/issues'
               target='_blank'
-              rel='noopener noreferrer'>
-              <Button variant='outline'>Report an Issue</Button>
+              rel='noopener noreferrer'
+              className='w-full sm:w-auto'>
+              <Button variant='outline' className='w-full'>
+                Report an Issue
+              </Button>
             </a>
-            <a href='mailto:support@stringartgenerator.app'>
-              <Button variant='outline'>Contact Us</Button>
+            <a
+              href='mailto:support@stringartgenerator.app'
+              className='w-full sm:w-auto'>
+              <Button variant='outline' className='w-full'>
+                Contact Us
+              </Button>
             </a>
           </div>
         </div>

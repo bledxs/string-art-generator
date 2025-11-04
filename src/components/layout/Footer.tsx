@@ -8,10 +8,10 @@ export function Footer() {
 
   return (
     <footer className='border-t bg-background'>
-      <div className='container mx-auto py-12 md:py-16'>
-        <div className='grid grid-cols-1 md:grid-cols-4 gap-8'>
+      <div className='container mx-auto py-8 md:py-12 lg:py-16 px-4'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8'>
           {/* Brand */}
-          <div className='space-y-3'>
+          <div className='space-y-3 sm:col-span-2 md:col-span-1'>
             <Link href='/' className='flex items-center gap-2'>
               <Sparkles className='h-5 w-5 text-primary' />
               <span className='font-bold'>{siteConfig.name}</span>
@@ -117,11 +117,11 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className='mt-12 pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-4'>
-          <p className='text-sm text-muted-foreground'>
+        <div className='mt-8 md:mt-12 pt-6 md:pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-3 md:gap-4 text-center sm:text-left'>
+          <p className='text-xs md:text-sm text-muted-foreground'>
             © {currentYear} {siteConfig.name}. Built with Next.js 16.
           </p>
-          <div className='flex gap-6 text-sm text-muted-foreground'>
+          <div className='flex gap-4 md:gap-6 text-xs md:text-sm text-muted-foreground'>
             <a
               href='mailto:${siteConfig.contact.support}'
               className='hover:text-foreground transition-colors'>

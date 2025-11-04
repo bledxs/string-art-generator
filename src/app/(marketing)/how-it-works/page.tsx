@@ -33,21 +33,21 @@ export default function HowItWorksPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className='relative py-20 px-4 border-b'>
+      <section className='relative py-12 md:py-20 px-4 border-b'>
         <div className='container mx-auto max-w-4xl text-center'>
-          <div className='inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6'>
+          <div className='inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4 md:mb-6'>
             <Sparkles className='h-4 w-4 text-primary' />
             <span className='text-sm font-medium'>How It Works</span>
           </div>
-          <h1 className='text-4xl md:text-6xl font-bold mb-6'>
+          <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 px-4'>
             Create String Art in 4 Simple Steps
           </h1>
-          <p className='text-xl text-muted-foreground max-w-2xl mx-auto mb-8'>
+          <p className='text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 md:mb-8 px-4'>
             Transform any image into a beautiful string art pattern in minutes.
             No experience required.
           </p>
           <Link href='/editor'>
-            <Button size='lg' className='text-lg'>
+            <Button size='lg' className='text-base md:text-lg w-full sm:w-auto'>
               <Sparkles className='mr-2 h-5 w-5' />
               Try It Now
             </Button>
@@ -56,24 +56,24 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Steps Section */}
-      <section className='py-16 px-4'>
+      <section className='py-12 md:py-16 px-4'>
         <div className='container mx-auto max-w-6xl'>
-          <div className='space-y-24'>
+          <div className='space-y-16 md:space-y-24'>
             {/* Step 1 */}
-            <div className='grid md:grid-cols-2 gap-12 items-center'>
+            <div className='grid md:grid-cols-2 gap-8 md:gap-12 items-center'>
               <div className='order-2 md:order-1'>
-                <div className='inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full mb-4'>
+                <div className='inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full mb-3 md:mb-4'>
                   <span className='text-xs font-bold text-primary'>STEP 1</span>
                 </div>
-                <h2 className='text-3xl md:text-4xl font-bold mb-4 flex items-center gap-3'>
-                  <Upload className='h-8 w-8 text-primary' />
+                <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 flex items-center gap-3'>
+                  <Upload className='h-6 w-6 md:h-8 md:w-8 text-primary shrink-0' />
                   Upload Your Image
                 </h2>
-                <p className='text-lg text-muted-foreground mb-6'>
+                <p className='text-base md:text-lg text-muted-foreground mb-4 md:mb-6'>
                   Choose any image from your device - photos, logos, artwork, or
                   graphics. Drag and drop or click to browse.
                 </p>
-                <ul className='space-y-3'>
+                <ul className='space-y-2 md:space-y-3'>
                   <li className='flex items-start gap-3'>
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
                     <span className='text-muted-foreground'>
@@ -96,35 +96,35 @@ export default function HowItWorksPage() {
               </div>
               <div className='order-1 md:order-2'>
                 <Card className='bg-muted/50'>
-                  <CardContent className='p-12 flex items-center justify-center min-h-[300px]'>
-                    <ImageIcon className='h-24 w-24 text-muted-foreground/40' />
+                  <CardContent className='p-8 md:p-12 flex items-center justify-center min-h-[200px] md:min-h-[300px]'>
+                    <ImageIcon className='h-16 w-16 md:h-24 md:w-24 text-muted-foreground/40' />
                   </CardContent>
                 </Card>
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className='grid md:grid-cols-2 gap-12 items-center'>
+            <div className='grid md:grid-cols-2 gap-8 md:gap-12 items-center'>
               <div>
                 <Card className='bg-muted/50'>
-                  <CardContent className='p-12 flex items-center justify-center min-h-[300px]'>
-                    <Settings className='h-24 w-24 text-muted-foreground/40' />
+                  <CardContent className='p-8 md:p-12 flex items-center justify-center min-h-[200px] md:min-h-[300px]'>
+                    <Settings className='h-16 w-16 md:h-24 md:w-24 text-muted-foreground/40' />
                   </CardContent>
                 </Card>
               </div>
               <div>
-                <div className='inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full mb-4'>
+                <div className='inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full mb-3 md:mb-4'>
                   <span className='text-xs font-bold text-primary'>STEP 2</span>
                 </div>
-                <h2 className='text-3xl md:text-4xl font-bold mb-4 flex items-center gap-3'>
-                  <Settings className='h-8 w-8 text-primary' />
+                <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 flex items-center gap-3'>
+                  <Settings className='h-6 w-6 md:h-8 md:w-8 text-primary shrink-0' />
                   Adjust Parameters
                 </h2>
-                <p className='text-lg text-muted-foreground mb-6'>
+                <p className='text-base md:text-lg text-muted-foreground mb-4 md:mb-6'>
                   Fine-tune the string art generation with intuitive controls.
                   Experiment with different settings to get your perfect result.
                 </p>
-                <ul className='space-y-3'>
+                <ul className='space-y-2 md:space-y-3'>
                   <li className='flex items-start gap-3'>
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
                     <div>
@@ -176,20 +176,20 @@ export default function HowItWorksPage() {
             </div>
 
             {/* Step 3 */}
-            <div className='grid md:grid-cols-2 gap-12 items-center'>
+            <div className='grid md:grid-cols-2 gap-8 md:gap-12 items-center'>
               <div className='order-2 md:order-1'>
-                <div className='inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full mb-4'>
+                <div className='inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full mb-3 md:mb-4'>
                   <span className='text-xs font-bold text-primary'>STEP 3</span>
                 </div>
-                <h2 className='text-3xl md:text-4xl font-bold mb-4 flex items-center gap-3'>
-                  <Zap className='h-8 w-8 text-primary' />
+                <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 flex items-center gap-3'>
+                  <Zap className='h-6 w-6 md:h-8 md:w-8 text-primary shrink-0' />
                   Generate String Art
                 </h2>
-                <p className='text-lg text-muted-foreground mb-6'>
+                <p className='text-base md:text-lg text-muted-foreground mb-4 md:mb-6'>
                   Click "Generate" and watch as our algorithm transforms your
                   image into a string art pattern in real-time.
                 </p>
-                <ul className='space-y-3'>
+                <ul className='space-y-2 md:space-y-3'>
                   <li className='flex items-start gap-3'>
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
                     <span className='text-muted-foreground'>
@@ -218,35 +218,35 @@ export default function HowItWorksPage() {
               </div>
               <div className='order-1 md:order-2'>
                 <Card className='bg-muted/50'>
-                  <CardContent className='p-12 flex items-center justify-center min-h-[300px]'>
-                    <Zap className='h-24 w-24 text-muted-foreground/40' />
+                  <CardContent className='p-8 md:p-12 flex items-center justify-center min-h-[200px] md:min-h-[300px]'>
+                    <Zap className='h-16 w-16 md:h-24 md:w-24 text-muted-foreground/40' />
                   </CardContent>
                 </Card>
               </div>
             </div>
 
             {/* Step 4 */}
-            <div className='grid md:grid-cols-2 gap-12 items-center'>
+            <div className='grid md:grid-cols-2 gap-8 md:gap-12 items-center'>
               <div>
                 <Card className='bg-muted/50'>
-                  <CardContent className='p-12 flex items-center justify-center min-h-[300px]'>
-                    <Download className='h-24 w-24 text-muted-foreground/40' />
+                  <CardContent className='p-8 md:p-12 flex items-center justify-center min-h-[200px] md:min-h-[300px]'>
+                    <Download className='h-16 w-16 md:h-24 md:w-24 text-muted-foreground/40' />
                   </CardContent>
                 </Card>
               </div>
               <div>
-                <div className='inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full mb-4'>
+                <div className='inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full mb-3 md:mb-4'>
                   <span className='text-xs font-bold text-primary'>STEP 4</span>
                 </div>
-                <h2 className='text-3xl md:text-4xl font-bold mb-4 flex items-center gap-3'>
-                  <Download className='h-8 w-8 text-primary' />
+                <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 flex items-center gap-3'>
+                  <Download className='h-6 w-6 md:h-8 md:w-8 text-primary shrink-0' />
                   Export Your Design
                 </h2>
-                <p className='text-lg text-muted-foreground mb-6'>
+                <p className='text-base md:text-lg text-muted-foreground mb-4 md:mb-6'>
                   Download your string art in multiple formats for different use
                   cases.
                 </p>
-                <ul className='space-y-3'>
+                <ul className='space-y-2 md:space-y-3'>
                   <li className='flex items-start gap-3'>
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
                     <div>
@@ -295,19 +295,19 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Algorithm Section */}
-      <section className='py-16 px-4 bg-muted/50'>
+      <section className='py-12 md:py-16 px-4 bg-muted/50'>
         <div className='container mx-auto max-w-4xl'>
-          <div className='text-center mb-12'>
-            <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+          <div className='text-center mb-8 md:mb-12 px-4'>
+            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4'>
               The Algorithm Behind the Magic
             </h2>
-            <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
+            <p className='text-base md:text-lg text-muted-foreground max-w-2xl mx-auto'>
               Our greedy algorithm intelligently connects pins to recreate your
               image using continuous string paths.
             </p>
           </div>
 
-          <div className='grid md:grid-cols-3 gap-6'>
+          <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6'>
             <Card>
               <CardContent className='p-6'>
                 <div className='text-4xl font-bold text-primary mb-2'>1</div>
@@ -343,12 +343,12 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Tips Section */}
-      <section className='py-16 px-4'>
+      <section className='py-12 md:py-16 px-4'>
         <div className='container mx-auto max-w-4xl'>
-          <h2 className='text-3xl md:text-4xl font-bold mb-8 text-center'>
+          <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center px-4'>
             Pro Tips for Best Results
           </h2>
-          <div className='grid md:grid-cols-2 gap-6'>
+          <div className='grid sm:grid-cols-2 gap-4 md:gap-6'>
             <Card>
               <CardContent className='p-6'>
                 <h3 className='font-semibold mb-3 flex items-center gap-2'>
@@ -382,17 +382,19 @@ export default function HowItWorksPage() {
       </section>
 
       {/* CTA Section */}
-      <section className='py-16 px-4 bg-primary/5'>
+      <section className='py-12 md:py-16 px-4 bg-primary/5'>
         <div className='container mx-auto max-w-4xl text-center'>
-          <h2 className='text-3xl md:text-4xl font-bold mb-6'>
+          <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 px-4'>
             Ready to Create Your String Art?
           </h2>
-          <p className='text-lg text-muted-foreground mb-8'>
+          <p className='text-base md:text-lg text-muted-foreground mb-6 md:mb-8 px-4'>
             Start transforming your images into beautiful string art patterns
             today. It's free and takes less than a minute!
           </p>
           <Link href='/editor'>
-            <Button size='lg' className='text-lg px-8'>
+            <Button
+              size='lg'
+              className='text-base md:text-lg px-6 md:px-8 w-full sm:w-auto'>
               <Sparkles className='mr-2 h-5 w-5' />
               Get Started Now
               <ArrowRight className='ml-2 h-5 w-5' />
