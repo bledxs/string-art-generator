@@ -1,12 +1,33 @@
 # String Art Generator - Stack Técnico
 
+## **Decisión Arquitectural**
+
+**Arquitectura:** Modular Monolith con Server Components + Minimal Client
+Islands
+
+**Prioridades:**
+
+1. **Performance-first:** Carga rápida, bundle mínimo
+2. **SSR-first:** Máximo server-side, mínimo cliente
+3. **SEO agresivo:** Todo contenido rastreable server-side
+
+**Justificación:**
+
+- React Server Components por defecto para todo contenido
+- Client Components SOLO para: Canvas interactivo, controles UI, Web Workers
+- Landing, metadata, layouts, componentes estáticos → 100% SSR
+- Algoritmo string art en Web Worker → No bloquea UI
+- Edge-ready para Vercel + Cloudflare CDN
+
+---
+
 ## **Frontend**
 
 ### Framework Principal
 
 - **Next.js 16 (Beta)**
-  - SSR + React Server Components para SEO
-  - CSR (Client-Side Rendering) para herramienta interactiva
+  - **SSR por defecto:** React Server Components para SEO máximo
+  - **CSR mínimo:** Solo canvas y controles interactivos (`'use client'`)
   - Edge-ready para deployment en Vercel
   - **Beta features:** Mejor performance en App Router, Turbopack mejorado
   - **Nota:** Versión beta estable para testing en producción
