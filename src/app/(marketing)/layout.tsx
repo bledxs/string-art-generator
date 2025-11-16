@@ -123,7 +123,7 @@ export default function MarketingLayout({
     <>
       <Header />
       <HeaderAd />
-      <main>{children}</main>
+      <main className='bg-background'>{children}</main>
       <Footer />
     </>
   );
