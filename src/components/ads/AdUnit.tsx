@@ -44,7 +44,7 @@ export function AdUnit({
       className={`${className} ${minHeight} flex items-center justify-center bg-muted/20`}>
       <ins
         className='adsbygoogle'
-        style={{ display: 'block', minHeight: 'inherit' }}
+        style={{ display: 'block', minHeight: 'inherit', minWidth: '250px' }}
         data-ad-client={adsConfig.publisherId}
         data-ad-slot={slotId}
         data-ad-format={format}
