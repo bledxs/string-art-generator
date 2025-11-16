@@ -41,7 +41,7 @@ export function AdUnit({
 
   return (
     <div
-      className={`${className} ${minHeight} flex items-center justify-center bg-background/20`}>
+      className={`${className} ${minHeight} flex items-center justify-center bg-background`}>
       <ins
         className='adsbygoogle'
         style={{ display: 'block', minHeight: 'inherit', minWidth: '250px' }}

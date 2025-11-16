@@ -28,7 +28,7 @@ export default function LandingPage() {
       <HowToSchema />
 
       {/* Hero Section */}
-      <section className='relative py-12 md:py-20 px-4 overflow-hidden bg-linear-to-br from-background via-background to-accent/5'>
+      <section className='relative py-12 md:py-20 px-4 overflow-hidden bg-background'>
         <div className='container mx-auto max-w-6xl'>
           <div className='text-center space-y-4 md:space-y-6'>
             <h1 className='text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight'>

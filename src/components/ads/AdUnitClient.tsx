@@ -73,7 +73,7 @@ export function AdUnitClient({
   return (
     <div
       ref={containerRef}
-      className={`${className} ${minHeight} flex items-center justify-center bg-muted/20`}>
+      className={`${className} ${minHeight} flex items-center justify-center bg-background`}>
       {isReady && (
         <ins
           className='adsbygoogle'
