@@ -22,7 +22,7 @@ export function Footer() {
               <Sparkles className='h-5 w-5 text-primary' />
               <span className='font-bold'>{siteConfig.name}</span>
             </Link>
-            <p className='text-sm text-muted-foreground max-w-xs'>
+            <p className='text-sm text-foreground/70 max-w-xs'>
               Transform any image into stunning string art patterns using
               advanced algorithms.
             </p>
@@ -30,8 +30,8 @@ export function Footer() {
 
           {/* Product Links */}
           <div className='space-y-3'>
-            <h3 className='font-semibold text-sm'>Product</h3>
-            <ul className='space-y-2 text-sm text-muted-foreground'>
+            <h3 className='font-bold text-sm text-foreground'>Product</h3>
+            <ul className='space-y-2 text-sm text-foreground/70'>
               <li>
                 <Link
                   href='/editor'
@@ -65,8 +65,8 @@ export function Footer() {
 
           {/* Resources */}
           <div className='space-y-3'>
-            <h3 className='font-semibold text-sm'>Resources</h3>
-            <ul className='space-y-2 text-sm text-muted-foreground'>
+            <h3 className='font-bold text-sm text-foreground'>Resources</h3>
+            <ul className='space-y-2 text-sm text-foreground/70'>
               <li>
                 <a
                   href='https://github.com/bledxs/string-art-generator'
@@ -99,13 +99,13 @@ export function Footer() {
 
           {/* Social */}
           <div className='space-y-3'>
-            <h3 className='font-semibold text-sm'>Connect</h3>
+            <h3 className='font-bold text-sm text-foreground'>Connect</h3>
             <div className='flex gap-4'>
               <a
                 href={siteConfig.links.github}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='text-muted-foreground hover:text-foreground transition-colors'
+                className='text-foreground/70 hover:text-foreground transition-colors'
                 aria-label='GitHub'>
                 <Github className='h-5 w-5' />
               </a>
@@ -113,21 +113,21 @@ export function Footer() {
                 href={siteConfig.links.twitter}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='text-muted-foreground hover:text-foreground transition-colors'
+                className='text-foreground/70 hover:text-foreground transition-colors'
                 aria-label='Twitter'>
                 <Twitter className='h-5 w-5' />
               </a>
             </div>
-            <p className='text-xs text-muted-foreground'>Open source project</p>
+            <p className='text-xs text-foreground/60'>Open source project</p>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className='mt-8 md:mt-12 pt-6 md:pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-3 md:gap-4 text-center sm:text-left'>
-          <p className='text-xs md:text-sm text-muted-foreground'>
+          <p className='text-xs md:text-sm text-foreground/60'>
             © {currentYear} {siteConfig.name}. Built with Next.js 16.
           </p>
-          <div className='flex gap-4 md:gap-6 text-xs md:text-sm text-muted-foreground'>
+          <div className='flex gap-4 md:gap-6 text-xs md:text-sm text-foreground/60'>
             <a
               href={`mailto:${siteConfig.contact.support}`}
               className='hover:text-foreground transition-colors'>

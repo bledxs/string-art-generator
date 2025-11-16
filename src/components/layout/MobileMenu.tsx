@@ -46,7 +46,7 @@ export function MobileMenu() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className='flex items-center gap-3 text-base font-medium text-muted-foreground hover:text-foreground transition-colors py-2 px-3 rounded-md hover:bg-muted'>
+                className='flex items-center gap-3 text-base font-medium text-foreground/70 hover:text-foreground transition-colors py-2 px-3 rounded-md hover:bg-muted'>
                 <Icon className='h-5 w-5' />
                 {item.label}
               </Link>

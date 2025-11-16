@@ -1,18 +1,15 @@
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Libre_Baskerville } from 'next/font/google';
 import { siteConfig } from '@/lib/config';
 import { AdSenseScript } from '@/components/ads/AdSenseScript';
 import { adsConfig } from '@/lib/ads-config';
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const libreBaskerville = Libre_Baskerville({
+  weight: ['400', '700'],
   subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  variable: '--font-libre-baskerville',
+  display: 'swap',
 });
 
 // Minimal metadata - specific metadata in route groups
@@ -54,8 +51,7 @@ export default function RootLayout({
           crossOrigin='anonymous'
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${libreBaskerville.variable} antialiased dark`}>
         <AdSenseScript />
         {children}
       </body>

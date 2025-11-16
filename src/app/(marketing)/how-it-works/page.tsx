@@ -42,7 +42,7 @@ export default function HowItWorksPage() {
           <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 px-4'>
             Create String Art in 4 Simple Steps
           </h1>
-          <p className='text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 md:mb-8 px-4'>
+          <p className='text-base sm:text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto mb-6 md:mb-8 px-4'>
             Transform any image into a beautiful string art pattern in minutes.
             No experience required.
           </p>
@@ -56,7 +56,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Steps Section */}
-      <section className='py-12 md:py-16 px-4'>
+      <section className='py-12 md:py-16 px-4 bg-muted'>
         <div className='container mx-auto max-w-6xl'>
           <div className='space-y-16 md:space-y-24'>
             {/* Step 1 */}
@@ -69,33 +69,33 @@ export default function HowItWorksPage() {
                   <Upload className='h-6 w-6 md:h-8 md:w-8 text-primary shrink-0' />
                   Upload Your Image
                 </h2>
-                <p className='text-base md:text-lg text-muted-foreground mb-4 md:mb-6'>
+                <p className='text-base md:text-lg text-foreground/70 mb-4 md:mb-6'>
                   Choose any image from your device - photos, logos, artwork, or
                   graphics. Drag and drop or click to browse.
                 </p>
                 <ul className='space-y-2 md:space-y-3'>
                   <li className='flex items-start gap-3'>
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
-                    <span className='text-muted-foreground'>
+                    <span className='text-foreground/70'>
                       Supports PNG, JPG, JPEG, and WebP formats
                     </span>
                   </li>
                   <li className='flex items-start gap-3'>
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
-                    <span className='text-muted-foreground'>
+                    <span className='text-foreground/70'>
                       Works best with high-contrast images
                     </span>
                   </li>
                   <li className='flex items-start gap-3'>
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
-                    <span className='text-muted-foreground'>
+                    <span className='text-foreground/70'>
                       Your images stay private - processed locally in browser
                     </span>
                   </li>
                 </ul>
               </div>
               <div className='order-1 md:order-2'>
-                <Card className='bg-muted/50'>
+                <Card className='bg-background/95 border-border/50'>
                   <CardContent className='p-8 md:p-12 flex items-center justify-center min-h-[200px] md:min-h-[300px]'>
                     <ImageIcon className='h-16 w-16 md:h-24 md:w-24 text-muted-foreground/40' />
                   </CardContent>
@@ -106,7 +106,7 @@ export default function HowItWorksPage() {
             {/* Step 2 */}
             <div className='grid md:grid-cols-2 gap-8 md:gap-12 items-center'>
               <div>
-                <Card className='bg-muted/50'>
+                <Card className='bg-background/98 border-border/50'>
                   <CardContent className='p-8 md:p-12 flex items-center justify-center min-h-[200px] md:min-h-[300px]'>
                     <Settings className='h-16 w-16 md:h-24 md:w-24 text-muted-foreground/40' />
                   </CardContent>
@@ -120,7 +120,7 @@ export default function HowItWorksPage() {
                   <Settings className='h-6 w-6 md:h-8 md:w-8 text-primary shrink-0' />
                   Adjust Parameters
                 </h2>
-                <p className='text-base md:text-lg text-muted-foreground mb-4 md:mb-6'>
+                <p className='text-base md:text-lg text-foreground/70 mb-4 md:mb-6'>
                   Fine-tune the string art generation with intuitive controls.
                   Experiment with different settings to get your perfect result.
                 </p>
@@ -131,7 +131,7 @@ export default function HowItWorksPage() {
                       <strong className='text-foreground'>
                         Pins (50-400):
                       </strong>
-                      <span className='text-muted-foreground'>
+                      <span className='text-foreground/70'>
                         {' '}
                         More pins = more detail but longer generation time
                       </span>
@@ -143,7 +143,7 @@ export default function HowItWorksPage() {
                       <strong className='text-foreground'>
                         Lines (500-5000):
                       </strong>
-                      <span className='text-muted-foreground'>
+                      <span className='text-foreground/70'>
                         {' '}
                         More lines create denser, darker patterns
                       </span>
@@ -155,7 +155,7 @@ export default function HowItWorksPage() {
                       <strong className='text-foreground'>
                         Line Weight & Opacity:
                       </strong>
-                      <span className='text-muted-foreground'>
+                      <span className='text-foreground/70'>
                         {' '}
                         Control visual thickness and transparency
                       </span>
@@ -165,7 +165,7 @@ export default function HowItWorksPage() {
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
                     <div>
                       <strong className='text-foreground'>Colors:</strong>
-                      <span className='text-muted-foreground'>
+                      <span className='text-foreground/70'>
                         {' '}
                         Customize string and background colors
                       </span>
@@ -185,39 +185,39 @@ export default function HowItWorksPage() {
                   <Zap className='h-6 w-6 md:h-8 md:w-8 text-primary shrink-0' />
                   Generate String Art
                 </h2>
-                <p className='text-base md:text-lg text-muted-foreground mb-4 md:mb-6'>
+                <p className='text-base md:text-lg text-foreground/70 mb-4 md:mb-6'>
                   Click "Generate" and watch as our algorithm transforms your
                   image into a string art pattern in real-time.
                 </p>
                 <ul className='space-y-2 md:space-y-3'>
                   <li className='flex items-start gap-3'>
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
-                    <span className='text-muted-foreground'>
+                    <span className='text-foreground/70'>
                       Advanced algorithm analyzes brightness and contrast
                     </span>
                   </li>
                   <li className='flex items-start gap-3'>
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
-                    <span className='text-muted-foreground'>
+                    <span className='text-foreground/70'>
                       Runs in background thread - UI stays responsive
                     </span>
                   </li>
                   <li className='flex items-start gap-3'>
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
-                    <span className='text-muted-foreground'>
+                    <span className='text-foreground/70'>
                       Real-time progress updates show generation status
                     </span>
                   </li>
                   <li className='flex items-start gap-3'>
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
-                    <span className='text-muted-foreground'>
+                    <span className='text-foreground/70'>
                       Generates optimal path connecting all pins
                     </span>
                   </li>
                 </ul>
               </div>
               <div className='order-1 md:order-2'>
-                <Card className='bg-muted/50'>
+                <Card className='bg-background/95 border-border/50'>
                   <CardContent className='p-8 md:p-12 flex items-center justify-center min-h-[200px] md:min-h-[300px]'>
                     <Zap className='h-16 w-16 md:h-24 md:w-24 text-muted-foreground/40' />
                   </CardContent>
@@ -228,7 +228,7 @@ export default function HowItWorksPage() {
             {/* Step 4 */}
             <div className='grid md:grid-cols-2 gap-8 md:gap-12 items-center'>
               <div>
-                <Card className='bg-muted/50'>
+                <Card className='bg-background/98 border-border/50'>
                   <CardContent className='p-8 md:p-12 flex items-center justify-center min-h-[200px] md:min-h-[300px]'>
                     <Download className='h-16 w-16 md:h-24 md:w-24 text-muted-foreground/40' />
                   </CardContent>
@@ -242,7 +242,7 @@ export default function HowItWorksPage() {
                   <Download className='h-6 w-6 md:h-8 md:w-8 text-primary shrink-0' />
                   Export Your Design
                 </h2>
-                <p className='text-base md:text-lg text-muted-foreground mb-4 md:mb-6'>
+                <p className='text-base md:text-lg text-foreground/70 mb-4 md:mb-6'>
                   Download your string art in multiple formats for different use
                   cases.
                 </p>
@@ -251,7 +251,7 @@ export default function HowItWorksPage() {
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
                     <div>
                       <strong className='text-foreground'>PNG:</strong>
-                      <span className='text-muted-foreground'>
+                      <span className='text-foreground/70'>
                         {' '}
                         High-resolution raster image (2000x2000)
                       </span>
@@ -261,7 +261,7 @@ export default function HowItWorksPage() {
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
                     <div>
                       <strong className='text-foreground'>SVG:</strong>
-                      <span className='text-muted-foreground'>
+                      <span className='text-foreground/70'>
                         {' '}
                         Scalable vector format for infinite resolution
                       </span>
@@ -271,7 +271,7 @@ export default function HowItWorksPage() {
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
                     <div>
                       <strong className='text-foreground'>JSON:</strong>
-                      <span className='text-muted-foreground'>
+                      <span className='text-foreground/70'>
                         {' '}
                         Raw data for developers and further processing
                       </span>
@@ -281,7 +281,7 @@ export default function HowItWorksPage() {
                     <CheckCircle className='h-5 w-5 text-primary shrink-0 mt-0.5' />
                     <div>
                       <strong className='text-foreground'>TXT:</strong>
-                      <span className='text-muted-foreground'>
+                      <span className='text-foreground/70'>
                         {' '}
                         Step-by-step instructions for physical creation
                       </span>
@@ -295,44 +295,50 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Algorithm Section */}
-      <section className='py-12 md:py-16 px-4 bg-muted/50'>
+      <section className='py-12 md:py-16 px-4 bg-background'>
         <div className='container mx-auto max-w-4xl'>
           <div className='text-center mb-8 md:mb-12 px-4'>
             <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4'>
               The Algorithm Behind the Magic
             </h2>
-            <p className='text-base md:text-lg text-muted-foreground max-w-2xl mx-auto'>
+            <p className='text-base md:text-lg text-foreground/80 max-w-2xl mx-auto'>
               Our greedy algorithm intelligently connects pins to recreate your
               image using continuous string paths.
             </p>
           </div>
 
           <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6'>
-            <Card>
+            <Card className='bg-background/95 border-border/50'>
               <CardContent className='p-6'>
                 <div className='text-4xl font-bold text-primary mb-2'>1</div>
-                <h3 className='font-semibold mb-2'>Image Analysis</h3>
-                <p className='text-sm text-muted-foreground'>
+                <h3 className='font-bold mb-2 text-foreground'>
+                  Image Analysis
+                </h3>
+                <p className='text-sm text-foreground/70'>
                   Converts your image to brightness values (0-255) for each
                   pixel region.
                 </p>
               </CardContent>
             </Card>
-            <Card>
+            <Card className='bg-background/98 border-border/50'>
               <CardContent className='p-6'>
                 <div className='text-4xl font-bold text-primary mb-2'>2</div>
-                <h3 className='font-semibold mb-2'>Pin Placement</h3>
-                <p className='text-sm text-muted-foreground'>
+                <h3 className='font-bold mb-2 text-foreground'>
+                  Pin Placement
+                </h3>
+                <p className='text-sm text-foreground/70'>
                   Arranges pins in a perfect circle with precise mathematical
                   spacing.
                 </p>
               </CardContent>
             </Card>
-            <Card>
+            <Card className='bg-background/95 border-border/50'>
               <CardContent className='p-6'>
                 <div className='text-4xl font-bold text-primary mb-2'>3</div>
-                <h3 className='font-semibold mb-2'>Path Generation</h3>
-                <p className='text-sm text-muted-foreground'>
+                <h3 className='font-bold mb-2 text-foreground'>
+                  Path Generation
+                </h3>
+                <p className='text-sm text-foreground/70'>
                   Finds optimal line connections by darkening the brightest
                   areas first.
                 </p>
@@ -343,19 +349,19 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Tips Section */}
-      <section className='py-12 md:py-16 px-4'>
+      <section className='py-12 md:py-16 px-4 bg-muted'>
         <div className='container mx-auto max-w-4xl'>
           <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center px-4'>
             Pro Tips for Best Results
           </h2>
           <div className='grid sm:grid-cols-2 gap-4 md:gap-6'>
-            <Card>
+            <Card className='bg-background/95 border-border/50'>
               <CardContent className='p-6'>
                 <h3 className='font-semibold mb-3 flex items-center gap-2'>
                   <Sparkles className='h-5 w-5 text-primary' />
                   Image Selection
                 </h3>
-                <ul className='space-y-2 text-sm text-muted-foreground'>
+                <ul className='space-y-2 text-sm text-foreground/70'>
                   <li>• Use high-contrast images for clearer results</li>
                   <li>• Portraits and logos work exceptionally well</li>
                   <li>• Avoid images with too many fine details</li>
@@ -363,13 +369,13 @@ export default function HowItWorksPage() {
                 </ul>
               </CardContent>
             </Card>
-            <Card>
+            <Card className='bg-background/98 border-border/50'>
               <CardContent className='p-6'>
-                <h3 className='font-semibold mb-3 flex items-center gap-2'>
+                <h3 className='font-bold mb-3 flex items-center gap-2 text-foreground'>
                   <Settings className='h-5 w-5 text-primary' />
                   Parameter Tuning
                 </h3>
-                <ul className='space-y-2 text-sm text-muted-foreground'>
+                <ul className='space-y-2 text-sm text-foreground/70'>
                   <li>• Start with default settings, then experiment</li>
                   <li>• More pins = sharper features but slower generation</li>
                   <li>• Increase lines for darker, denser patterns</li>
@@ -382,12 +388,12 @@ export default function HowItWorksPage() {
       </section>
 
       {/* CTA Section */}
-      <section className='py-12 md:py-16 px-4 bg-primary/5'>
+      <section className='py-12 md:py-16 px-4 bg-background'>
         <div className='container mx-auto max-w-4xl text-center'>
           <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 px-4'>
             Ready to Create Your String Art?
           </h2>
-          <p className='text-base md:text-lg text-muted-foreground mb-6 md:mb-8 px-4'>
+          <p className='text-base md:text-lg text-foreground/80 mb-6 md:mb-8 px-4'>
             Start transforming your images into beautiful string art patterns
             today. It's free and takes less than a minute!
           </p>

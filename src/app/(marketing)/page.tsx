@@ -28,7 +28,7 @@ export default function LandingPage() {
       <HowToSchema />
 
       {/* Hero Section */}
-      <section className='relative py-12 md:py-20 px-4 overflow-hidden'>
+      <section className='relative py-12 md:py-20 px-4 overflow-hidden bg-linear-to-br from-background via-background to-accent/5'>
         <div className='container mx-auto max-w-6xl'>
           <div className='text-center space-y-4 md:space-y-6'>
             <h1 className='text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight'>
@@ -53,7 +53,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className='py-12 md:py-20 px-4 bg-muted/50'>
+      <section className='py-12 md:py-20 px-4 bg-card'>
         <div className='container mx-auto max-w-6xl'>
           <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 px-4'>
             Why String Art Generator?
@@ -61,11 +61,13 @@ export default function LandingPage() {
 
           <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8'>
             {/* Feature 1 */}
-            <Card className='p-6 space-y-4'>
-              <div className='h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center'>
-                <Zap className='h-6 w-6 text-primary' />
+            <Card className='p-6 space-y-4 bg-secondary/20 border-secondary hover:shadow-lg transition-shadow'>
+              <div className='h-12 w-12 rounded-lg bg-secondary flex items-center justify-center'>
+                <Zap className='h-6 w-6 text-secondary-foreground' />
               </div>
-              <h3 className='text-xl font-semibold'>Lightning Fast</h3>
+              <h3 className='text-xl font-bold text-card-foreground'>
+                Lightning Fast
+              </h3>
               <p className='text-muted-foreground'>
                 Advanced Web Workers process your images in the background
                 without freezing your browser. Generate complex patterns in
@@ -74,11 +76,13 @@ export default function LandingPage() {
             </Card>
 
             {/* Feature 2 */}
-            <Card className='p-6 space-y-4'>
-              <div className='h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center'>
-                <ImageIcon className='h-6 w-6 text-primary' />
+            <Card className='p-6 space-y-4 bg-primary/5 border-primary/30 hover:shadow-lg transition-shadow'>
+              <div className='h-12 w-12 rounded-lg bg-primary flex items-center justify-center'>
+                <ImageIcon className='h-6 w-6 text-primary-foreground' />
               </div>
-              <h3 className='text-xl font-semibold'>Any Image</h3>
+              <h3 className='text-xl font-bold text-card-foreground'>
+                Any Image
+              </h3>
               <p className='text-muted-foreground'>
                 Upload photos, logos, or artwork. Our algorithm analyzes
                 brightness and creates optimal pin-to-pin connections for
@@ -87,11 +91,13 @@ export default function LandingPage() {
             </Card>
 
             {/* Feature 3 */}
-            <Card className='p-6 space-y-4'>
-              <div className='h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center'>
-                <Download className='h-6 w-6 text-primary' />
+            <Card className='p-6 space-y-4 bg-accent/20 border-accent hover:shadow-lg transition-shadow'>
+              <div className='h-12 w-12 rounded-lg bg-accent flex items-center justify-center'>
+                <Download className='h-6 w-6 text-accent-foreground' />
               </div>
-              <h3 className='text-xl font-semibold'>Multiple Formats</h3>
+              <h3 className='text-xl font-bold text-card-foreground'>
+                Multiple Formats
+              </h3>
               <p className='text-muted-foreground'>
                 Export as high-resolution PNG, scalable SVG, raw JSON data, or
                 step-by-step TXT instructions for physical builds.
@@ -102,7 +108,7 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section className='py-12 md:py-20 px-4'>
+      <section className='py-12 md:py-20 px-4 bg-background'>
         <div className='container mx-auto max-w-4xl'>
           <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 px-4'>
             How It Works
@@ -110,14 +116,14 @@ export default function LandingPage() {
 
           <div className='space-y-6 md:space-y-8'>
             <div className='flex gap-4 md:gap-6 items-start'>
-              <div className='shrink-0 h-10 w-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg'>
+              <div className='shrink-0 h-10 w-10 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center font-bold text-lg shadow-md'>
                 1
               </div>
               <div>
-                <h3 className='text-lg md:text-xl font-semibold mb-2'>
+                <h3 className='text-lg md:text-xl font-bold mb-2 text-foreground'>
                   Upload Your Image
                 </h3>
-                <p className='text-sm md:text-base text-muted-foreground'>
+                <p className='text-sm md:text-base text-foreground/80'>
                   Drag and drop or click to upload any image. Supports PNG, JPG,
                   JPEG, and WebP formats.
                 </p>
@@ -125,14 +131,14 @@ export default function LandingPage() {
             </div>
 
             <div className='flex gap-4 md:gap-6 items-start'>
-              <div className='shrink-0 h-10 w-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg'>
+              <div className='shrink-0 h-10 w-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg shadow-md'>
                 2
               </div>
               <div>
-                <h3 className='text-lg md:text-xl font-semibold mb-2'>
+                <h3 className='text-lg md:text-xl font-bold mb-2 text-foreground'>
                   Adjust Parameters
                 </h3>
-                <p className='text-sm md:text-base text-muted-foreground'>
+                <p className='text-sm md:text-base text-foreground/80'>
                   Fine-tune the number of pins (50-400), lines (500-5000), line
                   weight, opacity, and background color to match your vision.
                 </p>
@@ -140,14 +146,14 @@ export default function LandingPage() {
             </div>
 
             <div className='flex gap-4 md:gap-6 items-start'>
-              <div className='shrink-0 h-10 w-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg'>
+              <div className='shrink-0 h-10 w-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-lg shadow-md'>
                 3
               </div>
               <div>
-                <h3 className='text-lg md:text-xl font-semibold mb-2'>
+                <h3 className='text-lg md:text-xl font-bold mb-2 text-foreground'>
                   Generate & Export
                 </h3>
-                <p className='text-sm md:text-base text-muted-foreground'>
+                <p className='text-sm md:text-base text-foreground/80'>
                   Click generate and watch as the algorithm creates your string
                   art. Download in your preferred format and start building!
                 </p>
@@ -163,17 +169,19 @@ export default function LandingPage() {
       </div>
 
       {/* Benefits */}
-      <section className='py-12 md:py-20 px-4 bg-muted/50'>
+      <section className='py-12 md:py-20 px-4 bg-popover'>
         <div className='container mx-auto max-w-4xl'>
-          <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 px-4'>
+          <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 px-4 text-popover-foreground'>
             Perfect For
           </h2>
 
           <div className='grid sm:grid-cols-2 gap-4 md:gap-6'>
             <div className='flex gap-3 items-start'>
-              <CheckCircle className='h-6 w-6 text-primary shrink-0 mt-1' />
+              <CheckCircle className='h-6 w-6 text-secondary shrink-0 mt-1' />
               <div>
-                <h4 className='font-semibold mb-1'>Artists & Creators</h4>
+                <h4 className='font-bold mb-1 text-popover-foreground'>
+                  Artists & Creators
+                </h4>
                 <p className='text-sm text-muted-foreground'>
                   Design unique wall art and decorative pieces
                 </p>
@@ -183,7 +191,9 @@ export default function LandingPage() {
             <div className='flex gap-3 items-start'>
               <CheckCircle className='h-6 w-6 text-primary shrink-0 mt-1' />
               <div>
-                <h4 className='font-semibold mb-1'>DIY Enthusiasts</h4>
+                <h4 className='font-bold mb-1 text-popover-foreground'>
+                  DIY Enthusiasts
+                </h4>
                 <p className='text-sm text-muted-foreground'>
                   Get exact instructions for physical string art projects
                 </p>
@@ -191,9 +201,11 @@ export default function LandingPage() {
             </div>
 
             <div className='flex gap-3 items-start'>
-              <CheckCircle className='h-6 w-6 text-primary shrink-0 mt-1' />
+              <CheckCircle className='h-6 w-6 text-accent shrink-0 mt-1' />
               <div>
-                <h4 className='font-semibold mb-1'>Educators</h4>
+                <h4 className='font-bold mb-1 text-popover-foreground'>
+                  Educators
+                </h4>
                 <p className='text-sm text-muted-foreground'>
                   Teach geometry, algorithms, and creative coding
                 </p>
@@ -201,9 +213,11 @@ export default function LandingPage() {
             </div>
 
             <div className='flex gap-3 items-start'>
-              <CheckCircle className='h-6 w-6 text-primary shrink-0 mt-1' />
+              <CheckCircle className='h-6 w-6 text-secondary shrink-0 mt-1' />
               <div>
-                <h4 className='font-semibold mb-1'>Gift Makers</h4>
+                <h4 className='font-bold mb-1 text-popover-foreground'>
+                  Gift Makers
+                </h4>
                 <p className='text-sm text-muted-foreground'>
                   Create personalized string art from photos
                 </p>
@@ -214,7 +228,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className='py-12 md:py-20 px-4'>
+      <section className='py-12 md:py-20 px-4 bg-muted'>
         <div className='container mx-auto max-w-4xl text-center'>
           <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 px-4'>
             Ready to Create Your String Art?
@@ -226,7 +240,7 @@ export default function LandingPage() {
           <Link href='/editor'>
             <Button
               size='lg'
-              className='text-base md:text-lg px-6 md:px-8 w-full sm:w-auto'>
+              className='text-base md:text-lg px-6 md:px-8 w-full sm:w-auto shadow-lg'>
               <Sparkles className='mr-2 h-5 w-5' />
               Get Started Free
             </Button>
