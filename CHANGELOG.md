@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/bledxs/string-art-generator/compare/v1.1.0...v1.2.0) (2025-11-21)
+
+
+### Features
+
+* add new blog posts on string art techniques and artists ([6c07a1b](https://github.com/bledxs/string-art-generator/commit/6c07a1b25cd9e61b2c1079df4f98106a0a9a2533))
+
 ## [1.1.0](https://github.com/bledxs/string-art-generator/compare/v1.0.0...v1.1.0) (2025-11-21)
 
 
