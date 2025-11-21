@@ -131,6 +131,13 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link
+                  href='/resources'
+                  className='hover:text-foreground transition-colors'>
+                  Resources
+                </Link>
+              </li>
+              <li>
                 <a
                   href={siteConfig.links.github}
                   target='_blank'

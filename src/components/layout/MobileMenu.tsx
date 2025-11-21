@@ -14,6 +14,7 @@ import {
   GraduationCap,
   MessageSquare,
   Newspaper,
+  Package,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -40,6 +41,7 @@ export function MobileMenu() {
     { href: '/tutorials', label: 'Tutorials', icon: GraduationCap },
     { href: '/faq', label: 'FAQ', icon: HelpCircle },
     { href: '/gallery', label: 'Gallery', icon: Image },
+    { href: '/resources', label: 'Resources', icon: Package },
   ];
 
   return (

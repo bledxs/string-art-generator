@@ -96,6 +96,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+    // Resources page (FASE 4)
+    {
+      url: `${siteConfig.url}/resources`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
     // Legal pages (required for AdSense)
     {
       url: `${siteConfig.url}/privacy`,
