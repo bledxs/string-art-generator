@@ -1,29 +1,11 @@
-// Server Component - Gallery Page
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Sparkles, Image as ImageIcon, Settings } from 'lucide-react';
-import type { Metadata } from 'next';
-import { siteConfig } from '@/lib/config';
-
-export const metadata: Metadata = {
-  title: 'Gallery - String Art Examples',
-  description:
-    'Explore beautiful string art patterns created with our generator. Get inspired by portraits, logos, abstract designs, and more.',
-  alternates: {
-    canonical: `${siteConfig.url}/gallery`,
-  },
-  openGraph: {
-    title: 'Gallery - String Art Generator',
-    description: 'Stunning string art pattern examples and inspiration',
-    url: `${siteConfig.url}/gallery`,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
 
 // Example gallery items (in production, these could come from a CMS or database)
 const galleryItems = [
@@ -103,14 +85,40 @@ const galleryItems = [
 
 const categories = [
   { id: 'all', label: 'All', count: galleryItems.length },
-  { id: 'portrait', label: 'Portraits', count: 1 },
-  { id: 'logo', label: 'Logos', count: 2 },
-  { id: 'abstract', label: 'Abstract', count: 1 },
-  { id: 'animal', label: 'Animals', count: 1 },
-  { id: 'landscape', label: 'Landscapes', count: 1 },
+  {
+    id: 'portrait',
+    label: 'Portraits',
+    count: galleryItems.filter((i) => i.category === 'portrait').length,
+  },
+  {
+    id: 'logo',
+    label: 'Logos',
+    count: galleryItems.filter((i) => i.category === 'logo').length,
+  },
+  {
+    id: 'abstract',
+    label: 'Abstract',
+    count: galleryItems.filter((i) => i.category === 'abstract').length,
+  },
+  {
+    id: 'animal',
+    label: 'Animals',
+    count: galleryItems.filter((i) => i.category === 'animal').length,
+  },
+  {
+    id: 'landscape',
+    label: 'Landscapes',
+    count: galleryItems.filter((i) => i.category === 'landscape').length,
+  },
 ];
 
 export default function GalleryPage() {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const filteredItems =
+    selectedCategory === 'all'
+      ? galleryItems
+      : galleryItems.filter((item) => item.category === selectedCategory);
   return (
     <div className='container mx-auto max-w-7xl px-4 py-8 md:py-12'>
       {/* Header */}
@@ -133,8 +141,9 @@ export default function GalleryPage() {
         {categories.map((cat) => (
           <Badge
             key={cat.id}
-            variant={cat.id === 'all' ? 'default' : 'outline'}
-            className='cursor-pointer hover:bg-primary/10 transition-colors px-4 py-2'>
+            variant={cat.id === selectedCategory ? 'default' : 'outline'}
+            className='cursor-pointer hover:bg-primary/10 transition-colors px-4 py-2'
+            onClick={() => setSelectedCategory(cat.id)}>
             {cat.label} ({cat.count})
           </Badge>
         ))}
@@ -154,7 +163,7 @@ export default function GalleryPage() {
 
       {/* Gallery Grid */}
       <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8'>
-        {galleryItems.map((item) => (
+        {filteredItems.map((item) => (
           <Card
             key={item.id}
             className='overflow-hidden hover:shadow-lg transition-shadow'>
@@ -217,7 +226,9 @@ export default function GalleryPage() {
               </div>
 
               {/* Action */}
-              <Link href='/editor' className='block'>
+              <Link
+                href={`/editor?pins=${item.pins}&lines=${item.lines}&weight=${item.weight}&opacity=${item.opacity}`}
+                className='block'>
                 <Button className='w-full' size='sm'>
                   <Sparkles className='h-4 w-4 mr-2' />
                   Try These Settings

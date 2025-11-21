@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { ImageUploader } from './ImageUploader';
 import { ParametersPanel } from './ParametersPanel';
 import { Canvas } from './Canvas';
@@ -15,9 +17,35 @@ import { AdUnitClient } from '@/components/ads/AdUnitClient';
 import { adsConfig } from '@/lib/ads-config';
 
 export function EditorClient() {
-  const { image, isProcessing, progress, result, partialResult } =
-    useStringArtStore();
+  const searchParams = useSearchParams();
+  const {
+    image,
+    isProcessing,
+    progress,
+    result,
+    partialResult,
+    setParameters,
+  } = useStringArtStore();
   const { generate, cancel } = useStringArt();
+
+  // Apply URL parameters on mount
+  useEffect(() => {
+    const pins = searchParams.get('pins');
+    const lines = searchParams.get('lines');
+    const weight = searchParams.get('weight');
+    const opacity = searchParams.get('opacity');
+
+    const urlParams: Record<string, number> = {};
+
+    if (pins) urlParams.pins = Number(pins);
+    if (lines) urlParams.lines = Number(lines);
+    if (weight) urlParams.lineWeight = Number(weight);
+    if (opacity) urlParams.lineOpacity = Number(opacity);
+
+    if (Object.keys(urlParams).length > 0) {
+      setParameters(urlParams);
+    }
+  }, [searchParams, setParameters]);
 
   const canGenerate = image && !isProcessing;
 
