@@ -63,6 +63,34 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Legal */}
+          <div className='space-y-3'>
+            <h3 className='font-bold text-sm text-foreground'>Legal</h3>
+            <ul className='space-y-2 text-sm text-foreground/70'>
+              <li>
+                <Link
+                  href='/privacy'
+                  className='hover:text-foreground transition-colors'>
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/terms'
+                  className='hover:text-foreground transition-colors'>
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/cookies'
+                  className='hover:text-foreground transition-colors'>
+                  Cookie Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
+
           {/* Resources */}
           <div className='space-y-3'>
             <h3 className='font-bold text-sm text-foreground'>Resources</h3>
@@ -94,31 +122,14 @@ export function Footer() {
                   GitHub
                 </a>
               </li>
+              <li>
+                <a
+                  href={`mailto:${siteConfig.contact.support}`}
+                  className='hover:text-foreground transition-colors'>
+                  Contact
+                </a>
+              </li>
             </ul>
-          </div>
-
-          {/* Social */}
-          <div className='space-y-3'>
-            <h3 className='font-bold text-sm text-foreground'>Connect</h3>
-            <div className='flex gap-4'>
-              <a
-                href={siteConfig.links.github}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='text-foreground/70 hover:text-foreground transition-colors'
-                aria-label='GitHub'>
-                <Github className='h-5 w-5' />
-              </a>
-              <a
-                href={siteConfig.links.twitter}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='text-foreground/70 hover:text-foreground transition-colors'
-                aria-label='Twitter'>
-                <Twitter className='h-5 w-5' />
-              </a>
-            </div>
-            <p className='text-xs text-foreground/60'>Open source project</p>
           </div>
         </div>
 
@@ -127,12 +138,22 @@ export function Footer() {
           <p className='text-xs md:text-sm text-foreground/60'>
             © {currentYear} {siteConfig.name}. Built with Next.js 16.
           </p>
-          <div className='flex gap-4 md:gap-6 text-xs md:text-sm text-foreground/60'>
-            <a
-              href={`mailto:${siteConfig.contact.support}`}
+          <div className='flex flex-wrap justify-center gap-3 md:gap-4 text-xs text-foreground/60'>
+            <Link
+              href='/privacy'
               className='hover:text-foreground transition-colors'>
-              Contact
-            </a>
+              Privacy
+            </Link>
+            <Link
+              href='/terms'
+              className='hover:text-foreground transition-colors'>
+              Terms
+            </Link>
+            <Link
+              href='/cookies'
+              className='hover:text-foreground transition-colors'>
+              Cookies
+            </Link>
           </div>
         </div>
       </div>
