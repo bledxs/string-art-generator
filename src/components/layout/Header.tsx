@@ -11,7 +11,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { Sparkles, BookOpen, HelpCircle, Image } from 'lucide-react';
+import { Sparkles, BookOpen, HelpCircle, Image, Lightbulb } from 'lucide-react';
 import { siteConfig } from '@/lib/config';
 import { MobileMenu } from './MobileMenu';
 
@@ -89,6 +89,23 @@ export function Header() {
                         </div>
                         <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
                           Example configurations and inspiration
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href='/tips'
+                        className='block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground'>
+                        <div className='flex items-center gap-2'>
+                          <Lightbulb className='h-4 w-4' />
+                          <div className='text-sm font-medium leading-none'>
+                            Tips & Best Practices
+                          </div>
+                        </div>
+                        <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
+                          Expert advice for stunning results
                         </p>
                       </Link>
                     </NavigationMenuLink>

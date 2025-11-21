@@ -15,6 +15,7 @@ import {
   MessageSquare,
   Newspaper,
   Package,
+  Lightbulb,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -39,6 +40,7 @@ export function MobileMenu() {
   const learnItems = [
     { href: '/blog', label: 'Blog', icon: Newspaper },
     { href: '/tutorials', label: 'Tutorials', icon: GraduationCap },
+    { href: '/tips', label: 'Tips & Best Practices', icon: Lightbulb },
     { href: '/faq', label: 'FAQ', icon: HelpCircle },
     { href: '/gallery', label: 'Gallery', icon: Image },
     { href: '/resources', label: 'Resources', icon: Package },
