@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/bledxs/string-art-generator/compare/v1.2.0...v1.3.0) (2025-11-21)
+
+
+### Features
+
+* agregar botón de compartir en la página del blog ([3766bca](https://github.com/bledxs/string-art-generator/commit/3766bca4f0349692f61796989766b978582bb644))
+
 ## [1.2.0](https://github.com/bledxs/string-art-generator/compare/v1.1.0...v1.2.0) (2025-11-21)
 
 
