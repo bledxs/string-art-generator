@@ -17,6 +17,7 @@ import type { Metadata } from 'next';
 import { siteConfig } from '@/lib/config';
 import { blogPosts } from '@/content/blog/posts';
 import { deriveReadingTime } from '@/content/blog/reading-time';
+import { ShareButton } from '@/features/blog/components/ShareButton';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -193,10 +194,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   Share it with others who might enjoy it too.
                 </p>
               </div>
-              <Button variant='default' size='sm' className='shrink-0'>
-                <Share2 className='h-4 w-4 mr-2' />
-                Share Article
-              </Button>
+              <ShareButton
+                title={post.title}
+                description={post.description}
+                url={`${siteConfig.url}/blog/${post.slug}`}
+              />
             </div>
           </CardContent>
         </Card>
