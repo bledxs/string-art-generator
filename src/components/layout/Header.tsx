@@ -99,6 +99,14 @@ export function Header() {
 
             <NavigationMenuItem>
               <NavigationMenuLink
+                href='/blog'
+                className={navigationMenuTriggerStyle()}>
+                Blog
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuLink
                 href='/how-it-works'
                 className={navigationMenuTriggerStyle()}>
                 How It Works

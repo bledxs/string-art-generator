@@ -13,6 +13,7 @@ import {
   Image,
   GraduationCap,
   MessageSquare,
+  Newspaper,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -35,6 +36,7 @@ export function MobileMenu() {
   ];
 
   const learnItems = [
+    { href: '/blog', label: 'Blog', icon: Newspaper },
     { href: '/tutorials', label: 'Tutorials', icon: GraduationCap },
     { href: '/faq', label: 'FAQ', icon: HelpCircle },
     { href: '/gallery', label: 'Gallery', icon: Image },
