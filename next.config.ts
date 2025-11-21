@@ -1,4 +1,9 @@
 import type { NextConfig } from 'next';
+import createMDX from '@next/mdx';
+
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+});
 
 const nextConfig: NextConfig = {
   // Next.js 16 - Turbopack file system caching for faster builds
@@ -22,6 +27,7 @@ const nextConfig: NextConfig = {
 
   // Cloudflare/Vercel Edge compatibility
   // output: 'standalone', // Comentado por error de permisos en Windows - Vercel lo maneja automáticamente
+  pageExtensions: ['ts', 'tsx', 'mdx'],
 };
 
-export default nextConfig;
+export default withMDX(nextConfig);
