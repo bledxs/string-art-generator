@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/bledxs/string-art-generator/compare/v1.3.0...v1.4.0) (2025-11-21)
+
+
+### Features
+
+* add PDF template generation for string art with 100, 200, and 300 pins ([79779ea](https://github.com/bledxs/string-art-generator/commit/79779eae3684e9b22d17c3b4704999e87a37c446))
+
 ## [1.3.0](https://github.com/bledxs/string-art-generator/compare/v1.2.0...v1.3.0) (2025-11-21)
 
 
