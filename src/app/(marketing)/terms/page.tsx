@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   },
 };
 
-const LAST_UPDATED = '21 de noviembre de 2025';
-const EFFECTIVE_DATE = '21 de noviembre de 2025';
+const LAST_UPDATED = '21 November 2025';
+const EFFECTIVE_DATE = '21 November 2025';
 
 export default function TermsOfServicePage() {
   return (

@@ -12,9 +12,23 @@ const libreBaskerville = Libre_Baskerville({
   display: 'swap',
 });
 
-// Minimal metadata - specific metadata in route groups
+// Comprehensive root metadata for SEO
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  authors: [{ name: siteConfig.author }],
+  creator: siteConfig.author,
+  publisher: siteConfig.author,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   manifest: '/manifest.json',
   icons: {
     icon: [
@@ -24,6 +38,47 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
   },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.name} - Transform images into string art`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.name,
+    description: siteConfig.description,
+    creator: siteConfig.social.twitterHandle,
+    images: [siteConfig.twitterImage],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || '',
+  },
+  alternates: {
+    canonical: siteConfig.url,
+  },
+  category: 'Design & Art',
 };
 
 export const viewport: Viewport = {
