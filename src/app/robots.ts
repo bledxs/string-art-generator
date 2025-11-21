@@ -7,7 +7,8 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/'],
+        disallow: ['/api/', '/admin/', '/_next/', '/static/'],
+        crawlDelay: 0,
       },
       {
         userAgent: 'Googlebot',
@@ -15,7 +16,22 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/admin/'],
       },
       {
+        userAgent: 'Googlebot-Image',
+        allow: '/',
+        disallow: [],
+      },
+      {
         userAgent: 'Bingbot',
+        allow: '/',
+        disallow: ['/api/', '/admin/'],
+      },
+      {
+        userAgent: 'Slurp', // Yahoo
+        allow: '/',
+        disallow: ['/api/', '/admin/'],
+      },
+      {
+        userAgent: 'DuckDuckBot',
         allow: '/',
         disallow: ['/api/', '/admin/'],
       },
