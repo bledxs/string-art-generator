@@ -14,7 +14,6 @@ export const metadata = {
 export default function NotFound() {
   return (
     <div className='flex flex-col min-h-screen'>
-      <Header />
       <main className='flex-1 flex items-center justify-center px-4 py-16'>
         <div className='max-w-2xl w-full text-center space-y-8'>
           {/* Error Code */}
@@ -77,7 +76,6 @@ export default function NotFound() {
           </Card>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }
