@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.0](https://github.com/bledxs/string-art-generator/compare/v1.0.0...v1.1.0) (2025-11-21)
+
+
+### Features
+
+* **blog:** add blog routing and content to sitemap, header, footer, and mobile menu ([cb878e9](https://github.com/bledxs/string-art-generator/commit/cb878e92f90082ca88e8d326e1a06527d14255f3))
+* **blog:** agregar imágenes creativas y de historia de arte en el blog ([b0da07d](https://github.com/bledxs/string-art-generator/commit/b0da07d20edd8fc802c1391a3cb8612370e70be3))
+* **blog:** implement blog pages, routing, and MDX content system ([1eaad27](https://github.com/bledxs/string-art-generator/commit/1eaad27f94779e117be3b7a6c321b3e131ae2e28))
+* enable MDX support in Next.js app ([3678499](https://github.com/bledxs/string-art-generator/commit/36784993a8238bb6089db6ed89626f05906ce7e5))
+
+
+### Bug Fixes
+
+* **not-found:** remove legacy Header and Footer from not-found page ([fd5a7ce](https://github.com/bledxs/string-art-generator/commit/fd5a7ce714ab186791a65f678aef9be308005bef))
+
 ## 1.0.0 (2025-11-21)
 
 
