@@ -1,14 +1,22 @@
 {
-  "name": "my-app",
+  "name": "string-art-generator",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "prebuild": "rimraf .next || true",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate:images": "node scripts/generate-images.mjs"
+    "generate:images": "node scripts/generate-images.mjs",
+    "commit": "cz",
+    "prepare": "husky"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -64,19 +72,29 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@tailwindcss/postcss": "^4.1.16",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^24.10.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "babel-plugin-react-compiler": "^1.0.0",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.39.1",
     "eslint-config-next": "16.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "rimraf": "^6.1.2",
     "sharp": "^0.34.4",
     "tailwindcss": "^4.1.16",
     "tw-animate-css": "^1.4.0",
     "typescript": "^5.9.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }
