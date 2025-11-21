@@ -96,37 +96,40 @@ export function Footer() {
             <h3 className='font-bold text-sm text-foreground'>Resources</h3>
             <ul className='space-y-2 text-sm text-foreground/70'>
               <li>
-                <a
-                  href='https://github.com/bledxs/string-art-generator'
-                  target='_blank'
-                  rel='noopener noreferrer'
+                <Link
+                  href='/faq'
                   className='hover:text-foreground transition-colors'>
-                  Documentation
-                </a>
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/tutorials'
+                  className='hover:text-foreground transition-colors'>
+                  Tutorials
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/gallery'
+                  className='hover:text-foreground transition-colors'>
+                  Gallery
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/contact'
+                  className='hover:text-foreground transition-colors'>
+                  Contact
+                </Link>
               </li>
               <li>
                 <a
-                  href='https://github.com/bledxs/string-art-generator/issues'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='hover:text-foreground transition-colors'>
-                  Support
-                </a>
-              </li>
-              <li>
-                <a
-                  href='https://github.com/bledxs/string-art-generator'
+                  href={siteConfig.links.github}
                   target='_blank'
                   rel='noopener noreferrer'
                   className='hover:text-foreground transition-colors'>
                   GitHub
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`mailto:${siteConfig.contact.support}`}
-                  className='hover:text-foreground transition-colors'>
-                  Contact
                 </a>
               </li>
             </ul>

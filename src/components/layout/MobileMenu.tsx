@@ -12,6 +12,7 @@ import {
   HelpCircle,
   Image,
   GraduationCap,
+  MessageSquare,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -30,6 +31,7 @@ export function MobileMenu() {
     { href: '/', label: 'Home', icon: Home },
     { href: '/how-it-works', label: 'How It Works', icon: BookOpen },
     { href: '/about', label: 'About', icon: Info },
+    { href: '/contact', label: 'Contact', icon: MessageSquare },
   ];
 
   const learnItems = [
