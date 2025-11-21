@@ -60,6 +60,36 @@ El script genera las siguientes imágenes en la carpeta `public/`:
 - ✅ Añade texto descriptivo a imágenes sociales y screenshots
 - ✅ Compatible con las especificaciones de Open Graph, Twitter Cards y PWA
 
+## 📄 Generador de Templates PDF
+
+Script para generar templates de string art imprimibles con posiciones numeradas
+de clavos.
+
+### Uso
+
+```bash
+pnpm generate:templates
+```
+
+### Templates Generados
+
+El script genera 3 PDFs en `public/templates/`:
+
+#### 📐 Templates Disponibles
+
+- **100-pins-template.pdf** - A4 (210x297mm), círculo 25cm, nivel Principiante
+- **200-pins-template.pdf** - A3 (297x420mm), círculo 30cm, nivel Intermedio
+- **300-pins-template.pdf** - A2 (420x594mm), círculo 40cm, nivel Avanzado
+
+### Características
+
+- ✅ PDFs listos para imprimir al 100% de escala
+- ✅ Posiciones numeradas equidistantes en patrón circular
+- ✅ Cruceta central para alineación
+- ✅ Instrucciones incluidas en el template
+- ✅ Layout profesional con encabezado y pie de página
+- ✅ Numeración visible cada N posiciones para evitar saturación
+
 ### Notas
 
 1. **favicon.ico**: Sharp no genera archivos .ico directamente. Puedes:
@@ -71,11 +101,14 @@ El script genera las siguientes imágenes en la carpeta `public/`:
 2. **Screenshots**: Los screenshots generados son placeholders con el logo y
    texto. Para capturas reales de la aplicación, toma screenshots manualmente.
 
-3. **Personalización**: Edita `generate-images.mjs` para ajustar:
+3. **Personalización**: Edita `generate-images.mjs` o `generate-templates.mjs`
+   para ajustar:
    - Colores de fondo
    - Texto en imágenes sociales
    - Tamaños adicionales
    - Estilos de composición
+   - Número de pines en templates
+   - Tamaños de círculos
 
 ### Solución de Problemas
 
@@ -96,11 +129,21 @@ Error: Cannot find module 'sharp'
 
 Solución: Ejecuta `pnpm install`
 
+**Error: pdfkit no instalado**
+
+```
+Error: Cannot find module 'pdfkit'
+```
+
+Solución: Ejecuta `pnpm install`
+
 ### Workflow Recomendado
 
 1. Coloca tu `logo.png` en la raíz
-2. Ejecuta `pnpm generate:images`
-3. Verifica las imágenes generadas en `public/`
-4. Convierte `favicon-96x96.png` a `favicon.ico` si es necesario
-5. Reemplaza los screenshots con capturas reales de tu aplicación
-6. ¡Listo para deploy!
+2. Ejecuta `pnpm generate:images` para imágenes SEO/PWA
+3. Ejecuta `pnpm generate:templates` para PDFs de templates
+4. Verifica las imágenes generadas en `public/`
+5. Verifica los PDFs en `public/templates/`
+6. Convierte `favicon-96x96.png` a `favicon.ico` si es necesario
+7. Reemplaza los screenshots con capturas reales de tu aplicación
+8. ¡Listo para deploy!

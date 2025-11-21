@@ -1,4 +1,5 @@
 import { Download } from 'lucide-react';
+import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -24,17 +25,19 @@ export function TemplatesSection() {
           </CardHeader>
           <CardContent className='space-y-4'>
             <p className='text-sm text-muted-foreground'>
-              Ideal for simple designs and first projects. 25cm diameter circle.
+              Ideal for simple designs and first projects. 18cm diameter circle.
             </p>
             <ul className='text-sm space-y-1 text-muted-foreground'>
               <li>• A4 size (210 x 297mm)</li>
               <li>• 100 equally spaced pins</li>
               <li>• Numbered positions</li>
             </ul>
-            <Button className='w-full' variant='outline' disabled>
-              <Download className='h-4 w-4 mr-2' />
-              Download PDF (Coming Soon)
-            </Button>
+            <Link href='/templates/100-pins-template.pdf' download>
+              <Button className='w-full' variant='outline'>
+                <Download className='h-4 w-4 mr-2' />
+                Download PDF
+              </Button>
+            </Link>
           </CardContent>
         </Card>
 
@@ -47,17 +50,19 @@ export function TemplatesSection() {
           </CardHeader>
           <CardContent className='space-y-4'>
             <p className='text-sm text-muted-foreground'>
-              Perfect for portraits and detailed designs. 30cm diameter circle.
+              Perfect for portraits and detailed designs. 26cm diameter circle.
             </p>
             <ul className='text-sm space-y-1 text-muted-foreground'>
               <li>• A3 size (297 x 420mm)</li>
               <li>• 200 equally spaced pins</li>
               <li>• Numbered positions</li>
             </ul>
-            <Button className='w-full' variant='outline' disabled>
-              <Download className='h-4 w-4 mr-2' />
-              Download PDF (Coming Soon)
-            </Button>
+            <Link href='/templates/200-pins-template.pdf' download>
+              <Button className='w-full' variant='outline'>
+                <Download className='h-4 w-4 mr-2' />
+                Download PDF
+              </Button>
+            </Link>
           </CardContent>
         </Card>
 
@@ -70,17 +75,19 @@ export function TemplatesSection() {
           </CardHeader>
           <CardContent className='space-y-4'>
             <p className='text-sm text-muted-foreground'>
-              Maximum detail for professional work. 40cm diameter circle.
+              Maximum detail for professional work. 39cm diameter circle.
             </p>
             <ul className='text-sm space-y-1 text-muted-foreground'>
               <li>• A2 size (420 x 594mm)</li>
               <li>• 300 equally spaced pins</li>
               <li>• Numbered positions</li>
             </ul>
-            <Button className='w-full' variant='outline' disabled>
-              <Download className='h-4 w-4 mr-2' />
-              Download PDF (Coming Soon)
-            </Button>
+            <Link href='/templates/300-pins-template.pdf' download>
+              <Button className='w-full' variant='outline'>
+                <Download className='h-4 w-4 mr-2' />
+                Download PDF
+              </Button>
+            </Link>
           </CardContent>
         </Card>
       </div>
