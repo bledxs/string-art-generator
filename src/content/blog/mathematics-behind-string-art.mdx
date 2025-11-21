@@ -1,0 +1,375 @@
+import { Lead } from './components/Lead';
+
+export const meta = {
+  title: 'The Mathematics Behind String Art Generation',
+};
+
+<Lead>
+  String art appears deceptively simple: connect pins with thread to form an
+  image. But beneath this elegant result lies sophisticated mathematical
+  optimization, geometric principles, and computational algorithms. Let's
+  explore the mathematics that transforms pixels into thread paths.
+</Lead>
+
+## The Core Problem: Image to Thread
+
+At its heart, string art generation solves an **optimization problem**:
+
+> Given a source image and N pins arranged in a circle, find the sequence of
+> pin-to-pin connections that best approximates the original image using a
+> single continuous thread.
+
+This is computationally challenging because:
+
+- **Combinatorial explosion** - With 300 pins, there are ~45,000 possible
+  connections per step
+- **Path dependency** - Each choice affects all future choices
+- **No backtracking** - The thread cannot be "undrawn"
+- **Quality vs speed tradeoff** - Better results require more computation
+
+## Geometric Foundation
+
+### Circle Geometry
+
+Pins are positioned on a circle's perimeter using **polar coordinates**:
+
+```
+For pin i of N total pins:
+  angle = (i × 2π) / N
+  x = radius × cos(angle)
+  y = radius × sin(angle)
+```
+
+This creates **equidistant spacing**, ensuring uniform coverage potential. The
+radius determines the final artwork size.
+
+### Line Rasterization
+
+Each potential thread connection is a **line segment** between two pins. We
+calculate which pixels this line crosses using **Bresenham's algorithm**:
+
+```
+1. Calculate slope: Δy / Δx
+2. Step along the longer axis
+3. Track error accumulation
+4. Add pixel when error threshold crossed
+5. Return list of (x,y) coordinates
+```
+
+This gives us the "footprint" of a thread - which pixels it would darken.
+
+## The Greedy Algorithm
+
+Most string art generators use a **greedy algorithm** - at each step, choose the
+best immediate option:
+
+### Algorithm Steps
+
+```
+1. Start at a random pin
+2. For each unvisited connection from current pin:
+   a. Calculate line path (rasterization)
+   b. Compare line pixels to target image
+   c. Score the match quality
+3. Select highest-scoring connection
+4. "Draw" the line (darken those pixels)
+5. Move to the connected pin
+6. Repeat until max lines reached
+```
+
+### Scoring Function
+
+The score measures how well a potential line **matches the target image**:
+
+```
+score = Σ (image_pixel × line_weight) for all pixels in line path
+
+Where:
+  image_pixel = brightness (0-255)
+  line_weight = thread opacity (user parameter)
+```
+
+**Key insight:** We score based on the **current image state**, which gets
+progressively darker as more lines are added. This creates the subtractive
+effect.
+
+## Mathematical Optimization
+
+### Complexity Analysis
+
+**Time complexity:** O(N² × L × P)
+
+Where:
+
+- N = number of pins
+- L = number of lines to generate
+- P = average pixels per line
+
+For a typical configuration (300 pins, 4000 lines, ~500 pixels/line):
+
+```
+300² × 4000 × 500 = 180 billion operations
+```
+
+Modern computers handle this in 1-3 minutes using optimization tricks.
+
+### Optimization Techniques
+
+**1. Pre-computation:**
+
+```
+Store all possible line paths in memory:
+  lines[pin_a][pin_b] = [(x₁,y₁), (x₂,y₂), ..., (xₙ,yₙ)]
+
+Memory: ~300×300×500 pixels = 45M coordinates
+Time saved: 99% of rasterization work
+```
+
+**2. Incremental Updates:**
+
+```
+Instead of rescoring all N-1 connections each step:
+- Maintain sorted score list
+- Only update scores for lines touching current pin
+- Reduces per-step work by ~99.7%
+```
+
+**3. Spatial Hashing:**
+
+```
+Index lines by pixel coordinates they touch:
+  pixel_index[(x,y)] → [line₁, line₂, ..., lineₙ]
+
+Allows instant lookup of which lines to recalculate
+when image pixels change.
+```
+
+## Image Processing Mathematics
+
+### Contrast Enhancement
+
+Before generation, images are preprocessed to **maximize contrast**:
+
+```
+For each pixel p:
+  1. Convert to grayscale: gray = 0.299R + 0.587G + 0.114B
+  2. Apply contrast: adjusted = ((gray - 128) × factor) + 128
+  3. Clamp: clipped = max(0, min(255, adjusted))
+```
+
+The weights (0.299, 0.587, 0.114) reflect **human luminance perception** - we're
+more sensitive to green than red or blue.
+
+### Edge Detection
+
+Some algorithms use **Sobel operators** to emphasize edges:
+
+```
+Horizontal gradient:     Vertical gradient:
+[-1  0  +1]              [-1 -2 -1]
+[-2  0  +2]              [ 0  0  0]
+[-1  0  +1]              [+1 +2 +1]
+
+Edge magnitude: √(Gₓ² + Gᵧ²)
+```
+
+Strong edges guide the algorithm to place more lines where detail matters.
+
+## Envelope Theory: The Hidden Geometry
+
+String art demonstrates **envelope theory** - a mathematical concept where a
+family of lines creates a curve:
+
+### Parabolic Envelopes
+
+When connecting pins with regular spacing increments:
+
+```
+Connect pin i to pin (i + k) for all i
+Where k is a constant offset
+```
+
+The resulting pattern approximates a **parabola**, even though every individual
+line is straight.
+
+### Mathematical Proof
+
+A parabola is the envelope of its tangent lines. When we connect:
+
+```
+Point A: (x₁, f(x₁))
+Point B: (x₂, f(x₂))
+
+As x₂ → x₁, the secant line AB approaches the tangent at x₁.
+```
+
+String art reverses this: given enough straight lines at calculated angles, the
+**visual perception** completes the curve.
+
+## The String Art Transform
+
+We can think of string art generation as a **transform** - like Fourier or
+wavelet transforms:
+
+```
+T: Image → Thread_Sequence
+
+Where:
+  Input: 2D array of pixel values
+  Output: Ordered list of pin pairs
+  Constraint: Single continuous path
+  Objective: Minimize visual error
+```
+
+This is a **lossy, non-reversible transform**. Unlike JPEG compression, we
+cannot perfectly reconstruct the original.
+
+## Quality Metrics
+
+### Root Mean Square Error (RMSE)
+
+Measures average pixel difference:
+
+```
+RMSE = √(Σ(original_pixel - result_pixel)² / total_pixels)
+
+Lower is better (0 = perfect match)
+```
+
+### Structural Similarity Index (SSIM)
+
+Compares **perceived quality** rather than raw pixels:
+
+```
+SSIM = (2μₓμᵧ + C₁)(2σₓᵧ + C₂) / ((μₓ² + μᵧ² + C₁)(σₓ² + σᵧ² + C₂))
+
+Where:
+  μ = mean luminance
+  σ = standard deviation
+  σₓᵧ = covariance
+  C₁, C₂ = stabilization constants
+```
+
+Range: -1 to 1 (1 = identical)
+
+## Advanced Algorithms
+
+### Simulated Annealing
+
+Some generators use **probabilistic optimization**:
+
+```
+1. Start with random path
+2. Randomly swap two line segments
+3. If quality improves → accept
+4. If quality worsens → accept with probability p = e^(-ΔE/T)
+5. Decrease "temperature" T over time
+6. Repeat until convergence
+```
+
+This can escape **local optima** that greedy algorithms get stuck in.
+
+### Genetic Algorithms
+
+Treat thread sequences as **genetic code**:
+
+```
+1. Generate population of random sequences
+2. Evaluate fitness (image match quality)
+3. Select best performers
+4. Crossover: combine sequences from parents
+5. Mutation: randomly alter some connections
+6. Repeat for N generations
+```
+
+Computationally expensive but can find novel solutions.
+
+## Practical Parameter Math
+
+### Pin Count Selection
+
+**Too few pins** (< 100):
+
+- Each line covers ~1% of circle (360°/100 = 3.6°)
+- Limited angular resolution
+- Coarse details only
+
+**Optimal range** (200-350):
+
+- Each line ≈ 0.5-1° angular precision
+- Good balance of detail vs computation
+- Practical for physical builds
+
+**Too many pins** (> 500):
+
+- Diminishing returns (< 0.36° precision)
+- Quadratic computation increase
+- Difficult physical construction
+
+### Line Count Formula
+
+Approximate lines needed for quality result:
+
+```
+lines_needed ≈ pins × coverage_factor
+
+Where:
+  coverage_factor = 10-20 for simple images
+  coverage_factor = 20-40 for detailed images
+
+Example: 300 pins × 15 = 4500 lines
+```
+
+## The Beauty of Constraints
+
+String art's mathematical beauty emerges from its **constraints**:
+
+1. **Circular boundary** - Creates natural composition
+2. **Single path** - Enforces continuity and flow
+3. **Straight lines only** - Curves emerge from aggregation
+4. **Subtractive rendering** - Darkness builds incrementally
+
+These aren't limitations - they're what makes the mathematics **interesting**.
+
+## For Educators
+
+String art is exceptional for teaching:
+
+**Geometry:**
+
+- Circle properties (circumference, radii)
+- Angle measurement and division
+- Coordinate systems (Cartesian ↔ polar)
+
+**Algorithms:**
+
+- Greedy vs optimal solutions
+- Heuristic optimization
+- Time/space complexity
+
+**Linear Algebra:**
+
+- Line equations and intersections
+- Vector operations
+- Transformation matrices
+
+**Calculus:**
+
+- Tangent line approximations
+- Envelope curves
+- Rate of change visualization
+
+## Conclusion
+
+The mathematics behind string art bridges **pure and applied** - geometric
+elegance meets computational pragmatism. Understanding the algorithms doesn't
+diminish the magic; it reveals deeper beauty in how simple rules create complex
+results.
+
+Whether you're a student exploring algorithms, an artist seeking new techniques,
+or a mathematician appreciating envelope theory in action, string art offers a
+unique window into **visual mathematics**.
+
+Ready to see these algorithms in action? Try the [editor](/editor) and watch
+mathematics transform your images, or explore [tutorials](/tutorials) to
+understand the parameters that control the optimization.
