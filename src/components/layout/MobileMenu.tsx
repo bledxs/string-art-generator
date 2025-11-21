@@ -3,7 +3,16 @@
 // Client Component - Mobile Menu Sheet
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Home, BookOpen, Info, Sparkles } from 'lucide-react';
+import {
+  Menu,
+  Home,
+  BookOpen,
+  Info,
+  Sparkles,
+  HelpCircle,
+  Image,
+  GraduationCap,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -12,6 +21,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import { Separator } from '@/components/ui/separator';
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -20,7 +30,12 @@ export function MobileMenu() {
     { href: '/', label: 'Home', icon: Home },
     { href: '/how-it-works', label: 'How It Works', icon: BookOpen },
     { href: '/about', label: 'About', icon: Info },
-    { href: '/editor', label: 'Editor', icon: Sparkles },
+  ];
+
+  const learnItems = [
+    { href: '/tutorials', label: 'Tutorials', icon: GraduationCap },
+    { href: '/faq', label: 'FAQ', icon: HelpCircle },
+    { href: '/gallery', label: 'Gallery', icon: Image },
   ];
 
   return (
@@ -38,8 +53,30 @@ export function MobileMenu() {
         <SheetHeader>
           <SheetTitle className='text-left'>Navigation</SheetTitle>
         </SheetHeader>
-        <nav className='flex flex-col gap-4 mt-8'>
+        <nav className='flex flex-col gap-2 mt-8'>
+          {/* Main Navigation */}
           {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className='flex items-center gap-3 text-base font-medium text-foreground/70 hover:text-foreground transition-colors py-2 px-3 rounded-md hover:bg-muted'>
+                <Icon className='h-5 w-5' />
+                {item.label}
+              </Link>
+            );
+          })}
+
+          {/* Learn Section */}
+          <Separator className='my-3' />
+          <div className='px-3 py-2'>
+            <p className='text-xs font-semibold text-muted-foreground uppercase tracking-wider'>
+              Learn
+            </p>
+          </div>
+          {learnItems.map((item) => {
             const Icon = item.icon;
             return (
               <Link
