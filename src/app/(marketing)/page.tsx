@@ -15,6 +15,7 @@ import {
   WebSiteSchema,
   OrganizationSchema,
   HowToSchema,
+  SiteNavigationSchema,
 } from '@/components/seo/StructuredData';
 import { InlineAd } from '@/components/ads';
 
@@ -26,6 +27,7 @@ export default function LandingPage() {
       <WebSiteSchema />
       <OrganizationSchema />
       <HowToSchema />
+      <SiteNavigationSchema />
 
       {/* Hero Section */}
       <section className='relative py-12 md:py-20 px-4 overflow-hidden bg-background'>

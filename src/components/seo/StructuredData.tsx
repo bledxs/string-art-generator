@@ -4,7 +4,13 @@ import Script from 'next/script';
 import { siteConfig } from '@/lib/config';
 
 interface StructuredDataProps {
-  type: 'WebApplication' | 'WebSite' | 'Organization' | 'HowTo';
+  type:
+    | 'WebApplication'
+    | 'WebSite'
+    | 'Organization'
+    | 'HowTo'
+    | 'BreadcrumbList'
+    | 'ItemList';
   data: Record<string, any>;
 }
 
@@ -87,15 +93,48 @@ export function OrganizationSchema() {
     <StructuredData
       type='Organization'
       data={{
+        '@type': 'Organization',
         name: siteConfig.name,
+        alternateName: 'String Art Generator',
         url: siteConfig.url,
-        logo: `${siteConfig.url}/logo.png`,
-        sameAs: [siteConfig.links.twitter, siteConfig.links.github],
-        contactPoint: {
-          '@type': 'ContactPoint',
-          contactType: 'Customer Support',
-          email: siteConfig.contact.support,
+        logo: {
+          '@type': 'ImageObject',
+          url: `${siteConfig.url}/logo.png`,
+          width: 512,
+          height: 512,
         },
+        description: siteConfig.description,
+        foundingDate: '2024',
+        founder: {
+          '@type': 'Person',
+          name: 'String Art Generator Team',
+        },
+        sameAs: [siteConfig.links.github, siteConfig.links.twitter],
+        contactPoint: [
+          {
+            '@type': 'ContactPoint',
+            contactType: 'Customer Support',
+            email: siteConfig.contact.support,
+            availableLanguage: ['English'],
+          },
+          {
+            '@type': 'ContactPoint',
+            contactType: 'Technical Support',
+            url: `${siteConfig.links.github}/issues`,
+          },
+        ],
+        address: {
+          '@type': 'PostalAddress',
+          addressCountry: 'US',
+        },
+        knowsAbout: [
+          'String Art',
+          'Generative Art',
+          'Image Processing',
+          'Algorithmic Art',
+          'Web Workers',
+          'Digital Art',
+        ],
       }}
     />
   );
@@ -156,6 +195,57 @@ export function HowToSchema() {
             image: `${siteConfig.url}/step4.png`,
           },
         ],
+      }}
+    />
+  );
+}
+
+// BreadcrumbList for better navigation understanding
+export function BreadcrumbListSchema({
+  items,
+}: {
+  items: { name: string; url: string }[];
+}) {
+  return (
+    <StructuredData
+      type='BreadcrumbList'
+      data={{
+        itemListElement: items.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          item: item.url,
+        })),
+      }}
+    />
+  );
+}
+
+// SiteNavigationElement for main navigation
+export function SiteNavigationSchema() {
+  const navigationItems = [
+    { name: 'Home', url: siteConfig.url },
+    { name: 'Tutorials', url: `${siteConfig.url}/tutorials` },
+    { name: 'FAQ', url: `${siteConfig.url}/faq` },
+    { name: 'Gallery', url: `${siteConfig.url}/gallery` },
+    { name: 'How It Works', url: `${siteConfig.url}/how-it-works` },
+    { name: 'About', url: `${siteConfig.url}/about` },
+    { name: 'Editor', url: `${siteConfig.url}/editor` },
+  ];
+
+  return (
+    <StructuredData
+      type='ItemList'
+      data={{
+        '@type': 'ItemList',
+        name: 'Main Navigation',
+        description: 'Primary navigation menu for String Art Generator',
+        itemListElement: navigationItems.map((item, index) => ({
+          '@type': 'SiteNavigationElement',
+          position: index + 1,
+          name: item.name,
+          url: item.url,
+        })),
       }}
     />
   );
