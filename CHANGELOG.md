@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/bledxs/string-art-generator/compare/v1.9.0...v1.10.0) (2025-11-22)
+
+
+### Features
+
+* improve line scoring and worker handling in string art generation ([4211b00](https://github.com/bledxs/string-art-generator/commit/4211b00914c812c17ef9add8dd1a39f5635d4a09))
+
 ## [1.9.0](https://github.com/bledxs/string-art-generator/compare/v1.8.0...v1.9.0) (2025-11-22)
 
 
