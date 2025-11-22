@@ -1271,20 +1271,59 @@ BOTTOM BAR: Copyright | Privacy | Terms | Cookies
 
 ---
 
-### How It Works Updates
+### How It Works Updates ✅
 
 **Archivo:** `src/app/(marketing)/how-it-works/page.tsx`
 
-**Estado:** ✅ Página ya completa
+**Estado:** ✅ **Actualizada - 21 NOV 2025**
 
-**Contiene:**
+**Mejoras implementadas:**
 
-- 4 steps con explicaciones detalladas
-- Links internos a Editor
-- Scroll animations (framer-motion)
-- Contenido educativo suficiente (~800 palabras)
+- [x] **Links internos estratégicos** en cada step:
 
-**Notas:** No requiere actualizaciones adicionales para AdSense
+  - Step 1: Link a `/tutorials/image-selection`
+  - Step 2: Link a `/tutorials/parameters`
+  - Step 3: Link a `/blog/la-ciencia-detras-del-string-art`
+  - Step 4: Links a `/tutorials/export-formats` y `/tutorials/physical-build`
+
+- [x] **Sección "Popular Use Cases"** (6 cards):
+
+  - Portrait Art, Logo Design, Education
+  - Gift Ideas, Home Decor, Art Projects
+  - Cada uno con link a Use Cases específico
+
+- [x] **Sección "Frequently Asked Questions"** (3 FAQs preview):
+
+  - Generation time, Commercial use, Privacy
+  - Link a página completa FAQ (22 questions)
+
+- [x] **Gallery CTA Section**:
+
+  - Invitación a explorar ejemplos
+  - Link directo a `/gallery`
+
+- [x] **Tips section actualizada**:
+  - Link a página completa `/tips`
+
+**Contenido:**
+
+- 4 steps con explicaciones detalladas (~2,500 palabras)
+- Algorithm explanation (3-step breakdown)
+- Pro Tips (2 categories)
+- 6 Use Cases populares
+- 3 FAQs principales
+- 4 CTAs estratégicos (Editor, Tutorials, Gallery, FAQ)
+- **12 internal links** para mejor SEO y navegación
+
+**Impacto SEO:**
+
+- **Internal linking mejorado:** 12+ links relevantes
+- **Dwell time:** Más contenido aumenta tiempo en página
+- **Bounce rate:** CTAs y links reducen abandono
+- **Crawlability:** Mejor indexación por links internos
+
+**Notas:** Página completa para AdSense con contenido educativo extenso y
+navegación optimizada
 
 ---
 

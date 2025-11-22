@@ -93,6 +93,14 @@ export default function HowItWorksPage() {
                     </span>
                   </li>
                 </ul>
+                <div className='mt-6'>
+                  <Link
+                    href='/tutorials/image-selection'
+                    className='inline-flex items-center text-sm font-medium text-primary hover:underline'>
+                    Learn more about image selection
+                    <ArrowRight className='ml-1 h-4 w-4' />
+                  </Link>
+                </div>
               </div>
               <div className='order-1 md:order-2'>
                 <Card className='bg-background/95 border-border/50'>
@@ -172,6 +180,14 @@ export default function HowItWorksPage() {
                     </div>
                   </li>
                 </ul>
+                <div className='mt-6'>
+                  <Link
+                    href='/tutorials/parameters'
+                    className='inline-flex items-center text-sm font-medium text-primary hover:underline'>
+                    Full parameter optimization guide
+                    <ArrowRight className='ml-1 h-4 w-4' />
+                  </Link>
+                </div>
               </div>
             </div>
 
@@ -215,6 +231,14 @@ export default function HowItWorksPage() {
                     </span>
                   </li>
                 </ul>
+                <div className='mt-6'>
+                  <Link
+                    href='/blog/la-ciencia-detras-del-string-art'
+                    className='inline-flex items-center text-sm font-medium text-primary hover:underline'>
+                    Deep dive into the algorithm
+                    <ArrowRight className='ml-1 h-4 w-4' />
+                  </Link>
+                </div>
               </div>
               <div className='order-1 md:order-2'>
                 <Card className='bg-background/95 border-border/50'>
@@ -288,6 +312,21 @@ export default function HowItWorksPage() {
                     </div>
                   </li>
                 </ul>
+                <div className='mt-6 space-y-2'>
+                  <Link
+                    href='/tutorials/export-formats'
+                    className='inline-flex items-center text-sm font-medium text-primary hover:underline'>
+                    Learn about export formats
+                    <ArrowRight className='ml-1 h-4 w-4' />
+                  </Link>
+                  <br />
+                  <Link
+                    href='/tutorials/physical-build'
+                    className='inline-flex items-center text-sm font-medium text-primary hover:underline'>
+                    Physical construction guide
+                    <ArrowRight className='ml-1 h-4 w-4' />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -384,6 +423,215 @@ export default function HowItWorksPage() {
               </CardContent>
             </Card>
           </div>
+          <div className='mt-8 text-center'>
+            <Link
+              href='/tips'
+              className='inline-flex items-center text-sm font-medium text-primary hover:underline'>
+              View all tips and tricks
+              <ArrowRight className='ml-1 h-4 w-4' />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Common Use Cases Section */}
+      <section className='py-12 md:py-16 px-4 bg-background'>
+        <div className='container mx-auto max-w-4xl'>
+          <div className='text-center mb-8 md:mb-12 px-4'>
+            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4'>
+              Popular Use Cases
+            </h2>
+            <p className='text-base md:text-lg text-foreground/80 max-w-2xl mx-auto'>
+              See how others are using String Art Generator for different
+              creative projects
+            </p>
+          </div>
+
+          <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6'>
+            <Card className='bg-background/95 border-border/50 hover:border-primary/50 transition-colors'>
+              <CardContent className='p-6'>
+                <h3 className='font-bold mb-2 text-foreground'>Portrait Art</h3>
+                <p className='text-sm text-foreground/70 mb-4'>
+                  Transform family photos into unique wall decorations
+                </p>
+                <Link
+                  href='/use-cases#personalized-portraits'
+                  className='text-xs text-primary hover:underline inline-flex items-center'>
+                  Learn more
+                  <ArrowRight className='ml-1 h-3 w-3' />
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className='bg-background/98 border-border/50 hover:border-primary/50 transition-colors'>
+              <CardContent className='p-6'>
+                <h3 className='font-bold mb-2 text-foreground'>Logo Design</h3>
+                <p className='text-sm text-foreground/70 mb-4'>
+                  Create artistic brand representations for offices
+                </p>
+                <Link
+                  href='/use-cases#business-branding'
+                  className='text-xs text-primary hover:underline inline-flex items-center'>
+                  Learn more
+                  <ArrowRight className='ml-1 h-3 w-3' />
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className='bg-background/95 border-border/50 hover:border-primary/50 transition-colors'>
+              <CardContent className='p-6'>
+                <h3 className='font-bold mb-2 text-foreground'>Education</h3>
+                <p className='text-sm text-foreground/70 mb-4'>
+                  Teach math, geometry, and algorithms visually
+                </p>
+                <Link
+                  href='/use-cases#educational-tools'
+                  className='text-xs text-primary hover:underline inline-flex items-center'>
+                  Learn more
+                  <ArrowRight className='ml-1 h-3 w-3' />
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className='bg-background/98 border-border/50 hover:border-primary/50 transition-colors'>
+              <CardContent className='p-6'>
+                <h3 className='font-bold mb-2 text-foreground'>Gift Ideas</h3>
+                <p className='text-sm text-foreground/70 mb-4'>
+                  Handmade personalized presents for special occasions
+                </p>
+                <Link
+                  href='/use-cases#personalized-gifts'
+                  className='text-xs text-primary hover:underline inline-flex items-center'>
+                  Learn more
+                  <ArrowRight className='ml-1 h-3 w-3' />
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className='bg-background/95 border-border/50 hover:border-primary/50 transition-colors'>
+              <CardContent className='p-6'>
+                <h3 className='font-bold mb-2 text-foreground'>Home Decor</h3>
+                <p className='text-sm text-foreground/70 mb-4'>
+                  Design custom artwork matching your interior style
+                </p>
+                <Link
+                  href='/use-cases#home-decoration'
+                  className='text-xs text-primary hover:underline inline-flex items-center'>
+                  Learn more
+                  <ArrowRight className='ml-1 h-3 w-3' />
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className='bg-background/98 border-border/50 hover:border-primary/50 transition-colors'>
+              <CardContent className='p-6'>
+                <h3 className='font-bold mb-2 text-foreground'>Art Projects</h3>
+                <p className='text-sm text-foreground/70 mb-4'>
+                  Explore generative art and creative coding
+                </p>
+                <Link
+                  href='/use-cases#art-exploration'
+                  className='text-xs text-primary hover:underline inline-flex items-center'>
+                  Learn more
+                  <ArrowRight className='ml-1 h-3 w-3' />
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className='mt-8 text-center'>
+            <Link href='/use-cases'>
+              <Button variant='outline' size='lg' className='w-full sm:w-auto'>
+                View All Use Cases
+                <ArrowRight className='ml-2 h-4 w-4' />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Quick Links Section */}
+      <section className='py-12 md:py-16 px-4 bg-muted'>
+        <div className='container mx-auto max-w-4xl'>
+          <div className='text-center mb-8 md:mb-12 px-4'>
+            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4'>
+              Frequently Asked Questions
+            </h2>
+            <p className='text-base md:text-lg text-foreground/80 max-w-2xl mx-auto'>
+              Quick answers to common questions about the string art generation
+              process
+            </p>
+          </div>
+
+          <div className='space-y-4'>
+            <Card className='bg-background/95 border-border/50'>
+              <CardContent className='p-6'>
+                <h3 className='font-semibold mb-2 text-foreground'>
+                  How long does generation take?
+                </h3>
+                <p className='text-sm text-foreground/70'>
+                  Typically 5-30 seconds depending on parameters. Higher
+                  pin/line counts take longer but produce more detailed results.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className='bg-background/98 border-border/50'>
+              <CardContent className='p-6'>
+                <h3 className='font-semibold mb-2 text-foreground'>
+                  Can I use this commercially?
+                </h3>
+                <p className='text-sm text-foreground/70'>
+                  Yes! The tool is 100% free and open source (MIT License). You
+                  own all rights to your generated string art.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className='bg-background/95 border-border/50'>
+              <CardContent className='p-6'>
+                <h3 className='font-semibold mb-2 text-foreground'>
+                  Do you store my images?
+                </h3>
+                <p className='text-sm text-foreground/70'>
+                  No. All processing happens locally in your browser. Your
+                  images never leave your device, ensuring complete privacy.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className='mt-8 text-center'>
+            <Link href='/faq'>
+              <Button variant='outline' size='lg' className='w-full sm:w-auto'>
+                View All FAQs (22 Questions)
+                <ArrowRight className='ml-2 h-4 w-4' />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery CTA Section */}
+      <section className='py-12 md:py-16 px-4 bg-background border-b'>
+        <div className='container mx-auto max-w-4xl text-center'>
+          <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 px-4'>
+            Need Inspiration?
+          </h2>
+          <p className='text-base md:text-lg text-foreground/80 mb-6 md:mb-8 px-4'>
+            Browse our curated gallery of example configurations and try them
+            directly in the editor
+          </p>
+          <Link href='/gallery'>
+            <Button
+              variant='outline'
+              size='lg'
+              className='text-base md:text-lg px-6 md:px-8 w-full sm:w-auto'>
+              <ImageIcon className='mr-2 h-5 w-5' />
+              Browse Gallery
+              <ArrowRight className='ml-2 h-5 w-5' />
+            </Button>
+          </Link>
         </div>
       </section>
 
