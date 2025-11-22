@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.6.0](https://github.com/bledxs/string-art-generator/compare/v1.5.0...v1.6.0) (2025-11-22)
+
+
+### Features
+
+* **about:** add Our Story, Values, Timeline sections and expand icon imports ([812a1a0](https://github.com/bledxs/string-art-generator/commit/812a1a0ef28088500395ed681cfb6ff11f8c034a))
+* agregar página de consejos y mejores prácticas con secciones de selección de imágenes, optimización de parámetros, errores comunes, consejos de rendimiento y construcción física ([9efd76b](https://github.com/bledxs/string-art-generator/commit/9efd76baefdf1dd8256e4630a305dcc32abd22b1))
+* **blog:** add comments section to blog post page with Giscus integration ([d425649](https://github.com/bledxs/string-art-generator/commit/d425649c20ee914a5bdeaf4196f1c82a9b7cc2a0))
+* **landing:** add featured examples, stats, and testimonials sections to landing page ([9d5c492](https://github.com/bledxs/string-art-generator/commit/9d5c492e67c1ad67634cc0c861033a67f3ec6f3e))
+* **layout:** add Back to Top button to site layout ([9e3be83](https://github.com/bledxs/string-art-generator/commit/9e3be83dc0d745025c6a13935af43ddd55f9ffad))
+* **nav:** add Use Cases link to main and mobile navigation ([a3f86d6](https://github.com/bledxs/string-art-generator/commit/a3f86d6143f28c780e3c974f4ea50401f5f9d196))
+* **use-cases:** add Artists & Professionals use case section ([ac052c7](https://github.com/bledxs/string-art-generator/commit/ac052c7b24662221a626ff4fa31892a84037afbf))
+* **use-cases:** add Business & Brands use case section ([331b3eb](https://github.com/bledxs/string-art-generator/commit/331b3eb445388957dc9e971d0746d290ca7d2c2f))
+* **use-cases:** add Educators use case section ([dab3299](https://github.com/bledxs/string-art-generator/commit/dab32990a00a9cb592d2e88947204ef4b5a12350))
+* **use-cases:** add Events & Celebrations use case section ([ef181a0](https://github.com/bledxs/string-art-generator/commit/ef181a0606eed9ce9e1ad2661ca01342ee9669ce))
+* **use-cases:** add Makers & DIY Enthusiasts use case section ([c168f87](https://github.com/bledxs/string-art-generator/commit/c168f876035449c45948478d8f76e565ce7c0e4b))
+* **use-cases:** add new Use Cases marketing page and client component ([40a575e](https://github.com/bledxs/string-art-generator/commit/40a575eba734f2c7c1672ce75c8dc227a26af7fc))
+
+
+### Bug Fixes
+
+* **footer:** update resources links and add missing navigation items ([e586bfe](https://github.com/bledxs/string-art-generator/commit/e586bfe5772137bd4867d0bcf23bb42d94dee459))
+* **ui:** replace bg-linear-to-* with bg-gradient-to-* for Tailwind compatibility ([11f7a3d](https://github.com/bledxs/string-art-generator/commit/11f7a3d8c12feb6400b5b9c3b815b955d2ab8872))
+
 ## [1.5.0](https://github.com/bledxs/string-art-generator/compare/v1.4.0...v1.5.0) (2025-11-21)
 
 
