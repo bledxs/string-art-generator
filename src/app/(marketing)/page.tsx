@@ -1,5 +1,6 @@
 // Server Component - Landing Page
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
@@ -9,6 +10,10 @@ import {
   Image as ImageIcon,
   ArrowRight,
   CheckCircle,
+  Users,
+  Palette,
+  TrendingUp,
+  Star,
 } from 'lucide-react';
 import {
   WebApplicationSchema,
@@ -109,6 +114,101 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Featured Examples Section */}
+      <section className='py-12 md:py-20 px-4 bg-background'>
+        <div className='container mx-auto max-w-6xl'>
+          <div className='text-center mb-8 md:mb-12'>
+            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 px-4'>
+              Featured Examples
+            </h2>
+            <p className='text-muted-foreground max-w-2xl mx-auto px-4'>
+              See what's possible with String Art Generator. Each piece created
+              with just threads and math.
+            </p>
+          </div>
+
+          <div className='grid md:grid-cols-3 gap-6 md:gap-8'>
+            {/* Example 1 - Portrait */}
+            <Card className='overflow-hidden group hover:shadow-xl transition-all'>
+              <div className='aspect-square bg-muted relative overflow-hidden'>
+                <div className='absolute inset-0 bg-linear-to-br from-primary/20 to-secondary/20 flex items-center justify-center'>
+                  <ImageIcon className='h-24 w-24 text-muted-foreground/30' />
+                </div>
+              </div>
+              <div className='p-4 space-y-2'>
+                <div className='flex items-center gap-2'>
+                  <span className='inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary'>
+                    Portrait
+                  </span>
+                  <span className='text-xs text-muted-foreground'>
+                    300 pins, 4000 lines
+                  </span>
+                </div>
+                <h3 className='font-bold'>High Detail Portrait</h3>
+                <p className='text-sm text-muted-foreground'>
+                  Perfect for capturing facial features with high contrast.
+                </p>
+              </div>
+            </Card>
+
+            {/* Example 2 - Logo */}
+            <Card className='overflow-hidden group hover:shadow-xl transition-all'>
+              <div className='aspect-square bg-muted relative overflow-hidden'>
+                <div className='absolute inset-0 bg-linear-to-br from-secondary/20 to-accent/20 flex items-center justify-center'>
+                  <Sparkles className='h-24 w-24 text-muted-foreground/30' />
+                </div>
+              </div>
+              <div className='p-4 space-y-2'>
+                <div className='flex items-center gap-2'>
+                  <span className='inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-secondary/10 text-secondary'>
+                    Logo
+                  </span>
+                  <span className='text-xs text-muted-foreground'>
+                    150 pins, 2000 lines
+                  </span>
+                </div>
+                <h3 className='font-bold'>Bold Logo Design</h3>
+                <p className='text-sm text-muted-foreground'>
+                  Clean, recognizable designs with strong shapes.
+                </p>
+              </div>
+            </Card>
+
+            {/* Example 3 - Abstract */}
+            <Card className='overflow-hidden group hover:shadow-xl transition-all'>
+              <div className='aspect-square bg-muted relative overflow-hidden'>
+                <div className='absolute inset-0 bg-linear-to-br from-accent/20 to-primary/20 flex items-center justify-center'>
+                  <Palette className='h-24 w-24 text-muted-foreground/30' />
+                </div>
+              </div>
+              <div className='p-4 space-y-2'>
+                <div className='flex items-center gap-2'>
+                  <span className='inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent'>
+                    Abstract
+                  </span>
+                  <span className='text-xs text-muted-foreground'>
+                    200 pins, 3000 lines
+                  </span>
+                </div>
+                <h3 className='font-bold'>Artistic Expression</h3>
+                <p className='text-sm text-muted-foreground'>
+                  Unique patterns and creative interpretations.
+                </p>
+              </div>
+            </Card>
+          </div>
+
+          <div className='text-center mt-8'>
+            <Link href='/gallery'>
+              <Button variant='outline' size='lg'>
+                View Full Gallery
+                <ArrowRight className='ml-2 h-4 w-4' />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* How It Works */}
       <section className='py-12 md:py-20 px-4 bg-background'>
         <div className='container mx-auto max-w-4xl'>
@@ -160,6 +260,53 @@ export default function LandingPage() {
                   art. Download in your preferred format and start building!
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className='py-12 md:py-16 px-4 bg-linear-to-br from-primary/5 via-background to-secondary/5'>
+        <div className='container mx-auto max-w-6xl'>
+          <div className='grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8'>
+            <div className='text-center space-y-2'>
+              <div className='h-16 w-16 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-3'>
+                <Users className='h-8 w-8 text-primary' />
+              </div>
+              <div className='text-3xl md:text-4xl font-bold text-foreground'>
+                2.3K+
+              </div>
+              <p className='text-sm text-muted-foreground'>Unique Visitors</p>
+            </div>
+
+            <div className='text-center space-y-2'>
+              <div className='h-16 w-16 mx-auto rounded-2xl bg-secondary/10 flex items-center justify-center mb-3'>
+                <Sparkles className='h-8 w-8 text-secondary' />
+              </div>
+              <div className='text-3xl md:text-4xl font-bold text-foreground'>
+                500+
+              </div>
+              <p className='text-sm text-muted-foreground'>Designs Created</p>
+            </div>
+
+            <div className='text-center space-y-2'>
+              <div className='h-16 w-16 mx-auto rounded-2xl bg-accent/10 flex items-center justify-center mb-3'>
+                <Download className='h-8 w-8 text-accent' />
+              </div>
+              <div className='text-3xl md:text-4xl font-bold text-foreground'>
+                1K+
+              </div>
+              <p className='text-sm text-muted-foreground'>Files Downloaded</p>
+            </div>
+
+            <div className='text-center space-y-2'>
+              <div className='h-16 w-16 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-3'>
+                <TrendingUp className='h-8 w-8 text-primary' />
+              </div>
+              <div className='text-3xl md:text-4xl font-bold text-foreground'>
+                100%
+              </div>
+              <p className='text-sm text-muted-foreground'>Free Forever</p>
             </div>
           </div>
         </div>
@@ -225,6 +372,87 @@ export default function LandingPage() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className='py-12 md:py-20 px-4 bg-card'>
+        <div className='container mx-auto max-w-6xl'>
+          <div className='text-center mb-8 md:mb-12'>
+            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 px-4'>
+              Loved by Creators Worldwide
+            </h2>
+            <p className='text-muted-foreground max-w-2xl mx-auto px-4'>
+              See what artists, educators, and makers are saying about String
+              Art Generator.
+            </p>
+          </div>
+
+          <div className='grid md:grid-cols-3 gap-6 md:gap-8'>
+            {/* Testimonial 1 */}
+            <Card className='p-6 space-y-4 bg-background hover:shadow-lg transition-shadow'>
+              <div className='flex gap-1 mb-2'>
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className='h-4 w-4 fill-secondary text-secondary'
+                  />
+                ))}
+              </div>
+              <p className='text-sm text-muted-foreground italic'>
+                "This tool transformed how I create commissioned art pieces. The
+                ability to preview and adjust parameters saves hours of work!"
+              </p>
+              <div className='pt-2 border-t'>
+                <p className='font-semibold text-sm'>Sarah Chen</p>
+                <p className='text-xs text-muted-foreground'>
+                  Professional Artist
+                </p>
+              </div>
+            </Card>
+
+            {/* Testimonial 2 */}
+            <Card className='p-6 space-y-4 bg-background hover:shadow-lg transition-shadow'>
+              <div className='flex gap-1 mb-2'>
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className='h-4 w-4 fill-secondary text-secondary'
+                  />
+                ))}
+              </div>
+              <p className='text-sm text-muted-foreground italic'>
+                "My students love seeing math come to life! Perfect for teaching
+                algorithms and geometry in a visual, engaging way."
+              </p>
+              <div className='pt-2 border-t'>
+                <p className='font-semibold text-sm'>Dr. James Rodriguez</p>
+                <p className='text-xs text-muted-foreground'>
+                  Mathematics Educator
+                </p>
+              </div>
+            </Card>
+
+            {/* Testimonial 3 */}
+            <Card className='p-6 space-y-4 bg-background hover:shadow-lg transition-shadow'>
+              <div className='flex gap-1 mb-2'>
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className='h-4 w-4 fill-secondary text-secondary'
+                  />
+                ))}
+              </div>
+              <p className='text-sm text-muted-foreground italic'>
+                "Made a custom portrait for my mom's birthday. The TXT file made
+                the physical build so easy. She absolutely loved it!"
+              </p>
+              <div className='pt-2 border-t'>
+                <p className='font-semibold text-sm'>Alex Martinez</p>
+                <p className='text-xs text-muted-foreground'>DIY Enthusiast</p>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
