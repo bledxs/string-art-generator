@@ -17,7 +17,7 @@ import type { Metadata } from 'next';
 import { siteConfig } from '@/lib/config';
 import { blogPosts } from '@/content/blog/posts';
 import { deriveReadingTime } from '@/content/blog/reading-time';
-import { ShareButton } from '@/features/blog/components/ShareButton';
+import { ShareButton, Comments } from '@/features/blog/components';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -216,6 +216,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
           </CardContent>
         </Card>
+
+        {/* Comments Section */}
+        <div className='mt-12 mb-12'>
+          <h2 className='text-2xl font-bold mb-6 pb-2 border-b-2 border-primary/20'>
+            Comments & Discussion
+          </h2>
+          <p className='text-sm text-muted-foreground mb-6'>
+            Join the conversation! Sign in with your GitHub account to leave a
+            comment.
+          </p>
+          <Comments slug={post.slug} />
+        </div>
       </article>
 
       {/* Related Posts or CTA */}
