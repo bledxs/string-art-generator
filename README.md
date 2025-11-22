@@ -274,14 +274,13 @@ NEXT_PUBLIC_ENABLE_ADS=false  # Set to 'true' in production
 
 - **[Quality Audit](./docs/QUALITY-AUDIT.md)** - 19/19 criteria checklist (100%
   pass)
-- **[AdSense Integration](./docs/ADSENSE-INTEGRATION.md)** - Complete
-  monetization guide
-- **[Project Structure](./docs/PROJECT-STRUCTURE.md)** - Architecture details
-- **[Tech Stack](./docs/TECH-STACK.md)** - Framework and library choices
-- **[Image Generation](./docs/IMAGE-GENERATION-GUIDE.md)** - SEO images
-  automation
+- **[Tech Stack](./docs/TECH-STACK.md)** - Framework and library details
+- **[Project Structure](./docs/PROJECT-STRUCTURE.md)** - Architecture overview
+- **[SEO Images Guide](./docs/GENERATE-SEO-IMAGES.md)** - Automated image
+  generation
+- **[AdSense Integration](./docs/ADSENSE-INTEGRATION.md)** - Monetization setup
 - **[Vercel Deployment](./docs/VERCEL-DEPLOYMENT.md)** - Production deployment
-  guide
+- **[Giscus Setup](./docs/GISCUS-SETUP.md)** - Blog comments configuration
 
 ---
 

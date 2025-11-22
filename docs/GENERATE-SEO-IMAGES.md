@@ -1,26 +1,28 @@
-# 📸 Cómo Generar las Imágenes SEO
+# 📸 SEO Images Generation Guide
 
-## Paso 1: Prepara tu Logo
+## Quick Start
 
-Coloca tu archivo `logo.png` en la **raíz del proyecto** (mismo nivel que
-`package.json`).
+### Automated Generation (Recommended)
 
-### Recomendaciones para el Logo:
+1. **Place your logo** in the project root: `logo.png`
 
-- **Tamaño mínimo**: 512x512px (recomendado 1024x1024px para mejor calidad)
-- **Formato**: PNG con fondo transparente
-- **Aspecto**: Cuadrado o proporcional
-- **Contenido**: Logo claro y legible, sin mucho texto pequeño
+   - Recommended size: 1024x1024px or larger
+   - Format: PNG with transparent background
+   - Square aspect ratio
 
-## Paso 2: Ejecutar el Script
+2. **Run the generator:**
 
-```bash
-pnpm generate:images
-```
+   ```bash
+   pnpm generate:images
+   ```
 
-## Paso 3: Verificar las Imágenes
+3. **All images are created** in `public/` directory automatically
 
-El script generará todas las imágenes en la carpeta `public/`:
+---
+
+## Generated Images
+
+The script creates 10 optimized images:
 
 ```
 public/
