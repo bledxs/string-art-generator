@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/bledxs/string-art-generator/compare/v1.8.0...v1.9.0) (2025-11-22)
+
+
+### Features
+
+* add CODEOWNERS file and update pre-commit hook for linting ([f08c281](https://github.com/bledxs/string-art-generator/commit/f08c281f65fbc8e27b72b1ee553b7f9b2e5b6459))
+
 ## [1.8.0](https://github.com/bledxs/string-art-generator/compare/v1.7.0...v1.8.0) (2025-11-22)
 
 
