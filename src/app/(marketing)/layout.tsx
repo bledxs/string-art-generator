@@ -3,6 +3,7 @@ import { siteConfig } from '@/lib/config';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { HeaderAd } from '@/components/ads';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export const metadata: Metadata = {
   title: {
@@ -123,6 +124,7 @@ export default function MarketingLayout({
     <>
       <Header />
       <HeaderAd />
+      <Breadcrumbs />
       <main className='bg-background'>{children}</main>
       <Footer />
     </>
