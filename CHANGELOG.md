@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/bledxs/string-art-generator/compare/v1.7.0...v1.8.0) (2025-11-22)
+
+
+### Features
+
+* **breadcrumbs:** add Breadcrumbs component for improved navigation ([7ea290f](https://github.com/bledxs/string-art-generator/commit/7ea290f23efa90eec303227de7b01a3f94ec0b02))
+
 ## [1.7.0](https://github.com/bledxs/string-art-generator/compare/v1.6.0...v1.7.0) (2025-11-22)
 
 
