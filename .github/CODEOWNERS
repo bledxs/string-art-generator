@@ -1,0 +1,26 @@
+# Code Owners for string-art-generator
+# These owners will be automatically requested for review when someone opens a pull request.
+# Learn more: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global owner - all files require review from @bledxs
+* @bledxs
+
+# Critical configuration files
+/.github/ @bledxs
+/package.json @bledxs
+/package-lock.json @bledxs
+/pnpm-lock.yaml @bledxs
+/tsconfig.json @bledxs
+/next.config.ts @bledxs
+/.env* @bledxs
+
+# Documentation
+/docs/ @bledxs
+/README.md @bledxs
+
+# Core application code
+/src/ @bledxs
+
+# Deployment configuration
+/vercel.json @bledxs
+/.vercelignore @bledxs
