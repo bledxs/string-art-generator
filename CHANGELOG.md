@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/bledxs/string-art-generator/compare/v1.4.0...v1.5.0) (2025-11-21)
+
+
+### Features
+
+* agregar imágenes a los metadatos de Twitter en la página del blog ([a1bc8dc](https://github.com/bledxs/string-art-generator/commit/a1bc8dc7b9edd383e2095afb360521ebe128c4a2))
+
 ## [1.4.0](https://github.com/bledxs/string-art-generator/compare/v1.3.0...v1.4.0) (2025-11-21)
 
 
