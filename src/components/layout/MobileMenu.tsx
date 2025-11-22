@@ -41,6 +41,7 @@ export function MobileMenu() {
     { href: '/blog', label: 'Blog', icon: Newspaper },
     { href: '/tutorials', label: 'Tutorials', icon: GraduationCap },
     { href: '/tips', label: 'Tips & Best Practices', icon: Lightbulb },
+    { href: '/use-cases', label: 'Use Cases', icon: Sparkles },
     { href: '/faq', label: 'FAQ', icon: HelpCircle },
     { href: '/gallery', label: 'Gallery', icon: Image },
     { href: '/resources', label: 'Resources', icon: Package },
