@@ -118,6 +118,20 @@ export function Footer() {
               </li>
               <li>
                 <Link
+                  href='/tips'
+                  className='hover:text-foreground transition-colors'>
+                  Tips
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/use-cases'
+                  className='hover:text-foreground transition-colors'>
+                  Use Cases
+                </Link>
+              </li>
+              <li>
+                <Link
                   href='/gallery'
                   className='hover:text-foreground transition-colors'>
                   Gallery
@@ -134,7 +148,7 @@ export function Footer() {
                 <Link
                   href='/resources'
                   className='hover:text-foreground transition-colors'>
-                  Resources
+                  Templates
                 </Link>
               </li>
               <li>
