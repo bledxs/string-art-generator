@@ -92,7 +92,7 @@ export default function ResourcesPage() {
       <CommunitySection />
 
       {/* CTA Card */}
-      <Card className='bg-linear-to-br from-primary/10 to-primary/5 border-primary/20'>
+      <Card className='bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20'>
         <CardContent className='p-8 text-center'>
           <h2 className='text-2xl font-bold mb-4'>
             Ready to Create Your First String Art?

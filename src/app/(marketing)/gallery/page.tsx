@@ -168,7 +168,7 @@ export default function GalleryPage() {
             key={item.id}
             className='overflow-hidden hover:shadow-lg transition-shadow'>
             {/* Image Placeholder */}
-            <div className='aspect-square bg-linear-to-br from-muted to-muted/50 flex items-center justify-center border-b'>
+            <div className='aspect-square bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center border-b'>
               <div className='text-center space-y-2 p-6'>
                 <ImageIcon className='h-12 w-12 mx-auto text-muted-foreground/40' />
                 <p className='text-sm text-muted-foreground'>

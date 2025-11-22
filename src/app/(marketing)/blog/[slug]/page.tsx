@@ -199,7 +199,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
 
         {/* Share */}
-        <Card className='bg-linear-to-br from-primary/5 via-primary/10 to-secondary/5 border-primary/20'>
+        <Card className='bg-gradient-to-br from-primary/5 via-primary/10 to-secondary/5 border-primary/20'>
           <CardContent className='p-6'>
             <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4'>
               <div>
@@ -220,7 +220,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       {/* Related Posts or CTA */}
       <div className='mt-12 grid md:grid-cols-2 gap-6'>
-        <Card className='bg-linear-to-br from-primary/10 to-primary/5 border-primary/20 hover:border-primary/40 transition-all hover:shadow-lg group'>
+        <Card className='bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 hover:border-primary/40 transition-all hover:shadow-lg group'>
           <CardContent className='p-6'>
             <div className='flex items-start gap-3 mb-3'>
               <div className='p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors'>
@@ -242,7 +242,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </CardContent>
         </Card>
 
-        <Card className='bg-linear-to-br from-secondary/10 to-secondary/5 border-secondary/20 hover:border-secondary/40 transition-all hover:shadow-lg group'>
+        <Card className='bg-gradient-to-br from-secondary/10 to-secondary/5 border-secondary/20 hover:border-secondary/40 transition-all hover:shadow-lg group'>
           <CardContent className='p-6'>
             <div className='flex items-start gap-3 mb-3'>
               <div className='p-2 bg-secondary/10 rounded-lg group-hover:bg-secondary/20 transition-colors'>
