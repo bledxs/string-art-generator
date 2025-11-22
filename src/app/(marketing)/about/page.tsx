@@ -2,7 +2,19 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Sparkles, Heart, Code, Users, Target } from 'lucide-react';
+import {
+  Sparkles,
+  Heart,
+  Code,
+  Users,
+  Target,
+  Lightbulb,
+  Lock,
+  Zap,
+  BookOpen,
+  Rocket,
+  Award,
+} from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -111,8 +123,240 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Technology Section */}
+      {/* Our Story Section */}
       <section className='py-12 md:py-16 px-4 bg-background'>
+        <div className='container mx-auto max-w-4xl'>
+          <div className='text-center mb-8 md:mb-12 px-4'>
+            <Lightbulb className='h-10 w-10 md:h-12 md:w-12 text-primary mx-auto mb-4' />
+            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4'>
+              Our Story
+            </h2>
+          </div>
+
+          <div className='prose prose-lg dark:prose-invert max-w-none px-4'>
+            <p className='text-base md:text-lg text-foreground/80 leading-relaxed mb-4'>
+              String Art Generator began as a weekend experiment to explore the
+              intersection of art and algorithms. Fascinated by the mathematical
+              beauty of thread patterns, we wondered: could we automate the
+              creation of these intricate designs?
+            </p>
+            <p className='text-base md:text-lg text-foreground/80 leading-relaxed mb-4'>
+              What started as a simple proof-of-concept quickly evolved into
+              something more meaningful. We realized this tool could empower
+              artists to explore new creative possibilities, help educators
+              teach complex concepts visually, and enable makers to bring their
+              ideas to life without tedious manual calculations.
+            </p>
+            <p className='text-base md:text-lg text-foreground/80 leading-relaxed mb-4'>
+              Today, String Art Generator serves thousands of users worldwide—
+              from professional artists creating commissioned pieces to students
+              learning about algorithms, from DIY enthusiasts building gifts to
+              businesses creating unique branding.
+            </p>
+            <p className='text-base md:text-lg text-foreground/80 leading-relaxed'>
+              We're proud to offer this tool completely free, with no ads or
+              tracking, as our contribution to the maker community. Every update
+              and feature is driven by user feedback and our passion for making
+              generative art accessible to all.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Values Section */}
+      <section className='py-12 md:py-16 px-4 bg-muted'>
+        <div className='container mx-auto max-w-6xl'>
+          <div className='text-center mb-8 md:mb-12 px-4'>
+            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4'>
+              Our Values
+            </h2>
+            <p className='text-base md:text-lg text-foreground/80 max-w-2xl mx-auto'>
+              The principles that guide everything we build.
+            </p>
+          </div>
+
+          <div className='grid md:grid-cols-3 gap-6 md:gap-8'>
+            {/* Value 1 */}
+            <Card className='bg-background hover:shadow-lg transition-shadow'>
+              <CardContent className='p-6 space-y-4'>
+                <div className='h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center'>
+                  <Code className='h-6 w-6 text-primary' />
+                </div>
+                <h3 className='text-xl font-bold'>Open Source</h3>
+                <p className='text-sm text-muted-foreground leading-relaxed'>
+                  We believe in transparency and community collaboration. Our
+                  code is open for anyone to learn from, contribute to, or fork
+                  for their own projects.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Value 2 */}
+            <Card className='bg-background hover:shadow-lg transition-shadow'>
+              <CardContent className='p-6 space-y-4'>
+                <div className='h-12 w-12 rounded-xl bg-secondary/10 flex items-center justify-center'>
+                  <Lock className='h-6 w-6 text-secondary' />
+                </div>
+                <h3 className='text-xl font-bold'>Privacy First</h3>
+                <p className='text-sm text-muted-foreground leading-relaxed'>
+                  Your images are processed entirely in your browser. We don't
+                  upload, store, or track your creations. What you make is
+                  yours, period.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Value 3 */}
+            <Card className='bg-background hover:shadow-lg transition-shadow'>
+              <CardContent className='p-6 space-y-4'>
+                <div className='h-12 w-12 rounded-xl bg-accent/10 flex items-center justify-center'>
+                  <Heart className='h-6 w-6 text-accent' />
+                </div>
+                <h3 className='text-xl font-bold'>Free Forever</h3>
+                <p className='text-sm text-muted-foreground leading-relaxed'>
+                  Powerful creative tools shouldn't be locked behind paywalls.
+                  String Art Generator will always be free, with no premium
+                  tiers or hidden fees.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Timeline Section */}
+      <section className='py-12 md:py-16 px-4 bg-background'>
+        <div className='container mx-auto max-w-4xl'>
+          <div className='text-center mb-8 md:mb-12 px-4'>
+            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4'>
+              Project Timeline
+            </h2>
+            <p className='text-base md:text-lg text-foreground/80'>
+              Our journey from concept to community tool.
+            </p>
+          </div>
+
+          <div className='space-y-6 md:space-y-8 px-4'>
+            {/* Timeline Item 1 */}
+            <div className='flex gap-4 md:gap-6'>
+              <div className='flex flex-col items-center'>
+                <div className='h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center shrink-0'>
+                  <Lightbulb className='h-6 w-6 text-primary' />
+                </div>
+                <div className='w-0.5 flex-1 bg-border mt-2'></div>
+              </div>
+              <div className='pb-8'>
+                <div className='text-sm font-medium text-primary mb-1'>
+                  May 2025
+                </div>
+                <h3 className='text-lg md:text-xl font-bold mb-2'>
+                  First Prototype
+                </h3>
+                <p className='text-sm md:text-base text-muted-foreground'>
+                  Built initial version with Vite + React to test the core
+                  string art algorithm. Proved the concept worked and validated
+                  the greedy path optimization approach.
+                </p>
+              </div>
+            </div>
+
+            {/* Timeline Item 2 */}
+            <div className='flex gap-4 md:gap-6'>
+              <div className='flex flex-col items-center'>
+                <div className='h-12 w-12 rounded-full bg-secondary/20 flex items-center justify-center shrink-0'>
+                  <Code className='h-6 w-6 text-secondary' />
+                </div>
+                <div className='w-0.5 flex-1 bg-border mt-2'></div>
+              </div>
+              <div className='pb-8'>
+                <div className='text-sm font-medium text-secondary mb-1'>
+                  June - August 2025
+                </div>
+                <h3 className='text-lg md:text-xl font-bold mb-2'>
+                  Migration to Next.js 15
+                </h3>
+                <p className='text-sm md:text-base text-muted-foreground'>
+                  Rebuilt the app with Next.js 15 for better SEO, performance,
+                  and scalability. Added Web Workers for background processing
+                  and implemented multiple export formats.
+                </p>
+              </div>
+            </div>
+
+            {/* Timeline Item 3 */}
+            <div className='flex gap-4 md:gap-6'>
+              <div className='flex flex-col items-center'>
+                <div className='h-12 w-12 rounded-full bg-accent/20 flex items-center justify-center shrink-0'>
+                  <Rocket className='h-6 w-6 text-accent' />
+                </div>
+                <div className='w-0.5 flex-1 bg-border mt-2'></div>
+              </div>
+              <div className='pb-8'>
+                <div className='text-sm font-medium text-accent mb-1'>
+                  September - October 2025
+                </div>
+                <h3 className='text-lg md:text-xl font-bold mb-2'>
+                  Early Adoption
+                </h3>
+                <p className='text-sm md:text-base text-muted-foreground'>
+                  Soft launch to friends and early testers. Gathered valuable
+                  feedback, fixed bugs, and started building initial user base.
+                  First 100 unique visitors!
+                </p>
+              </div>
+            </div>
+
+            {/* Timeline Item 4 */}
+            <div className='flex gap-4 md:gap-6'>
+              <div className='flex flex-col items-center'>
+                <div className='h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center shrink-0'>
+                  <BookOpen className='h-6 w-6 text-primary' />
+                </div>
+                <div className='w-0.5 flex-1 bg-border mt-2'></div>
+              </div>
+              <div className='pb-8'>
+                <div className='text-sm font-medium text-primary mb-1'>
+                  November 2025
+                </div>
+                <h3 className='text-lg md:text-xl font-bold mb-2'>
+                  Major Update: Next.js 16 + Rich Content
+                </h3>
+                <p className='text-sm md:text-base text-muted-foreground'>
+                  Upgraded to Next.js 16 and React 19.2. Added comprehensive
+                  tutorials, blog with 7 articles, gallery, FAQ, PDF templates,
+                  and comment system. Growth accelerated to 2,300+ unique
+                  visitors in 30 days!
+                </p>
+              </div>
+            </div>
+
+            {/* Timeline Item 5 */}
+            <div className='flex gap-4 md:gap-6'>
+              <div className='flex flex-col items-center'>
+                <div className='h-12 w-12 rounded-full bg-secondary/20 flex items-center justify-center shrink-0'>
+                  <Award className='h-6 w-6 text-secondary' />
+                </div>
+              </div>
+              <div>
+                <div className='text-sm font-medium text-secondary mb-1'>
+                  Today
+                </div>
+                <h3 className='text-lg md:text-xl font-bold mb-2'>
+                  Growing Community
+                </h3>
+                <p className='text-sm md:text-base text-muted-foreground'>
+                  2,300+ unique visitors, hundreds of designs created, and
+                  continuous improvements based on community feedback. The
+                  journey continues!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Technology Section */}
+      <section className='py-12 md:py-16 px-4 bg-muted'>
         <div className='container mx-auto max-w-6xl'>
           <div className='text-center mb-8 md:mb-12 px-4'>
             <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4'>
