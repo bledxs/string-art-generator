@@ -3,6 +3,7 @@ import { Libre_Baskerville } from 'next/font/google';
 import { siteConfig } from '@/lib/config';
 import { AdSenseScript } from '@/components/ads/AdSenseScript';
 import { adsConfig } from '@/lib/ads-config';
+import { BackToTop } from '@/components/ui/back-to-top';
 import './globals.css';
 
 const libreBaskerville = Libre_Baskerville({
@@ -109,6 +110,7 @@ export default function RootLayout({
       <body className={`${libreBaskerville.variable} antialiased dark`}>
         <AdSenseScript />
         {children}
+        <BackToTop />
       </body>
     </html>
   );
