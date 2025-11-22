@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/bledxs/string-art-generator/compare/v1.6.0...v1.7.0) (2025-11-22)
+
+
+### Features
+
+* **how-it-works:** enhance content with internal links, use cases, and FAQs for improved user navigation and SEO ([b3b5969](https://github.com/bledxs/string-art-generator/commit/b3b5969fe06eacd05dfcb58e8e5b2f9b75e532c2))
+
 ## [1.6.0](https://github.com/bledxs/string-art-generator/compare/v1.5.0...v1.6.0) (2025-11-22)
 
 
