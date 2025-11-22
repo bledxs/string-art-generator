@@ -26,7 +26,8 @@ export function optimizePaths(
   const startTime = performance.now();
 
   // Track original metrics
-  const originalCrossings = countCrossings(paths, pinCount);
+  // Disabled expensive O(N^2) calculation for performance
+  const originalCrossings = -1;
 
   let optimizedPaths = [...paths];
 
@@ -49,7 +50,8 @@ export function optimizePaths(
   });
   if (onProgress) onProgress(100);
 
-  const optimizedCrossings = countCrossings(optimizedPaths, pinCount);
+  // Disabled expensive O(N^2) calculation for performance
+  const optimizedCrossings = -1;
   const endTime = performance.now();
 
   return {
@@ -57,7 +59,7 @@ export function optimizePaths(
     metrics: {
       originalCrossings,
       optimizedCrossings,
-      crossingsReduced: originalCrossings - optimizedCrossings,
+      crossingsReduced: 0,
       pathsSimplified: paths.length - optimizedPaths.length,
       processingTime: endTime - startTime,
     },

@@ -33,7 +33,7 @@ export function ParametersPanel() {
           <Slider
             id='pins'
             min={50}
-            max={400}
+            max={500}
             step={10}
             value={[parameters.pins]}
             onValueChange={([value]) => setParameters({ pins: value })}
@@ -54,7 +54,7 @@ export function ParametersPanel() {
           <Slider
             id='lines'
             min={500}
-            max={5000}
+            max={10000}
             step={100}
             value={[parameters.lines]}
             onValueChange={([value]) => setParameters({ lines: value })}

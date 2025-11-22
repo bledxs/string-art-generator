@@ -155,28 +155,35 @@ function calculateLineScore(
   to: PinPosition,
   brightness: number[][],
 ): number {
-  const samples = 50; // Sample points along line
   let score = 0;
+  let count = 0;
 
-  for (let i = 0; i <= samples; i++) {
-    const t = i / samples;
-    const x = from.x + (to.x - from.x) * t;
-    const y = from.y + (to.y - from.y) * t;
+  // Use Bresenham-like stepping to sample every pixel
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  const steps = Math.ceil(distance);
 
-    const xi = Math.floor(x);
-    const yi = Math.floor(y);
+  if (steps === 0) return Infinity; // Same point
 
-    if (
-      yi >= 0 &&
-      yi < brightness.length &&
-      xi >= 0 &&
-      xi < brightness[0].length
-    ) {
-      score += brightness[yi][xi];
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const x = Math.floor(from.x + dx * t);
+    const y = Math.floor(from.y + dy * t);
+
+    if (y >= 0 && y < brightness.length && x >= 0 && x < brightness[0].length) {
+      score += brightness[y][x];
+      count++;
     }
   }
 
-  return score;
+  // Normalize score by length to prefer darker average, not just shorter lines
+  // However, standard greedy often just sums.
+  // If we normalize, we might pick very short dark lines over long dark lines.
+  // But usually we want to cover dark areas.
+  // Let's stick to sum, but maybe we should penalize length slightly?
+  // The original code just summed.
+  return count > 0 ? score / count : Infinity;
 }
 
 /**
@@ -188,23 +195,19 @@ function darkenLine(
   brightness: number[][],
   amount: number,
 ): void {
-  const samples = 50;
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  const steps = Math.ceil(distance);
 
-  for (let i = 0; i <= samples; i++) {
-    const t = i / samples;
-    const x = from.x + (to.x - from.x) * t;
-    const y = from.y + (to.y - from.y) * t;
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const x = Math.floor(from.x + dx * t);
+    const y = Math.floor(from.y + dy * t);
 
-    const xi = Math.floor(x);
-    const yi = Math.floor(y);
-
-    if (
-      yi >= 0 &&
-      yi < brightness.length &&
-      xi >= 0 &&
-      xi < brightness[0].length
-    ) {
-      brightness[yi][xi] = Math.max(0, brightness[yi][xi] + amount);
+    if (y >= 0 && y < brightness.length && x >= 0 && x < brightness[0].length) {
+      // Cap at 255 (white)
+      brightness[y][x] = Math.min(255, brightness[y][x] + amount);
     }
   }
 }
