@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/bledxs/string-art-generator/compare/v1.10.0...v1.11.0) (2025-12-12)
+
+
+### Features
+
+* enhance about page messaging, update blog metadata URLs, and improve gallery functionality ([94f5780](https://github.com/bledxs/string-art-generator/commit/94f5780bfc29996fd949e3a43fa7ce06cedcb685))
+
 ## [1.10.0](https://github.com/bledxs/string-art-generator/compare/v1.9.0...v1.10.0) (2025-11-22)
 
 
