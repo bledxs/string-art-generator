@@ -88,6 +88,56 @@ export const blogPosts: BlogPost[] = [
     tags: ['image selection', 'tips', 'preprocessing', 'contrast'],
     image: '/blog/image-selection.webp',
   },
+  {
+    slug: 'advanced-techniques-professional-string-art',
+    title: 'Advanced Techniques for Professional-Quality String Art',
+    description:
+      'Master advanced string art techniques including multi-color layering, gradient effects, complex patterns, and professional finishing methods for gallery-worthy results.',
+    date: '2024-12-12',
+    author: 'String Art Generator Team',
+    category: 'Tutorials',
+    tags: [
+      'advanced',
+      'techniques',
+      'professional',
+      'multi-color',
+      'gradients',
+    ],
+    image: '/blog/advanced-techniques.webp',
+  },
+  {
+    slug: 'troubleshooting-common-problems',
+    title: 'Troubleshooting Common String Art Problems: Expert Solutions',
+    description:
+      'Complete guide to diagnosing and fixing common string art problems including pattern issues, structural problems, color challenges, and material failures.',
+    date: '2024-12-12',
+    author: 'String Art Generator Team',
+    category: 'Tutorials',
+    tags: ['troubleshooting', 'problems', 'solutions', 'fixes', 'tips'],
+    image: '/blog/troubleshooting.webp',
+  },
+  {
+    slug: 'commercial-string-art-business-guide',
+    title: 'Starting a String Art Business: Complete Commercial Guide',
+    description:
+      'Comprehensive guide to starting and running a profitable string art business including pricing, marketing, production, legal considerations, and scaling strategies.',
+    date: '2024-12-12',
+    author: 'String Art Generator Team',
+    category: 'Business',
+    tags: ['business', 'commercial', 'selling', 'pricing', 'marketing'],
+    image: '/blog/business-guide.webp',
+  },
+  {
+    slug: 'string-art-gift-ideas-every-occasion',
+    title: '30+ String Art Gift Ideas for Every Occasion: Complete Guide',
+    description:
+      'The ultimate gift guide for string art. Discover personalized gift ideas for weddings, birthdays, holidays, graduations, and special occasions with detailed project suggestions.',
+    date: '2024-12-12',
+    author: 'String Art Generator Team',
+    category: 'Inspiration',
+    tags: ['gifts', 'ideas', 'occasions', 'personalized', 'celebrations'],
+    image: '/blog/gift-ideas.webp',
+  },
 ];
 
 export const blogCategories = [
@@ -96,4 +146,5 @@ export const blogCategories = [
   'Tutorials',
   'Mathematics',
   'Artist Profiles',
+  'Business',
 ] as const;
