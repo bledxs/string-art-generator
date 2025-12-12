@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.0](https://github.com/bledxs/string-art-generator/compare/v1.11.0...v1.12.0) (2025-12-12)
+
+
+### Features
+
+* add comprehensive troubleshooting guide for common string art problems ([3fd0302](https://github.com/bledxs/string-art-generator/commit/3fd03020418518fa4e1db0990fb645c348af5e5b))
+
 ## [1.11.0](https://github.com/bledxs/string-art-generator/compare/v1.10.0...v1.11.0) (2025-12-12)
 
 
