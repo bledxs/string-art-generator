@@ -1,14 +1,32 @@
-'use client';
-
-import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Sparkles, Image as ImageIcon, Settings } from 'lucide-react';
 
-// Example gallery items (in production, these could come from a CMS or database)
-const galleryItems = [
+type GalleryCategory =
+  | 'portrait'
+  | 'logo'
+  | 'abstract'
+  | 'animal'
+  | 'landscape';
+
+type GalleryItem = {
+  id: number;
+  title: string;
+  category: GalleryCategory;
+  description: string;
+  pins: number;
+  lines: number;
+  weight: number;
+  opacity: number;
+  complexity: 'Beginner' | 'Intermediate' | 'Advanced';
+  generationTime: string;
+  imageSrc: string;
+};
+
+const galleryItems: GalleryItem[] = [
   {
     id: 1,
     title: 'Portrait - Classic Style',
@@ -20,6 +38,7 @@ const galleryItems = [
     opacity: 0.15,
     complexity: 'Advanced',
     generationTime: '45s',
+    imageSrc: '/blog/history-string-art.webp',
   },
   {
     id: 2,
@@ -32,6 +51,7 @@ const galleryItems = [
     opacity: 0.2,
     complexity: 'Beginner',
     generationTime: '15s',
+    imageSrc: '/blog/comparison.webp',
   },
   {
     id: 3,
@@ -44,6 +64,7 @@ const galleryItems = [
     opacity: 0.12,
     complexity: 'Intermediate',
     generationTime: '25s',
+    imageSrc: '/blog/mathematics.webp',
   },
   {
     id: 4,
@@ -56,6 +77,7 @@ const galleryItems = [
     opacity: 0.18,
     complexity: 'Intermediate',
     generationTime: '35s',
+    imageSrc: '/blog/artists.webp',
   },
   {
     id: 5,
@@ -68,6 +90,7 @@ const galleryItems = [
     opacity: 0.14,
     complexity: 'Advanced',
     generationTime: '50s',
+    imageSrc: '/blog/creative-ways.webp',
   },
   {
     id: 6,
@@ -80,45 +103,47 @@ const galleryItems = [
     opacity: 0.22,
     complexity: 'Beginner',
     generationTime: '20s',
+    imageSrc: '/blog/beginner-guide.webp',
   },
 ];
 
-const categories = [
-  { id: 'all', label: 'All', count: galleryItems.length },
-  {
-    id: 'portrait',
-    label: 'Portraits',
-    count: galleryItems.filter((i) => i.category === 'portrait').length,
-  },
-  {
-    id: 'logo',
-    label: 'Logos',
-    count: galleryItems.filter((i) => i.category === 'logo').length,
-  },
-  {
-    id: 'abstract',
-    label: 'Abstract',
-    count: galleryItems.filter((i) => i.category === 'abstract').length,
-  },
-  {
-    id: 'animal',
-    label: 'Animals',
-    count: galleryItems.filter((i) => i.category === 'animal').length,
-  },
-  {
-    id: 'landscape',
-    label: 'Landscapes',
-    count: galleryItems.filter((i) => i.category === 'landscape').length,
-  },
-];
+const categoryLabels: Record<GalleryCategory, string> = {
+  portrait: 'Portraits',
+  logo: 'Logos',
+  abstract: 'Abstract',
+  animal: 'Animals',
+  landscape: 'Landscapes',
+};
 
-export default function GalleryPage() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+interface GalleryPageProps {
+  searchParams: Promise<{ category?: string }>;
+}
+
+function isGalleryCategory(value: string): value is GalleryCategory {
+  return value in categoryLabels;
+}
+
+export default async function GalleryPage({ searchParams }: GalleryPageProps) {
+  const { category } = await searchParams;
+  const selectedCategory =
+    typeof category === 'string' && isGalleryCategory(category)
+      ? category
+      : 'all';
 
   const filteredItems =
     selectedCategory === 'all'
       ? galleryItems
       : galleryItems.filter((item) => item.category === selectedCategory);
+
+  const categories = [
+    { id: 'all', label: 'All', count: galleryItems.length },
+    ...Object.entries(categoryLabels).map(([id, label]) => ({
+      id,
+      label,
+      count: galleryItems.filter((i) => i.category === id).length,
+    })),
+  ];
+
   return (
     <div className='container mx-auto max-w-7xl px-4 py-8 md:py-12'>
       {/* Header */}
@@ -138,25 +163,30 @@ export default function GalleryPage() {
 
       {/* Category Filters */}
       <div className='mb-8 flex flex-wrap gap-2 justify-center'>
-        {categories.map((cat) => (
-          <Badge
-            key={cat.id}
-            variant={cat.id === selectedCategory ? 'default' : 'outline'}
-            className='cursor-pointer hover:bg-primary/10 transition-colors px-4 py-2'
-            onClick={() => setSelectedCategory(cat.id)}>
-            {cat.label} ({cat.count})
-          </Badge>
-        ))}
+        {categories.map((cat) => {
+          const active = cat.id === selectedCategory;
+          const href =
+            cat.id === 'all' ? '/gallery' : `/gallery?category=${cat.id}`;
+          return (
+            <Link key={cat.id} href={href}>
+              <Badge
+                variant={active ? 'default' : 'outline'}
+                className='cursor-pointer hover:bg-primary/10 transition-colors px-4 py-2'>
+                {cat.label} ({cat.count})
+              </Badge>
+            </Link>
+          );
+        })}
       </div>
 
       {/* Info Card */}
-      <Card className='mb-8 bg-blue-500/5 border-blue-500/30'>
+      <Card className='mb-8 bg-primary/5 border-primary/20'>
         <CardContent className='p-6'>
           <p className='text-sm text-foreground/80'>
-            <strong className='text-foreground'>Note:</strong> These are example
-            configurations. Actual gallery images will be added soon. Each
-            example shows optimal parameter settings you can replicate in the
-            editor.
+            <strong className='text-foreground'>Tip:</strong> Each example
+            includes a ready-to-use configuration (pins, lines, weight, and
+            opacity). Open it in the editor and tweak parameters to match your
+            image.
           </p>
         </CardContent>
       </Card>
@@ -167,17 +197,19 @@ export default function GalleryPage() {
           <Card
             key={item.id}
             className='overflow-hidden hover:shadow-lg transition-shadow'>
-            {/* Image Placeholder */}
-            <div className='aspect-square bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center border-b'>
-              <div className='text-center space-y-2 p-6'>
-                <ImageIcon className='h-12 w-12 mx-auto text-muted-foreground/40' />
-                <p className='text-sm text-muted-foreground'>
-                  Example Image Coming Soon
-                </p>
-                <p className='text-xs text-muted-foreground/70'>
-                  {item.category.charAt(0).toUpperCase() +
-                    item.category.slice(1)}
-                </p>
+            {/* Preview Image */}
+            <div className='aspect-square bg-muted relative overflow-hidden border-b'>
+              <Image
+                src={item.imageSrc}
+                alt={item.title}
+                fill
+                className='object-cover'
+                sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+              />
+              <div className='absolute left-3 top-3'>
+                <Badge variant='secondary' className='text-xs'>
+                  {categoryLabels[item.category]}
+                </Badge>
               </div>
             </div>
 
@@ -239,24 +271,21 @@ export default function GalleryPage() {
         ))}
       </div>
 
-      {/* Coming Soon Section */}
-      <Card className='mt-12 bg-primary/5'>
+      <Card className='mt-12 bg-primary/5 border-primary/20'>
         <CardContent className='p-8 text-center'>
-          <Sparkles className='h-12 w-12 mx-auto text-primary mb-4' />
-          <h3 className='font-bold text-xl mb-3'>More Examples Coming Soon</h3>
+          <ImageIcon className='h-12 w-12 mx-auto text-primary mb-4' />
+          <h2 className='font-bold text-xl mb-3'>Want better results?</h2>
           <p className='text-muted-foreground mb-6 max-w-xl mx-auto'>
-            We're curating a collection of stunning string art examples with
-            before/after images and optimal settings. Check back soon!
+            The biggest improvements usually come from choosing a high-contrast
+            image and dialing in pins/lines. Use the tutorials to pick the right
+            source image and optimize parameters.
           </p>
           <div className='flex flex-col sm:flex-row gap-3 justify-center'>
-            <Link href='/editor'>
-              <Button>
-                <Sparkles className='h-4 w-4 mr-2' />
-                Start Creating
-              </Button>
+            <Link href='/tutorials/image-selection'>
+              <Button variant='outline'>Image Selection Guide</Button>
             </Link>
-            <Link href='/tutorials'>
-              <Button variant='outline'>View Tutorials</Button>
+            <Link href='/tutorials/parameters'>
+              <Button>Parameter Optimization</Button>
             </Link>
           </div>
         </CardContent>

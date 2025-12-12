@@ -78,7 +78,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
     // Check if image physically exists in public/
     const imageExists = post.image
-      ? existsSync(join(process.cwd(), 'public', post.image))
+      ? existsSync(join(process.cwd(), 'public', post.image.replace(/^\//, '')))
       : false;
 
     return {
@@ -316,22 +316,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             </PaginationItem>
           </PaginationContent>
         </Pagination>
-      )}
-
-      {/* Coming Soon - only show on first page with all posts */}
-      {!category && currentPage === 1 && blogPosts.length < 10 && (
-        <Card className='mt-12 bg-primary/5'>
-          <CardContent className='p-8 text-center'>
-            <BookOpen className='h-12 w-12 text-primary mx-auto mb-4' />
-            <h3 className='font-bold text-xl mb-2'>
-              More Articles Coming Soon
-            </h3>
-            <p className='text-muted-foreground max-w-md mx-auto'>
-              We're working on more in-depth tutorials, artist profiles, and
-              mathematical explorations. Check back soon!
-            </p>
-          </CardContent>
-        </Card>
       )}
     </div>
   );

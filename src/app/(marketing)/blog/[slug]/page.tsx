@@ -58,7 +58,7 @@ export async function generateMetadata({
       authors: [post.author],
       images: [
         {
-          url: `${siteConfig.url}/blog/${post.image}`,
+          url: `${siteConfig.url}${post.image}`,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -69,7 +69,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      images: [`${siteConfig.url}/blog/${post.image}`],
+      images: [`${siteConfig.url}${post.image}`],
     },
     robots: {
       index: true,
@@ -95,25 +95,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     // Pass slug so we can derive word count if meta lacks metrics
     dynamicReadingTime = deriveReadingTime(mod.meta ?? {}, '5 min read', slug);
   } catch {
-    return (
-      <div className='container mx-auto max-w-4xl px-4 py-8'>
-        <Card>
-          <CardContent className='p-8 text-center'>
-            <BookOpen className='h-12 w-12 text-muted-foreground mx-auto mb-4' />
-            <h2 className='text-xl font-bold mb-2'>Content Coming Soon</h2>
-            <p className='text-muted-foreground mb-6'>
-              This article is currently being written. Check back soon!
-            </p>
-            <Link href='/blog'>
-              <Button>
-                <ArrowLeft className='h-4 w-4 mr-2' />
-                Back to Blog
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-      </div>
-    );
+    notFound();
   }
 
   return (

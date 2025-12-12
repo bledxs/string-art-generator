@@ -154,9 +154,9 @@ export default function AboutPage() {
               businesses creating unique branding.
             </p>
             <p className='text-base md:text-lg text-foreground/80 leading-relaxed'>
-              We're proud to offer this tool completely free, with no ads or
-              tracking, as our contribution to the maker community. Every update
-              and feature is driven by user feedback and our passion for making
+              We're proud to offer this tool completely free and privacy-first,
+              as our contribution to the maker community. Every update and
+              feature is driven by user feedback and our passion for making
               generative art accessible to all.
             </p>
           </div>
