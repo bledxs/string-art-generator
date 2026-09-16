@@ -1,6 +1,1 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-# Run linting on staged files
-# Branch protection is handled by GitHub repository rules
 npx lint-staged
