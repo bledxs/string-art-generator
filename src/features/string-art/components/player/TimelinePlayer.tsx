@@ -23,18 +23,19 @@ export function TimelinePlayer({
 	onOpenAssistant,
 	currentPins,
 }: Readonly<TimelinePlayerProps>) {
-	if (totalLines <= 1) return null;
+	const isDisabled = totalLines <= 1;
 
 	const handleSliderChange = (vals: number[]) => {
 		onVisibleLinesChange(vals[0]);
 	};
 
 	return (
-		<div className='flex h-14 w-full items-center justify-between gap-2 border-t bg-card/75 px-2 backdrop-blur-md sm:gap-4 sm:px-4'>
+		<footer className='flex h-14 w-full shrink-0 items-center justify-between gap-2 border-t bg-card/85 px-2 backdrop-blur-md transition-colors sm:gap-4 sm:px-4'>
 			<div className='flex shrink-0 items-center gap-1.5 sm:gap-2'>
 				<Button
 					variant={isPlaying ? 'secondary' : 'default'}
 					size='icon'
+					disabled={isDisabled}
 					onClick={onTogglePlay}
 					aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
 					className='size-8'
@@ -48,29 +49,42 @@ export function TimelinePlayer({
 
 				<div className='hidden items-center gap-1.5 rounded-md border bg-muted/30 px-2 py-1 font-mono text-xs sm:flex'>
 					<span className='text-muted-foreground'>Clavo:</span>
-					<span className='font-bold text-foreground'>{currentPins.from}</span>
+					<span className='font-bold text-foreground'>
+						{isDisabled ? '-' : currentPins.from}
+					</span>
 					<ArrowRight className='size-3 text-primary' />
-					<span className='font-bold text-primary'>{currentPins.to}</span>
+					<span className='font-bold text-primary'>
+						{isDisabled ? '-' : currentPins.to}
+					</span>
 				</div>
 			</div>
 
-			<div className='flex flex-1 items-center gap-2 sm:gap-3'>
-				<Slider
-					value={[visibleLines]}
-					min={1}
-					max={totalLines}
-					step={1}
-					onValueChange={handleSliderChange}
-					className='cursor-pointer'
-				/>
-				<span className='w-14 shrink-0 select-none text-right font-mono text-muted-foreground text-xs sm:w-20'>
-					{visibleLines}/{totalLines}
-				</span>
+			<div className='flex flex-1 items-center justify-center gap-2 sm:gap-3'>
+				{isDisabled ? (
+					<span className='select-none truncate text-center text-muted-foreground text-xs italic'>
+						Inicia la generación para explorar trazos en la línea de tiempo
+					</span>
+				) : (
+					<>
+						<Slider
+							value={[visibleLines]}
+							min={1}
+							max={totalLines}
+							step={1}
+							onValueChange={handleSliderChange}
+							className='cursor-pointer'
+						/>
+						<span className='w-14 shrink-0 select-none text-right font-mono text-muted-foreground text-xs sm:w-20'>
+							{visibleLines}/{totalLines}
+						</span>
+					</>
+				)}
 			</div>
 
 			<Button
 				variant='outline'
 				size='sm'
+				disabled={isDisabled}
 				onClick={onOpenAssistant}
 				aria-label='Abrir guía de tejido'
 				className='size-8 shrink-0 p-0 sm:h-8 sm:w-auto sm:px-2.5'
@@ -78,6 +92,6 @@ export function TimelinePlayer({
 				<BookOpen className='size-3.5 text-primary' />
 				<span className='hidden sm:inline'>Guía de Tejido</span>
 			</Button>
-		</div>
+		</footer>
 	);
 }

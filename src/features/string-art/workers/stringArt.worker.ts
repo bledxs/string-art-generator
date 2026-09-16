@@ -79,7 +79,7 @@ function runGenerationLoop(
 	const lineSequence: number[] = [currentPin];
 	const batchBuffer: number[] = [];
 	const usedLines = new Set<number>();
-	const batchSize = 25;
+	const batchSize = 50;
 
 	function step() {
 		if (shouldStop) {

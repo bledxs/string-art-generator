@@ -30,7 +30,7 @@ export function useStudioWorkbench() {
 	const [imageSrc, setImageSrc] = useState<string>(SAMPLE_PRESETS[0].url);
 	const [cropperImageSrc, setCropperImageSrc] = useState<string | null>(null);
 	const [isCropperOpen, setIsCropperOpen] = useState(false);
-	const [visibleLinesCount, setVisibleLinesCount] = useState<number>(0);
+	const [scrubbedLines, setScrubbedLines] = useState<number | null>(null);
 	const [isExportOpen, setIsExportOpen] = useState(false);
 	const [isAssistantOpen, setIsAssistantOpen] = useState(false);
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -43,15 +43,33 @@ export function useStudioWorkbench() {
 		return calculateCircularPins(loomConfig.pinCount, radius, center);
 	}, [loomConfig.pinCount, loomConfig.pinOffsetRatio]);
 
+	const totalLines = engine.progress.lineSequence.length;
+
+	const visibleLinesCount = useMemo(() => {
+		if (engine.status === 'running' || scrubbedLines === null) {
+			return totalLines;
+		}
+		return Math.min(scrubbedLines, totalLines);
+	}, [engine.status, scrubbedLines, totalLines]);
+
 	const displayedLines = useMemo(() => {
+		if (visibleLinesCount >= totalLines) {
+			return engine.progress.lineSequence;
+		}
 		return engine.progress.lineSequence.slice(0, visibleLinesCount);
-	}, [engine.progress.lineSequence, visibleLinesCount]);
+	}, [engine.progress.lineSequence, visibleLinesCount, totalLines]);
 
 	useEffect(() => {
-		if (engine.status === 'running') {
-			setVisibleLinesCount(engine.progress.lineSequence.length);
-		}
-	}, [engine.status, engine.progress.lineSequence.length]);
+		if (!isPlaying || totalLines <= 1) return;
+		const timer = setInterval(() => {
+			setScrubbedLines((prev) => {
+				const current = prev ?? totalLines;
+				if (current >= totalLines) return 1;
+				return Math.min(totalLines, current + 25);
+			});
+		}, 35);
+		return () => clearInterval(timer);
+	}, [isPlaying, totalLines]);
 
 	const handleSelectPreset = useCallback((preset: PresetImage) => {
 		setSelectedPreset(preset);
@@ -76,6 +94,8 @@ export function useStudioWorkbench() {
 	}, [imageSrc]);
 
 	const startGeneration = useCallback(() => {
+		setScrubbedLines(null);
+		setIsPlaying(false);
 		const img = new Image();
 		img.crossOrigin = 'anonymous';
 		img.src = imageSrc;
@@ -172,7 +192,10 @@ export function useStudioWorkbench() {
 		engine,
 		sidebarProps,
 		baseModalsProps,
-		setVisibleLinesCount,
+		setVisibleLinesCount: (val: number) => {
+			setIsPlaying(false);
+			setScrubbedLines(val);
+		},
 		setIsExportOpen,
 		setIsAssistantOpen,
 		togglePlay: () => setIsPlaying(!isPlaying),
