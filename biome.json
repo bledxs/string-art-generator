@@ -45,6 +45,17 @@
 		},
 		"rules": {
 			"preset": "recommended",
+			"a11y": {
+				"noStaticElementInteractions": "error",
+				"noNoninteractiveTabindex": "error",
+				"noPositiveTabindex": "error",
+				"useKeyWithClickEvents": "error",
+				"useSemanticElements": "error",
+				"useButtonType": "error",
+				"useAltText": "error",
+				"useAriaPropsForRole": "error",
+				"noAriaHiddenOnFocusable": "error"
+			},
 			"complexity": {
 				"noExcessiveCognitiveComplexity": {
 					"level": "error",
