@@ -22,7 +22,7 @@ export function TimelinePlayer({
 	onTogglePlay,
 	onOpenAssistant,
 	currentPins,
-}: TimelinePlayerProps) {
+}: Readonly<TimelinePlayerProps>) {
 	if (totalLines <= 1) return null;
 
 	const handleSliderChange = (vals: number[]) => {
@@ -30,8 +30,8 @@ export function TimelinePlayer({
 	};
 
 	return (
-		<div className='flex h-14 w-full items-center justify-between gap-4 border-t bg-card/75 px-4 backdrop-blur-md'>
-			<div className='flex items-center gap-2'>
+		<div className='flex h-14 w-full items-center justify-between gap-2 border-t bg-card/75 px-2 backdrop-blur-md sm:gap-4 sm:px-4'>
+			<div className='flex shrink-0 items-center gap-1.5 sm:gap-2'>
 				<Button
 					variant={isPlaying ? 'secondary' : 'default'}
 					size='icon'
@@ -54,7 +54,7 @@ export function TimelinePlayer({
 				</div>
 			</div>
 
-			<div className='flex flex-1 items-center gap-3'>
+			<div className='flex flex-1 items-center gap-2 sm:gap-3'>
 				<Slider
 					value={[visibleLines]}
 					min={1}
@@ -63,8 +63,8 @@ export function TimelinePlayer({
 					onValueChange={handleSliderChange}
 					className='cursor-pointer'
 				/>
-				<span className='w-24 select-none text-right font-mono text-muted-foreground text-xs'>
-					{visibleLines} / {totalLines}
+				<span className='w-14 shrink-0 select-none text-right font-mono text-muted-foreground text-xs sm:w-20'>
+					{visibleLines}/{totalLines}
 				</span>
 			</div>
 
@@ -72,7 +72,8 @@ export function TimelinePlayer({
 				variant='outline'
 				size='sm'
 				onClick={onOpenAssistant}
-				className='gap-1.5 whitespace-nowrap text-xs'
+				aria-label='Abrir guía de tejido'
+				className='size-8 shrink-0 p-0 sm:h-8 sm:w-auto sm:px-2.5'
 			>
 				<BookOpen className='size-3.5 text-primary' />
 				<span className='hidden sm:inline'>Guía de Tejido</span>

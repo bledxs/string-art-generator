@@ -39,48 +39,47 @@ export function WeavingAssistantModal({
 	onNext,
 	onPrev,
 	onJump,
-}: WeavingAssistantModalProps) {
+}: Readonly<WeavingAssistantModalProps>) {
 	const { currentStep, totalSteps, fromPin, toPin, progressPercent } = stepData;
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onClose}>
-			<DialogContent className='sm:max-w-md'>
+			<DialogContent className='max-w-xs p-4 sm:max-w-md sm:p-6'>
 				<DialogHeader>
 					<div className='flex items-center gap-2'>
 						<Sparkles className='size-4 text-primary' />
-						<DialogTitle>Asistente de Tejido Manual</DialogTitle>
+						<DialogTitle>Asistente de Tejido</DialogTitle>
 					</div>
 					<DialogDescription>
-						Guía interactiva paso a paso para tender el hilo sobre el bastidor
-						físico.
+						Guía interactiva paso a paso para el bastidor físico.
 					</DialogDescription>
 				</DialogHeader>
 
-				<div className='flex flex-col items-center gap-6 py-4'>
+				<div className='flex flex-col items-center gap-4 py-2 sm:gap-6 sm:py-4'>
 					<div className='flex w-full items-center justify-between text-muted-foreground text-xs'>
-						<span>Progreso de armado</span>
+						<span>Progreso</span>
 						<span className='font-mono font-semibold text-foreground'>
 							{progressPercent}%
 						</span>
 					</div>
 
-					<div className='flex w-full items-center justify-center gap-4'>
-						<div className='flex flex-1 flex-col items-center justify-center rounded-xl border bg-muted/30 p-4 text-center'>
+					<div className='flex w-full items-center justify-center gap-2 sm:gap-4'>
+						<div className='flex flex-1 flex-col items-center justify-center rounded-xl border bg-muted/30 p-2 text-center sm:p-4'>
 							<span className='text-muted-foreground text-xs uppercase tracking-wider'>
-								Desde Clavo
+								Desde
 							</span>
-							<span className='font-bold font-mono text-4xl text-foreground'>
+							<span className='font-bold font-mono text-2xl text-foreground sm:text-4xl'>
 								{fromPin}
 							</span>
 						</div>
 
-						<ArrowRight className='size-6 text-primary' />
+						<ArrowRight className='size-4 text-primary sm:size-6' />
 
-						<div className='flex flex-1 flex-col items-center justify-center rounded-xl border-2 border-primary bg-primary/10 p-4 text-center shadow-inner'>
+						<div className='flex flex-1 flex-col items-center justify-center rounded-xl border-2 border-primary bg-primary/10 p-2 text-center shadow-inner sm:p-4'>
 							<span className='text-primary text-xs uppercase tracking-wider'>
-								Hacia Clavo
+								Hacia
 							</span>
-							<span className='font-bold font-mono text-4xl text-primary'>
+							<span className='font-bold font-mono text-2xl text-primary sm:text-4xl'>
 								{toPin}
 							</span>
 						</div>
@@ -93,36 +92,38 @@ export function WeavingAssistantModal({
 						<span className='font-bold text-foreground'>{totalSteps}</span>
 					</div>
 
-					<div className='flex w-full items-center justify-between gap-2'>
+					<div className='flex w-full items-center justify-between gap-1.5 sm:gap-2'>
 						<Button
 							variant='outline'
 							size='icon'
 							disabled={currentStep <= 0}
 							onClick={() => onJump(-10)}
 							aria-label='Retroceder 10 pasos'
-							className='size-9'
+							className='size-8 sm:size-9'
 						>
-							<ChevronsLeft className='size-4' />
+							<ChevronsLeft className='size-3.5 sm:size-4' />
 						</Button>
 
 						<Button
 							variant='secondary'
 							disabled={currentStep <= 0}
 							onClick={onPrev}
-							className='flex-1 gap-1.5'
+							aria-label='Paso anterior'
+							className='flex-1 gap-1 px-2 text-xs sm:gap-1.5'
 						>
-							<ChevronLeft className='size-4' />
-							Anterior
+							<ChevronLeft className='size-3.5 sm:size-4' />
+							<span className='xs:inline hidden'>Ant.</span>
 						</Button>
 
 						<Button
 							variant='default'
 							disabled={currentStep >= totalSteps}
 							onClick={onNext}
-							className='flex-1 gap-1.5'
+							aria-label='Paso siguiente'
+							className='flex-1 gap-1 px-2 text-xs sm:gap-1.5'
 						>
-							Siguiente
-							<ChevronRight className='size-4' />
+							<span className='xs:inline hidden'>Sig.</span>
+							<ChevronRight className='size-3.5 sm:size-4' />
 						</Button>
 
 						<Button
@@ -131,9 +132,9 @@ export function WeavingAssistantModal({
 							disabled={currentStep >= totalSteps}
 							onClick={() => onJump(10)}
 							aria-label='Avanzar 10 pasos'
-							className='size-9'
+							className='size-8 sm:size-9'
 						>
-							<ChevronsRight className='size-4' />
+							<ChevronsRight className='size-3.5 sm:size-4' />
 						</Button>
 					</div>
 				</div>

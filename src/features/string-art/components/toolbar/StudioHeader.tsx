@@ -1,6 +1,6 @@
 'use client';
 
-import { CircleDot, Moon, Sun } from 'lucide-react';
+import { CircleDot, Moon, SlidersHorizontal, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import type * as React from 'react';
 import { Badge } from '@/shared/ui/badge';
@@ -15,6 +15,7 @@ interface StudioHeaderProps {
 	diameterCm: number;
 	timeElapsedMs: number;
 	actionSlot?: React.ReactNode;
+	onToggleMobileSidebar?: () => void;
 }
 
 export function StudioHeader({
@@ -24,7 +25,8 @@ export function StudioHeader({
 	diameterCm,
 	timeElapsedMs,
 	actionSlot,
-}: StudioHeaderProps) {
+	onToggleMobileSidebar,
+}: Readonly<StudioHeaderProps>) {
 	const { theme, setTheme } = useTheme();
 
 	const toggleTheme = () => {
@@ -51,19 +53,33 @@ export function StudioHeader({
 	}[status];
 
 	return (
-		<header className='flex h-14 w-full items-center justify-between border-b bg-card/60 px-4 backdrop-blur-md'>
-			<div className='flex items-center gap-3'>
-				<div className='flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary'>
+		<header className='flex h-14 w-full items-center justify-between border-b bg-card/60 px-2 backdrop-blur-md sm:px-4'>
+			<div className='flex min-w-0 items-center gap-2 sm:gap-3'>
+				{onToggleMobileSidebar && (
+					<Button
+						variant='ghost'
+						size='icon'
+						onClick={onToggleMobileSidebar}
+						aria-label='Abrir configuración'
+						className='size-8 shrink-0 md:hidden'
+					>
+						<SlidersHorizontal className='size-4' />
+					</Button>
+				)}
+
+				<div className='flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary'>
 					<CircleDot className='size-4' />
 				</div>
-				<div className='flex flex-col'>
-					<div className='flex items-center gap-2'>
-						<span className='font-semibold text-sm tracking-tight'>
+				<div className='flex min-w-0 flex-col'>
+					<div className='flex items-center gap-1.5 sm:gap-2'>
+						<span className='truncate font-semibold text-xs tracking-tight sm:text-sm'>
 							String Art Studio
 						</span>
-						{statusBadge}
+						<div className='xs:inline-flex hidden sm:inline-flex'>
+							{statusBadge}
+						</div>
 					</div>
-					<span className='text-muted-foreground text-xs'>
+					<span className='hidden text-muted-foreground text-xs sm:block'>
 						Generador de tejido geométrico de alta resolución
 					</span>
 				</div>
@@ -76,7 +92,7 @@ export function StudioHeader({
 				timeElapsedMs={timeElapsedMs}
 			/>
 
-			<div className='flex items-center gap-2'>
+			<div className='flex shrink-0 items-center gap-1 sm:gap-2'>
 				{actionSlot}
 				<Button
 					variant='ghost'

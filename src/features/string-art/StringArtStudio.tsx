@@ -1,11 +1,12 @@
 'use client';
 
 import { Download } from 'lucide-react';
+import { useState } from 'react';
 import { Button } from '@/shared/ui/button';
 import { StudioWorkspaceStage } from './components/canvas/StudioWorkspaceStage';
 import { TimelinePlayer } from './components/player';
 import { StudioModals } from './components/StudioModals';
-import { StudioSidebar } from './components/sidebar';
+import { MobileSidebarDrawer, StudioSidebar } from './components/sidebar';
 import { StudioHeader } from './components/toolbar';
 import { useCanvasTransform } from './hooks/useCanvasTransform';
 import { useStudioWorkbench } from './hooks/useStudioWorkbench';
@@ -15,6 +16,7 @@ export function StringArtStudio() {
 	const studio = useStudioWorkbench();
 	const transform = useCanvasTransform();
 	const assistant = useWeavingAssistant(studio.engine.progress.lineSequence);
+	const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
 	const exportAction = (
 		<Button
@@ -22,10 +24,11 @@ export function StringArtStudio() {
 			size='sm'
 			disabled={studio.displayedLines.length < 2}
 			onClick={() => studio.setIsExportOpen(true)}
-			className='gap-1.5 text-xs'
+			className='gap-1.5 p-2 text-xs sm:px-3'
+			aria-label='Exportar proyecto'
 		>
 			<Download className='size-3.5' />
-			Exportar
+			<span className='hidden sm:inline'>Exportar</span>
 		</Button>
 	);
 
@@ -38,10 +41,13 @@ export function StringArtStudio() {
 				diameterCm={studio.loomConfig.physicalDiameterCm}
 				timeElapsedMs={studio.engine.progress.timeElapsedMs}
 				actionSlot={exportAction}
+				onToggleMobileSidebar={() => setIsMobileSidebarOpen(true)}
 			/>
 
 			<div className='flex flex-1 overflow-hidden'>
-				<StudioSidebar {...studio.sidebarProps} />
+				<div className='hidden md:flex'>
+					<StudioSidebar {...studio.sidebarProps} />
+				</div>
 				<StudioWorkspaceStage
 					size={studio.canvasSize}
 					pins={studio.pins}
@@ -61,6 +67,12 @@ export function StringArtStudio() {
 				onVisibleLinesChange={studio.setVisibleLinesCount}
 				onTogglePlay={studio.togglePlay}
 				onOpenAssistant={() => studio.setIsAssistantOpen(true)}
+			/>
+
+			<MobileSidebarDrawer
+				isOpen={isMobileSidebarOpen}
+				onClose={() => setIsMobileSidebarOpen(false)}
+				sidebarProps={studio.sidebarProps}
 			/>
 
 			<StudioModals

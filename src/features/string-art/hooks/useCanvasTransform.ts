@@ -18,17 +18,11 @@ export function useCanvasTransform(initialScale = 1) {
 	const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
 	const zoomIn = useCallback(() => {
-		setTransform((prev) => ({
-			...prev,
-			scale: Math.min(prev.scale * 1.25, 5),
-		}));
+		setTransform((p) => ({ ...p, scale: Math.min(p.scale * 1.25, 5) }));
 	}, []);
 
 	const zoomOut = useCallback(() => {
-		setTransform((prev) => ({
-			...prev,
-			scale: Math.max(prev.scale / 1.25, 0.2),
-		}));
+		setTransform((p) => ({ ...p, scale: Math.max(p.scale / 1.25, 0.2) }));
 	}, []);
 
 	const resetTransform = useCallback(() => {
@@ -37,15 +31,15 @@ export function useCanvasTransform(initialScale = 1) {
 
 	const handleWheel = useCallback((e: React.WheelEvent) => {
 		e.preventDefault();
-		const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9;
-		setTransform((prev) => ({
-			...prev,
-			scale: Math.min(Math.max(prev.scale * zoomFactor, 0.2), 5),
+		const factor = e.deltaY < 0 ? 1.1 : 0.9;
+		setTransform((p) => ({
+			...p,
+			scale: Math.min(Math.max(p.scale * factor, 0.2), 5),
 		}));
 	}, []);
 
 	const handleMouseDown = useCallback((e: React.MouseEvent) => {
-		if (e.button !== 0) return; // Only primary button
+		if (e.button !== 0) return;
 		setIsDragging(true);
 		setDragStart({ x: e.clientX, y: e.clientY });
 	}, []);
@@ -56,16 +50,37 @@ export function useCanvasTransform(initialScale = 1) {
 			const dx = e.clientX - dragStart.x;
 			const dy = e.clientY - dragStart.y;
 			setDragStart({ x: e.clientX, y: e.clientY });
-			setTransform((prev) => ({
-				...prev,
-				offsetX: prev.offsetX + dx,
-				offsetY: prev.offsetY + dy,
+			setTransform((p) => ({
+				...p,
+				offsetX: p.offsetX + dx,
+				offsetY: p.offsetY + dy,
 			}));
 		},
 		[isDragging, dragStart],
 	);
 
-	const handleMouseUp = useCallback(() => {
+	const handleTouchStart = useCallback((e: React.TouchEvent) => {
+		if (e.touches.length !== 1) return;
+		setIsDragging(true);
+		setDragStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+	}, []);
+
+	const handleTouchMove = useCallback(
+		(e: React.TouchEvent) => {
+			if (!isDragging || e.touches.length !== 1) return;
+			const dx = e.touches[0].clientX - dragStart.x;
+			const dy = e.touches[0].clientY - dragStart.y;
+			setDragStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+			setTransform((p) => ({
+				...p,
+				offsetX: p.offsetX + dx,
+				offsetY: p.offsetY + dy,
+			}));
+		},
+		[isDragging, dragStart],
+	);
+
+	const handleEnd = useCallback(() => {
 		setIsDragging(false);
 	}, []);
 
@@ -78,6 +93,9 @@ export function useCanvasTransform(initialScale = 1) {
 		onWheel: handleWheel,
 		onMouseDown: handleMouseDown,
 		onMouseMove: handleMouseMove,
-		onMouseUp: handleMouseUp,
+		onMouseUp: handleEnd,
+		onTouchStart: handleTouchStart,
+		onTouchMove: handleTouchMove,
+		onTouchEnd: handleEnd,
 	};
 }
