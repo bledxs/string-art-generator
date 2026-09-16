@@ -36,7 +36,7 @@ export function CanvasViewport({
 			ref={containerRef}
 			aria-label='Lienzo interactivo de String Art'
 			className={cn(
-				'studio-grid relative flex size-full flex-1 touch-none select-none items-center justify-center overflow-hidden',
+				'studio-grid relative flex size-full flex-1 touch-none select-none items-center justify-center overflow-hidden bg-canvas-bg',
 				isDragging ? 'cursor-grabbing' : 'cursor-grab',
 			)}
 			onMouseDown={onMouseDown}
@@ -49,8 +49,9 @@ export function CanvasViewport({
 			onTouchCancel={onTouchEnd}
 			onWheel={onWheel}
 		>
+			<div className='studio-spotlight pointer-events-none absolute inset-0 z-0' />
 			<div
-				className='flex items-center justify-center transition-transform duration-75 ease-out will-change-transform'
+				className='relative z-10 flex items-center justify-center transition-transform duration-75 ease-out will-change-transform'
 				style={{
 					transform: `translate3d(${transform.offsetX}px, ${transform.offsetY}px, 0) scale(${transform.scale})`,
 				}}

@@ -13,8 +13,10 @@ import { AlgorithmConfigPanel } from './AlgorithmConfigPanel';
 import { LoomConfigPanel } from './LoomConfigPanel';
 import { PresetGallery } from './PresetGallery';
 import { SidebarActions } from './SidebarActions';
+import { ThreadSpoolWidget } from './ThreadSpoolWidget';
 
 export interface StudioSidebarProps {
+	linesCount?: number;
 	loom: { config: LoomConfig; onChange: (cfg: LoomConfig) => void };
 	algo: { config: AlgorithmConfig; onChange: (cfg: AlgorithmConfig) => void };
 	presets: {
@@ -35,6 +37,7 @@ export interface StudioSidebarProps {
 }
 
 export function StudioSidebar({
+	linesCount = 0,
 	loom,
 	algo,
 	presets,
@@ -96,7 +99,11 @@ export function StudioSidebar({
 				</Tabs>
 			</div>
 
-			<div className='border-t bg-card/80 p-3'>
+			<div className='flex flex-col gap-3 border-t bg-card/80 p-3'>
+				<ThreadSpoolWidget
+					linesCount={linesCount}
+					diameterCm={loom.config.physicalDiameterCm}
+				/>
 				<SidebarActions
 					status={execution.status}
 					onStart={execution.onStart}

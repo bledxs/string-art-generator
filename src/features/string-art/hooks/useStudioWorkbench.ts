@@ -99,6 +99,7 @@ export function useStudioWorkbench() {
 
 	const sidebarProps = useMemo(
 		() => ({
+			linesCount: displayedLines.length,
 			loom: { config: loomConfig, onChange: setLoomConfig },
 			algo: { config: algoConfig, onChange: setAlgoConfig },
 			presets: {
@@ -117,6 +118,7 @@ export function useStudioWorkbench() {
 			},
 		}),
 		[
+			displayedLines.length,
 			loomConfig,
 			algoConfig,
 			selectedPreset,
