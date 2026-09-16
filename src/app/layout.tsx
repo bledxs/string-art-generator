@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type * as React from 'react';
 import { Toaster } from 'sonner';
 import './globals.css';
-import { ThemeProvider } from './providers.tsx';
+import { ThemeProvider } from './providers';
 
 export const metadata: Metadata = {
 	title: 'String Art Studio — Generador de Arte de Hilos de Alta Precisión',
@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children,
-}: {
+}: Readonly<{
 	children: React.ReactNode;
-}) {
+}>) {
 	return (
 		<html lang='es' suppressHydrationWarning>
 			<body className='min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary/20 selection:text-primary'>

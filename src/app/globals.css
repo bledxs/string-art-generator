@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
-@plugin '@tailwindcss/typography';
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -90,7 +90,9 @@
 body {
 	background-color: var(--background);
 	color: var(--foreground);
-	font-feature-settings: 'rlig' 1, 'calt' 1;
+	font-feature-settings:
+		"rlig" 1,
+		"calt" 1;
 	overflow-x: hidden;
 }
 
