@@ -14,7 +14,7 @@ import { useWeavingAssistant } from './hooks/useWeavingAssistant';
 
 export function StringArtStudio() {
 	const studio = useStudioWorkbench();
-	const transform = useCanvasTransform();
+	const transform = useCanvasTransform(studio.canvasSize);
 	const assistant = useWeavingAssistant(studio.engine.progress.lineSequence);
 	const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 

@@ -5,6 +5,7 @@ import { cn } from '@/shared/utils/cn';
 import type { CanvasTransform } from '../../hooks/useCanvasTransform';
 
 interface CanvasViewportProps {
+	containerRef?: React.RefObject<HTMLElement | null>;
 	transform: CanvasTransform;
 	isDragging: boolean;
 	onMouseDown: (e: React.MouseEvent) => void;
@@ -18,6 +19,7 @@ interface CanvasViewportProps {
 }
 
 export function CanvasViewport({
+	containerRef,
 	transform,
 	isDragging,
 	onMouseDown,
@@ -31,6 +33,7 @@ export function CanvasViewport({
 }: Readonly<CanvasViewportProps>) {
 	return (
 		<section
+			ref={containerRef}
 			aria-label='Lienzo interactivo de String Art'
 			className={cn(
 				'studio-grid relative flex size-full flex-1 touch-none select-none items-center justify-center overflow-hidden',
