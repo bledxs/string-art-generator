@@ -15,6 +15,7 @@
 			"**/*.json",
 			"**/*.mjs",
 			"**/*.cjs",
+			"**/*.css",
 			"!**/node_modules",
 			"!**/dist",
 			"!**/.next",
@@ -57,20 +58,26 @@
 			"correctness": {
 				"noUnusedVariables": "error",
 				"noUnusedImports": "error",
-				"noUndeclaredVariables": "error"
+				"noUndeclaredVariables": "error",
+				"noUnresolvedImports": "error"
 			},
 			"suspicious": {
 				"noExplicitAny": "error",
 				"noConsole": "warn",
-				"noDoubleEquals": "error"
+				"noDoubleEquals": "error",
+				"noImportCycles": "error"
 			},
 			"style": {
 				"useConst": "error",
 				"noNonNullAssertion": "error",
-				"useAsConstAssertion": "error"
+				"useAsConstAssertion": "error",
+				"useImportType": "error",
+				"useExportType": "error",
+				"useNodejsImportProtocol": "error"
 			},
 			"nursery": {
 				"noUnsafeTypeAssertion": "error",
+				"useImportsFirst": "error",
 				"useSortedClasses": {
 					"level": "error",
 					"options": {
