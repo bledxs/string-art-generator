@@ -28,6 +28,8 @@ export function useStudioWorkbench() {
 		SAMPLE_PRESETS[0],
 	);
 	const [imageSrc, setImageSrc] = useState<string>(SAMPLE_PRESETS[0].url);
+	const [cropperImageSrc, setCropperImageSrc] = useState<string | null>(null);
+	const [isCropperOpen, setIsCropperOpen] = useState(false);
 	const [visibleLinesCount, setVisibleLinesCount] = useState<number>(0);
 	const [isExportOpen, setIsExportOpen] = useState(false);
 	const [isAssistantOpen, setIsAssistantOpen] = useState(false);
@@ -54,14 +56,24 @@ export function useStudioWorkbench() {
 	const handleSelectPreset = useCallback((preset: PresetImage) => {
 		setSelectedPreset(preset);
 		setImageSrc(preset.url);
-		setLoomConfig((prev) => ({ ...prev, pinCount: preset.recommendedPins }));
-		setAlgoConfig((prev) => ({ ...prev, maxLines: preset.recommendedLines }));
+		setLoomConfig((p) => ({ ...p, pinCount: preset.recommendedPins }));
+		setAlgoConfig((p) => ({ ...p, maxLines: preset.recommendedLines }));
 	}, []);
 
 	const handleCustomUpload = useCallback((dataUrl: string) => {
-		setSelectedPreset(null);
-		setImageSrc(dataUrl);
+		setCropperImageSrc(dataUrl);
+		setIsCropperOpen(true);
 	}, []);
+
+	const handleCropComplete = useCallback((croppedUrl: string) => {
+		setImageSrc(croppedUrl);
+		setSelectedPreset(null);
+	}, []);
+
+	const handleOpenCropper = useCallback(() => {
+		setCropperImageSrc(imageSrc);
+		setIsCropperOpen(true);
+	}, [imageSrc]);
 
 	const startGeneration = useCallback(() => {
 		const img = new Image();
@@ -91,8 +103,10 @@ export function useStudioWorkbench() {
 			algo: { config: algoConfig, onChange: setAlgoConfig },
 			presets: {
 				selectedId: selectedPreset?.id ?? null,
+				activeImageSrc: imageSrc,
 				onSelect: handleSelectPreset,
 				onUpload: handleCustomUpload,
+				onOpenCropper: handleOpenCropper,
 			},
 			execution: {
 				status: engine.status,
@@ -106,10 +120,41 @@ export function useStudioWorkbench() {
 			loomConfig,
 			algoConfig,
 			selectedPreset,
+			imageSrc,
 			engine,
 			handleSelectPreset,
 			handleCustomUpload,
+			handleOpenCropper,
 			startGeneration,
+		],
+	);
+
+	const baseModalsProps = useMemo(
+		() => ({
+			exportModal: {
+				isOpen: isExportOpen,
+				onClose: () => setIsExportOpen(false),
+				pins,
+				lines: displayedLines,
+				loom: loomConfig,
+				algo: algoConfig,
+			},
+			cropperModal: {
+				isOpen: isCropperOpen,
+				imageSrc: cropperImageSrc,
+				onClose: () => setIsCropperOpen(false),
+				onCropComplete: handleCropComplete,
+			},
+		}),
+		[
+			isExportOpen,
+			pins,
+			displayedLines,
+			loomConfig,
+			algoConfig,
+			isCropperOpen,
+			cropperImageSrc,
+			handleCropComplete,
 		],
 	);
 
@@ -120,11 +165,11 @@ export function useStudioWorkbench() {
 		pins,
 		displayedLines,
 		visibleLinesCount,
-		isExportOpen,
 		isAssistantOpen,
 		isPlaying,
 		engine,
 		sidebarProps,
+		baseModalsProps,
 		setVisibleLinesCount,
 		setIsExportOpen,
 		setIsAssistantOpen,

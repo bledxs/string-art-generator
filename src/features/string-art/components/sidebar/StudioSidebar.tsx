@@ -19,8 +19,10 @@ export interface StudioSidebarProps {
 	algo: { config: AlgorithmConfig; onChange: (cfg: AlgorithmConfig) => void };
 	presets: {
 		selectedId: string | null;
+		activeImageSrc: string;
 		onSelect: (p: PresetImage) => void;
 		onUpload: (url: string) => void;
+		onOpenCropper: () => void;
 	};
 	execution: {
 		status: EngineStatus;
@@ -69,8 +71,10 @@ export function StudioSidebar({
 					<TabsContent value='image' className='mt-4'>
 						<PresetGallery
 							selectedPresetId={presets.selectedId}
+							activeImageSrc={presets.activeImageSrc}
 							onSelectPreset={presets.onSelect}
 							onCustomImageUpload={presets.onUpload}
+							onOpenCropper={presets.onOpenCropper}
 						/>
 					</TabsContent>
 

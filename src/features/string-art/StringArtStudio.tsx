@@ -76,14 +76,7 @@ export function StringArtStudio() {
 			/>
 
 			<StudioModals
-				exportModal={{
-					isOpen: studio.isExportOpen,
-					onClose: () => studio.setIsExportOpen(false),
-					pins: studio.pins,
-					lines: studio.displayedLines,
-					loom: studio.loomConfig,
-					algo: studio.algoConfig,
-				}}
+				{...studio.baseModalsProps}
 				assistantModal={{
 					isOpen: studio.isAssistantOpen,
 					onClose: () => studio.setIsAssistantOpen(false),

@@ -2,6 +2,7 @@
 
 import type { AlgorithmConfig, LoomConfig, Pin } from '../types';
 import { WeavingAssistantModal } from './player/WeavingAssistantModal';
+import { ImageCropperModal } from './sidebar/ImageCropperModal';
 import { ExportModal } from './toolbar/ExportModal';
 
 interface StudioModalsProps {
@@ -27,16 +28,24 @@ interface StudioModalsProps {
 		onPrev: () => void;
 		onJump: (delta: number) => void;
 	};
+	cropperModal: {
+		isOpen: boolean;
+		imageSrc: string | null;
+		onClose: () => void;
+		onCropComplete: (dataUrl: string) => void;
+	};
 }
 
 export function StudioModals({
 	exportModal,
 	assistantModal,
-}: StudioModalsProps) {
+	cropperModal,
+}: Readonly<StudioModalsProps>) {
 	return (
 		<>
 			<ExportModal {...exportModal} />
 			<WeavingAssistantModal {...assistantModal} />
+			<ImageCropperModal {...cropperModal} />
 		</>
 	);
 }
