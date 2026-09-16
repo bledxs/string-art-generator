@@ -75,9 +75,9 @@ export function useCanvasTransform(initialScale = 1) {
 		zoomIn,
 		zoomOut,
 		resetTransform,
-		handleWheel,
-		handleMouseDown,
-		handleMouseMove,
-		handleMouseUp,
+		onWheel: handleWheel,
+		onMouseDown: handleMouseDown,
+		onMouseMove: handleMouseMove,
+		onMouseUp: handleMouseUp,
 	};
 }
