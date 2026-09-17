@@ -1,6 +1,7 @@
 'use client';
 
 import { Download, FileCode, FileImage, FileText } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 import {
 	Dialog,
@@ -36,6 +37,8 @@ export function ExportModal({
 	algo,
 	colorRuns,
 }: Readonly<ExportModalProps>) {
+	const { t } = useTranslation();
+
 	const handleDownloadSvg = () => {
 		const svg = generateSvgString(
 			pins,
@@ -66,12 +69,9 @@ export function ExportModal({
 				<DialogHeader>
 					<div className='flex items-center gap-2'>
 						<Download className='size-4 text-primary' />
-						<DialogTitle>Exportar Proyecto para Armado</DialogTitle>
+						<DialogTitle>{t.exportModal.title}</DialogTitle>
 					</div>
-					<DialogDescription>
-						Elige el formato de salida para fabricación digital o montaje físico
-						paso a paso.
-					</DialogDescription>
+					<DialogDescription>{t.exportModal.description}</DialogDescription>
 				</DialogHeader>
 
 				<div className='grid grid-cols-1 gap-3 py-2'>
@@ -86,10 +86,10 @@ export function ExportModal({
 						</div>
 						<div className='flex flex-col'>
 							<span className='font-semibold text-foreground text-xs'>
-								SVG Vectorial (Corte Láser / Gráficos)
+								{t.exportModal.svgTitle}
 							</span>
 							<span className='text-muted-foreground text-xs'>
-								Trazo limpio con coordenadas exactas de hilo y marco.
+								{t.exportModal.svgDesc}
 							</span>
 						</div>
 					</Button>
@@ -105,10 +105,10 @@ export function ExportModal({
 						</div>
 						<div className='flex flex-col'>
 							<span className='font-semibold text-foreground text-xs'>
-								Secuencia de Clavos (TXT)
+								{t.exportModal.txtTitle}
 							</span>
 							<span className='text-muted-foreground text-xs'>
-								Lista secuencial de numeración para tejer a mano.
+								{t.exportModal.txtDesc}
 							</span>
 						</div>
 					</Button>
@@ -124,10 +124,10 @@ export function ExportModal({
 						</div>
 						<div className='flex flex-col'>
 							<span className='font-semibold text-foreground text-xs'>
-								Receta Completa del Proyecto (JSON)
+								{t.exportModal.jsonTitle}
 							</span>
 							<span className='text-muted-foreground text-xs'>
-								Configuración de bastidor, parámetros y matriz completa.
+								{t.exportModal.jsonDesc}
 							</span>
 						</div>
 					</Button>

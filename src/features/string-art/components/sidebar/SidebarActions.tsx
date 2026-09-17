@@ -1,6 +1,7 @@
 'use client';
 
 import { Play, RotateCcw, Sliders, Square } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 import type { EngineStatus } from '../../types';
 
@@ -19,6 +20,8 @@ export function SidebarActions({
 	onResume,
 	onStop,
 }: Readonly<SidebarActionsProps>) {
+	const { t } = useTranslation();
+
 	if (status === 'idle') {
 		return (
 			<Button
@@ -28,7 +31,7 @@ export function SidebarActions({
 				className='w-full gap-2 font-medium'
 			>
 				<Play className='size-4 fill-current' />
-				Generar Arte de Hilo
+				{t.actions.generate}
 			</Button>
 		);
 	}
@@ -40,17 +43,17 @@ export function SidebarActions({
 					variant='secondary'
 					size='lg'
 					onClick={onPause}
-					className='flex-1 gap-2'
+					className='min-w-0 flex-1 gap-2'
 				>
 					<Sliders className='size-4' />
-					Pausar
+					{t.actions.pause}
 				</Button>
 				<Button
 					variant='destructive'
 					size='lg'
 					onClick={onStop}
-					aria-label='Detener cálculo'
-					className='size-10 px-0'
+					aria-label={t.actions.stopAria}
+					className='size-10 shrink-0 px-0'
 				>
 					<Square className='size-4 fill-current' />
 				</Button>
@@ -65,17 +68,17 @@ export function SidebarActions({
 					variant='default'
 					size='lg'
 					onClick={onResume}
-					className='flex-1 gap-2'
+					className='min-w-0 flex-1 gap-2'
 				>
 					<Play className='size-4 fill-current' />
-					Reanudar
+					{t.actions.resume}
 				</Button>
 				<Button
 					variant='destructive'
 					size='lg'
 					onClick={onStop}
-					aria-label='Detener cálculo'
-					className='size-10 px-0'
+					aria-label={t.actions.stopAria}
+					className='size-10 shrink-0 px-0'
 				>
 					<Square className='size-4 fill-current' />
 				</Button>
@@ -91,7 +94,7 @@ export function SidebarActions({
 			className='w-full gap-2'
 		>
 			<RotateCcw className='size-4' />
-			Regenerar
+			{t.actions.regenerate}
 		</Button>
 	);
 }

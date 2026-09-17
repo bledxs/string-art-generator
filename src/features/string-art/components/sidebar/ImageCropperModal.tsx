@@ -3,6 +3,7 @@
 import { Check, Crop, RotateCcw, ZoomIn } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import Cropper, { type Area } from 'react-easy-crop';
+import { useTranslation } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 import {
 	Dialog,
@@ -27,6 +28,7 @@ export function ImageCropperModal({
 	onClose,
 	onCropComplete,
 }: Readonly<ImageCropperModalProps>) {
+	const { t } = useTranslation();
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
 	const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
@@ -59,12 +61,9 @@ export function ImageCropperModal({
 				<DialogHeader>
 					<div className='flex items-center gap-2'>
 						<Crop className='size-4 text-primary' />
-						<DialogTitle>Recortar Imagen para el Bastidor</DialogTitle>
+						<DialogTitle>{t.cropper.title}</DialogTitle>
 					</div>
-					<DialogDescription>
-						Ajusta la posición y escala dentro del círculo guía para centrar tu
-						diseño.
-					</DialogDescription>
+					<DialogDescription>{t.cropper.description}</DialogDescription>
 				</DialogHeader>
 
 				<div className='relative mt-2 h-72 w-full overflow-hidden rounded-lg bg-black'>
@@ -85,7 +84,7 @@ export function ImageCropperModal({
 					<div className='flex items-center justify-between text-xs'>
 						<span className='flex items-center gap-1.5 font-medium text-foreground'>
 							<ZoomIn className='size-3.5 text-primary' />
-							Zoom de recorte
+							Zoom
 						</span>
 						<span className='font-mono text-muted-foreground'>
 							{Math.round(zoom * 100)}%
@@ -111,12 +110,12 @@ export function ImageCropperModal({
 						className='gap-1.5 text-muted-foreground text-xs'
 					>
 						<RotateCcw className='size-3.5' />
-						Restablecer
+						{t.zoom.reset}
 					</Button>
 
 					<div className='flex items-center gap-2'>
 						<Button variant='outline' size='sm' onClick={onClose}>
-							Cancelar
+							{t.cropper.cancelBtn}
 						</Button>
 						<Button
 							variant='default'
@@ -126,7 +125,7 @@ export function ImageCropperModal({
 							className='gap-1.5'
 						>
 							<Check className='size-3.5' />
-							Aplicar Recorte
+							{t.cropper.applyBtn}
 						</Button>
 					</div>
 				</div>

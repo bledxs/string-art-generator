@@ -1,4 +1,7 @@
+'use client';
+
 import { Check } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n';
 import { Badge } from '@/shared/ui/badge';
 
 interface ProjectStatsProps {
@@ -15,8 +18,8 @@ export function ProjectStats({
 	diameterCm,
 	timeElapsedMs,
 	converged,
-}: ProjectStatsProps) {
-	// Average chord length is approximately 0.65 * diameter
+}: Readonly<ProjectStatsProps>) {
+	const { t } = useTranslation();
 	const estimatedMeters = Math.round((linesCount * (diameterCm * 0.65)) / 100);
 	const seconds = (timeElapsedMs / 1000).toFixed(1);
 
@@ -28,26 +31,21 @@ export function ProjectStats({
 					className='border-emerald-500/50 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
 				>
 					<Check className='mr-1 size-3' />
-					Óptimo alcanzado
+					{t.header.status.completed}
 				</Badge>
 			)}
 			<Badge variant='accent'>
-				Líneas:{' '}
+				{t.header.stats.lines}:{' '}
 				<span className='ml-1 font-bold text-foreground'>{linesCount}</span>
 			</Badge>
 			<Badge variant='accent'>
-				Clavos:{' '}
+				{t.header.stats.pins}:{' '}
 				<span className='ml-1 font-bold text-foreground'>{pinCount}</span>
 			</Badge>
-			<Badge variant='accent'>
-				Hilo est.:{' '}
-				<span className='ml-1 font-bold text-foreground'>
-					~{estimatedMeters}m
-				</span>
-			</Badge>
+			<Badge variant='accent'>~{estimatedMeters}m</Badge>
 			{timeElapsedMs > 0 && (
 				<Badge variant='accent'>
-					Tiempo:{' '}
+					{t.header.stats.time}:{' '}
 					<span className='ml-1 font-bold text-foreground'>{seconds}s</span>
 				</Badge>
 			)}

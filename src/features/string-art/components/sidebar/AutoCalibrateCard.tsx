@@ -2,6 +2,7 @@
 
 import { Sparkles, Wand2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from '@/shared/i18n';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import {
@@ -22,6 +23,7 @@ export function AutoCalibrateCard({
 	onApply,
 	disabled = false,
 }: Readonly<AutoCalibrateCardProps>) {
+	const { t } = useTranslation();
 	const [recommendation, setRecommendation] =
 		useState<CalibrationRecommendation | null>(null);
 
@@ -57,44 +59,73 @@ export function AutoCalibrateCard({
 
 	if (!recommendation) return null;
 
+	const reasoningText =
+		recommendation.reasoning.includes('Alta frecuencia') ||
+		recommendation.reasoning.includes('High edge')
+			? t.analyzer.highDetailReasoning
+			: t.analyzer.smoothReasoning;
+
+	const localizedMaterialName = (() => {
+		switch (recommendation.material.id) {
+			case 'silk-extra-fine':
+				return t.engine.materials.silk;
+			case 'cotton-standard':
+				return t.engine.materials.cotton;
+			case 'embroidery-heavy':
+				return t.engine.materials.embroidery;
+			case 'rustic-cord':
+				return t.engine.materials.rustic;
+			default:
+				return recommendation.material.name;
+		}
+	})();
+
 	return (
 		<div className='rounded-xl border border-primary/20 bg-primary/5 p-3 shadow-xs'>
 			<div className='flex items-center justify-between'>
 				<span className='flex items-center gap-1.5 font-medium text-foreground text-xs'>
-					<Wand2 className='size-3.5 text-primary' />
-					Auto-Calibración Inteligente
+					<Wand2 className='size-3.5 shrink-0 text-primary' />
+					{t.presets.autoCalibrate.title}
 				</span>
-				<Badge variant='accent' className='font-mono text-xs'>
+				<Badge variant='accent' className='shrink-0 font-mono text-xs'>
 					<Sparkles className='mr-1 size-2.5 text-primary' />
-					Recomendado
+					{t.presets.autoCalibrate.badge}
 				</Badge>
 			</div>
 
 			<p className='mt-1.5 text-muted-foreground text-xs leading-relaxed'>
-				{recommendation.reasoning}
+				{reasoningText}
 			</p>
 
 			<div className='mt-2.5 grid grid-cols-2 gap-1.5 font-mono text-xs'>
-				<div className='rounded-md border bg-card/60 px-2 py-1'>
-					<span className='text-muted-foreground text-xs'>Clavos:</span>
+				<div className='flex min-w-0 items-center justify-between rounded-md border bg-card/60 px-2 py-1'>
+					<span className='truncate text-muted-foreground text-xs'>
+						{t.presets.autoCalibrate.pins}
+					</span>
 					<span className='ml-1 font-bold text-foreground'>
 						{recommendation.pinCount}
 					</span>
 				</div>
-				<div className='rounded-md border bg-card/60 px-2 py-1'>
-					<span className='text-muted-foreground text-xs'>Líneas:</span>
+				<div className='flex min-w-0 items-center justify-between rounded-md border bg-card/60 px-2 py-1'>
+					<span className='truncate text-muted-foreground text-xs'>
+						{t.presets.autoCalibrate.lines}
+					</span>
 					<span className='ml-1 font-bold text-foreground'>
 						{recommendation.maxLines}
 					</span>
 				</div>
-				<div className='rounded-md border bg-card/60 px-2 py-1'>
-					<span className='text-muted-foreground text-xs'>Hilo:</span>
+				<div className='flex min-w-0 items-center justify-between rounded-md border bg-card/60 px-2 py-1'>
+					<span className='truncate text-muted-foreground text-xs'>
+						{t.presets.autoCalibrate.thread}
+					</span>
 					<span className='ml-1 truncate font-bold text-foreground'>
-						{recommendation.material.name.split(' ')[0]}
+						{localizedMaterialName.split(' ')[0]}
 					</span>
 				</div>
-				<div className='rounded-md border bg-card/60 px-2 py-1'>
-					<span className='text-muted-foreground text-xs'>Contraste:</span>
+				<div className='flex min-w-0 items-center justify-between rounded-md border bg-card/60 px-2 py-1'>
+					<span className='truncate text-muted-foreground text-xs'>
+						{t.presets.autoCalibrate.contrast}
+					</span>
 					<span className='ml-1 font-bold text-foreground'>
 						+{recommendation.contrast}
 					</span>
@@ -109,7 +140,7 @@ export function AutoCalibrateCard({
 				className='mt-3 w-full gap-1.5 font-semibold text-xs'
 			>
 				<Wand2 className='size-3.5 text-primary' />
-				Aplicar Calibración Óptima
+				{t.presets.autoCalibrate.applyBtn}
 			</Button>
 		</div>
 	);

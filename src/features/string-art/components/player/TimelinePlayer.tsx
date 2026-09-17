@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowRight, BookOpen, Pause, Play } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 import { Slider } from '@/shared/ui/slider';
 
@@ -23,6 +24,7 @@ export function TimelinePlayer({
 	onOpenAssistant,
 	currentPins,
 }: Readonly<TimelinePlayerProps>) {
+	const { t } = useTranslation();
 	const isDisabled = totalLines <= 1;
 
 	const handleSliderChange = (vals: number[]) => {
@@ -37,7 +39,7 @@ export function TimelinePlayer({
 					size='icon'
 					disabled={isDisabled}
 					onClick={onTogglePlay}
-					aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
+					aria-label={isPlaying ? t.timeline.pause : t.timeline.play}
 					className='size-8'
 				>
 					{isPlaying ? (
@@ -48,7 +50,7 @@ export function TimelinePlayer({
 				</Button>
 
 				<div className='hidden items-center gap-1.5 rounded-md border bg-muted/30 px-2 py-1 font-mono text-xs sm:flex'>
-					<span className='text-muted-foreground'>Clavo:</span>
+					<span className='text-muted-foreground'>{t.timeline.pinLabel}</span>
 					<span className='font-bold text-foreground'>
 						{isDisabled ? '-' : currentPins.from}
 					</span>
@@ -62,7 +64,7 @@ export function TimelinePlayer({
 			<div className='flex flex-1 items-center justify-center gap-2 sm:gap-3'>
 				{isDisabled ? (
 					<span className='select-none truncate text-center text-muted-foreground text-xs italic'>
-						Inicia la generación para explorar trazos en la línea de tiempo
+						{t.timeline.emptyPrompt}
 					</span>
 				) : (
 					<>
@@ -86,11 +88,11 @@ export function TimelinePlayer({
 				size='sm'
 				disabled={isDisabled}
 				onClick={onOpenAssistant}
-				aria-label='Abrir guía de tejido'
+				aria-label={t.timeline.guideAria}
 				className='size-8 shrink-0 p-0 sm:h-8 sm:w-auto sm:px-2.5'
 			>
 				<BookOpen className='size-3.5 text-primary' />
-				<span className='hidden sm:inline'>Guía de Tejido</span>
+				<span className='hidden sm:inline'>{t.timeline.guideBtn}</span>
 			</Button>
 		</footer>
 	);

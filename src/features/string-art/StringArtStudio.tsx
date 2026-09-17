@@ -2,6 +2,7 @@
 
 import { Download } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 import { StudioWorkspaceStage } from './components/canvas/StudioWorkspaceStage';
 import { TimelinePlayer } from './components/player';
@@ -13,6 +14,7 @@ import { useStudioWorkbench } from './hooks/useStudioWorkbench';
 import { useWeavingAssistant } from './hooks/useWeavingAssistant';
 
 export function StringArtStudio() {
+	const { t } = useTranslation();
 	const studio = useStudioWorkbench();
 	const transform = useCanvasTransform(studio.canvasSize);
 	const assistant = useWeavingAssistant(
@@ -28,10 +30,10 @@ export function StringArtStudio() {
 			disabled={studio.displayedLines.length < 2}
 			onClick={() => studio.setIsExportOpen(true)}
 			className='gap-1.5 p-2 text-xs sm:px-3'
-			aria-label='Exportar proyecto'
+			aria-label={t.header.exportAria}
 		>
 			<Download className='size-3.5' />
-			<span className='hidden sm:inline'>Exportar</span>
+			<span className='hidden sm:inline'>{t.header.exportBtn}</span>
 		</Button>
 	);
 

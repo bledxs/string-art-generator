@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/shared/i18n';
 import { StudioSidebar, type StudioSidebarProps } from './StudioSidebar';
 
 interface MobileSidebarDrawerProps {
@@ -13,13 +14,15 @@ export function MobileSidebarDrawer({
 	onClose,
 	sidebarProps,
 }: Readonly<MobileSidebarDrawerProps>) {
+	const { t } = useTranslation();
+
 	if (!isOpen) return null;
 
 	return (
 		<div className='fixed inset-0 z-50 flex md:hidden'>
 			<button
 				type='button'
-				aria-label='Cerrar fondo'
+				aria-label={t.sidebar.closeAria}
 				className='fixed inset-0 cursor-pointer bg-black/70 backdrop-blur-xs transition-opacity'
 				onClick={onClose}
 			/>

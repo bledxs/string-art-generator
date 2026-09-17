@@ -1,6 +1,7 @@
 'use client';
 
 import { Minus, Plus, RotateCcw } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 
 interface ZoomControlsProps {
@@ -16,6 +17,7 @@ export function ZoomControls({
 	onZoomOut,
 	onReset,
 }: Readonly<ZoomControlsProps>) {
+	const { t } = useTranslation();
 	const zoomPercentage = Math.round(scale * 100);
 
 	return (
@@ -24,7 +26,7 @@ export function ZoomControls({
 				variant='ghost'
 				size='icon'
 				onClick={onZoomOut}
-				aria-label='Reducir zoom'
+				aria-label={t.zoom.zoomOut}
 				className='size-7'
 			>
 				<Minus className='size-3.5' />
@@ -38,7 +40,7 @@ export function ZoomControls({
 				variant='ghost'
 				size='icon'
 				onClick={onZoomIn}
-				aria-label='Aumentar zoom'
+				aria-label={t.zoom.zoomIn}
 				className='size-7'
 			>
 				<Plus className='size-3.5' />
@@ -50,7 +52,7 @@ export function ZoomControls({
 				variant='ghost'
 				size='icon'
 				onClick={onReset}
-				aria-label='Restablecer vista'
+				aria-label={t.zoom.reset}
 				className='size-7'
 			>
 				<RotateCcw className='size-3.5' />

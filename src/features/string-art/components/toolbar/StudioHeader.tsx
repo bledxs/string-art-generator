@@ -3,6 +3,7 @@
 import { CircleDot, Moon, SlidersHorizontal, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import type * as React from 'react';
+import { LanguageSelector, useTranslation } from '@/shared/i18n';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import type { EngineStatus } from '../../types';
@@ -30,26 +31,27 @@ export function StudioHeader({
 	onToggleMobileSidebar,
 }: Readonly<StudioHeaderProps>) {
 	const { theme, setTheme } = useTheme();
+	const { t } = useTranslation();
 
 	const toggleTheme = () => {
 		setTheme(theme === 'dark' ? 'light' : 'dark');
 	};
 
 	const statusBadge = {
-		idle: <Badge variant='secondary'>Inactivo</Badge>,
+		idle: <Badge variant='secondary'>{t.header.status.idle}</Badge>,
 		running: (
 			<Badge className='bg-amber-500/15 text-amber-600 dark:text-amber-400'>
-				Calculando...
+				{t.header.status.running}
 			</Badge>
 		),
 		paused: (
 			<Badge className='bg-orange-500/15 text-orange-600 dark:text-orange-400'>
-				Pausado
+				{t.header.status.paused}
 			</Badge>
 		),
 		completed: (
 			<Badge className='bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'>
-				Completado
+				{t.header.status.completed}
 			</Badge>
 		),
 	}[status];
@@ -62,7 +64,7 @@ export function StudioHeader({
 						variant='ghost'
 						size='icon'
 						onClick={onToggleMobileSidebar}
-						aria-label='Abrir configuración'
+						aria-label={t.header.openSettingsAria}
 						className='size-8 shrink-0 md:hidden'
 					>
 						<SlidersHorizontal className='size-4' />
@@ -75,14 +77,14 @@ export function StudioHeader({
 				<div className='flex min-w-0 flex-col'>
 					<div className='flex items-center gap-1.5 sm:gap-2'>
 						<span className='truncate font-semibold text-xs tracking-tight sm:text-sm'>
-							String Art Studio
+							{t.header.title}
 						</span>
 						<div className='xs:inline-flex hidden sm:inline-flex'>
 							{statusBadge}
 						</div>
 					</div>
 					<span className='hidden text-muted-foreground text-xs sm:block'>
-						Generador de tejido geométrico de alta resolución
+						{t.header.subtitle}
 					</span>
 				</div>
 			</div>
@@ -95,13 +97,14 @@ export function StudioHeader({
 				converged={converged}
 			/>
 
-			<div className='flex shrink-0 items-center gap-1 sm:gap-2'>
+			<div className='flex shrink-0 items-center gap-1.5 sm:gap-2'>
+				<LanguageSelector />
 				{actionSlot}
 				<Button
 					variant='ghost'
 					size='icon'
 					onClick={toggleTheme}
-					aria-label='Alternar tema'
+					aria-label={t.header.toggleThemeAria}
 					className='size-8'
 				>
 					<Sun className='size-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />

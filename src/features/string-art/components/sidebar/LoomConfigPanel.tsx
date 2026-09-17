@@ -1,4 +1,7 @@
+'use client';
+
 import { Circle, Ratio, Ruler, Square } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 import { Slider } from '@/shared/ui/slider';
 import type { LoomConfig } from '../../types';
@@ -9,22 +12,12 @@ interface LoomConfigPanelProps {
 	disabled?: boolean;
 }
 
-const ASPECT_RATIOS: Array<{
-	id: '1:1' | '3:4' | '4:3' | '16:9';
-	label: string;
-	desc: string;
-}> = [
-	{ id: '1:1', label: '1:1', desc: 'Cuadrado' },
-	{ id: '3:4', label: '3:4', desc: 'Retrato' },
-	{ id: '4:3', label: '4:3', desc: 'Apaisado' },
-	{ id: '16:9', label: '16:9', desc: 'Panorámico' },
-];
-
 export function LoomConfigPanel({
 	config,
 	onChange,
 	disabled = false,
-}: LoomConfigPanelProps) {
+}: Readonly<LoomConfigPanelProps>) {
+	const { t } = useTranslation();
 	const isRect = config.shape === 'rectangle';
 
 	const handleShapeChange = (shape: 'circle' | 'rectangle') => {
@@ -42,20 +35,23 @@ export function LoomConfigPanel({
 		onChange({ ...config, aspectRatio });
 	};
 
-	const handlePinCountChange = (values: number[]) => {
-		onChange({ ...config, pinCount: values[0] });
-	};
-
-	const handleDiameterChange = (values: number[]) => {
-		onChange({ ...config, physicalDiameterCm: values[0] });
-	};
+	const aspectRatios: Array<{
+		id: '1:1' | '3:4' | '4:3' | '16:9';
+		label: string;
+		desc: string;
+	}> = [
+		{ id: '1:1', label: '1:1', desc: t.loom.ratios.square },
+		{ id: '3:4', label: '3:4', desc: t.loom.ratios.portrait },
+		{ id: '4:3', label: '4:3', desc: t.loom.ratios.landscape },
+		{ id: '16:9', label: '16:9', desc: t.loom.ratios.widescreen },
+	];
 
 	return (
 		<div className='flex flex-col gap-4'>
 			{/* Shape Selector */}
 			<div className='flex flex-col gap-1.5'>
 				<span className='font-medium text-foreground text-xs'>
-					Forma del Bastidor
+					{t.loom.shapeTitle}
 				</span>
 				<div className='grid grid-cols-2 gap-1.5'>
 					<Button
@@ -64,30 +60,43 @@ export function LoomConfigPanel({
 						size='sm'
 						disabled={disabled}
 						onClick={() => handleShapeChange('circle')}
-						className='h-auto flex-col items-start p-2 text-left'
+						className='h-auto w-full min-w-0 flex-col items-start whitespace-normal p-2 text-left'
 					>
 						<span className='flex items-center gap-1.5 font-semibold text-xs'>
-							<Circle className='size-3.5 text-amber-500' />
-							Circular
+							<Circle className='size-3.5 shrink-0 text-amber-500' />
+							<span className='truncate'>{t.loom.circular}</span>
 						</span>
-						<span className='text-muted-foreground text-xs opacity-80'>
-							Aro radial clásico
+						<span
+							className={`break-words text-xs leading-tight ${
+								!isRect
+									? 'font-normal text-primary-foreground/90'
+									: 'text-muted-foreground opacity-80'
+							}`}
+						>
+							{t.loom.circularDesc}
 						</span>
 					</Button>
+
 					<Button
 						type='button'
 						variant={isRect ? 'default' : 'outline'}
 						size='sm'
 						disabled={disabled}
 						onClick={() => handleShapeChange('rectangle')}
-						className='h-auto flex-col items-start p-2 text-left'
+						className='h-auto w-full min-w-0 flex-col items-start whitespace-normal p-2 text-left'
 					>
 						<span className='flex items-center gap-1.5 font-semibold text-xs'>
-							<Square className='size-3.5 text-indigo-400' />
-							Rectangular
+							<Square className='size-3.5 shrink-0 text-indigo-400' />
+							<span className='truncate'>{t.loom.rectangular}</span>
 						</span>
-						<span className='text-muted-foreground text-xs opacity-80'>
-							Marco ortogonal (Perspicere)
+						<span
+							className={`break-words text-xs leading-tight ${
+								isRect
+									? 'font-normal text-primary-foreground/90'
+									: 'text-muted-foreground opacity-80'
+							}`}
+						>
+							{t.loom.rectangularDesc}
 						</span>
 					</Button>
 				</div>
@@ -98,46 +107,55 @@ export function LoomConfigPanel({
 				<div className='flex flex-col gap-1.5'>
 					<div className='flex items-center justify-between text-xs'>
 						<span className='flex items-center gap-1.5 font-medium text-foreground'>
-							<Ratio className='size-3.5 text-primary' />
-							Proporción de Marco
+							<Ratio className='size-3.5 shrink-0 text-primary' />
+							{t.loom.ratioTitle}
 						</span>
 						<span className='font-mono text-muted-foreground text-xs'>
 							{config.aspectRatio ?? '1:1'}
 						</span>
 					</div>
-					<div className='grid grid-cols-4 gap-1'>
-						{ASPECT_RATIOS.map((item) => (
-							<Button
-								key={item.id}
-								type='button'
-								variant={
-									(config.aspectRatio ?? '1:1') === item.id
-										? 'default'
-										: 'outline'
-								}
-								size='sm'
-								disabled={disabled}
-								onClick={() => handleAspectRatioChange(item.id)}
-								className='flex-col p-1.5 text-center'
-							>
-								<span className='font-bold text-xs'>{item.label}</span>
-								<span className='text-xs opacity-75'>{item.desc}</span>
-							</Button>
-						))}
+					<div className='grid grid-cols-2 gap-1.5'>
+						{aspectRatios.map((item) => {
+							const isSelected = (config.aspectRatio ?? '1:1') === item.id;
+							return (
+								<Button
+									key={item.id}
+									type='button'
+									variant={isSelected ? 'default' : 'outline'}
+									size='sm'
+									disabled={disabled}
+									onClick={() => handleAspectRatioChange(item.id)}
+									className='h-auto w-full min-w-0 items-center justify-between px-2.5 py-1.5 text-left'
+								>
+									<span className='font-bold font-mono text-xs'>
+										{item.label}
+									</span>
+									<span
+										className={`truncate text-xs ${
+											isSelected
+												? 'font-normal text-primary-foreground/90'
+												: 'text-muted-foreground opacity-80'
+										}`}
+									>
+										{item.desc}
+									</span>
+								</Button>
+							);
+						})}
 					</div>
 				</div>
 			)}
 
 			{/* Number of Pins */}
-			<div className='flex flex-col gap-2'>
+			<div className='flex flex-col gap-1.5'>
 				<div className='flex items-center justify-between text-xs'>
 					<span className='flex items-center gap-1.5 font-medium text-foreground'>
 						{isRect ? (
-							<Square className='size-3.5 text-primary' />
+							<Square className='size-3.5 shrink-0 text-primary' />
 						) : (
-							<Circle className='size-3.5 text-primary' />
+							<Circle className='size-3.5 shrink-0 text-primary' />
 						)}
-						Número de clavos
+						{t.loom.pinsTitle}
 					</span>
 					<span className='font-mono text-muted-foreground'>
 						{config.pinCount}
@@ -149,21 +167,21 @@ export function LoomConfigPanel({
 					max={500}
 					step={10}
 					disabled={disabled}
-					onValueChange={handlePinCountChange}
+					onValueChange={(values) =>
+						onChange({ ...config, pinCount: values[0] })
+					}
 				/>
-				<span className='text-muted-foreground text-xs'>
-					{isRect
-						? 'Distribución proporcional en los 4 bordes del marco.'
-						: 'Resolución angular alrededor del aro circular.'}
+				<span className='text-muted-foreground text-xs leading-tight opacity-80'>
+					{isRect ? t.loom.pinsRectDesc : t.loom.pinsCircleDesc}
 				</span>
 			</div>
 
 			{/* Physical Dimensions */}
-			<div className='flex flex-col gap-2'>
+			<div className='flex flex-col gap-1.5'>
 				<div className='flex items-center justify-between text-xs'>
 					<span className='flex items-center gap-1.5 font-medium text-foreground'>
-						<Ruler className='size-3.5 text-primary' />
-						{isRect ? 'Ancho mayor físico' : 'Diámetro físico'}
+						<Ruler className='size-3.5 shrink-0 text-primary' />
+						{isRect ? t.loom.diameterRectTitle : t.loom.diameterTitle}
 					</span>
 					<span className='font-mono text-muted-foreground'>
 						{config.physicalDiameterCm} cm
@@ -175,10 +193,12 @@ export function LoomConfigPanel({
 					max={150}
 					step={5}
 					disabled={disabled}
-					onValueChange={handleDiameterChange}
+					onValueChange={(values) =>
+						onChange({ ...config, physicalDiameterCm: values[0] })
+					}
 				/>
-				<span className='text-muted-foreground text-xs'>
-					Permite estimar con exactitud los metros de hilo y la escala real.
+				<span className='text-muted-foreground text-xs leading-tight opacity-80'>
+					{t.loom.diameterDesc}
 				</span>
 			</div>
 		</div>

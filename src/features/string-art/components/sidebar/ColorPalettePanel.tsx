@@ -1,6 +1,7 @@
 'use client';
 
 import { Check, Layers } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n';
 import { Slider } from '@/shared/ui/slider';
 import type { AlgorithmConfig, ColorLayer } from '../../types';
 import {
@@ -19,6 +20,7 @@ export function ColorPalettePanel({
 	onChange,
 	disabled = false,
 }: Readonly<ColorPalettePanelProps>) {
+	const { t, locale } = useTranslation();
 	const currentPaletteId = config.colorPaletteType ?? 'monochrome';
 	const isLightOnDark = config.colorMode === 'light-on-dark';
 	const activeLayers: ColorLayer[] = (
@@ -70,49 +72,74 @@ export function ColorPalettePanel({
 		});
 	};
 
+	const getLocalizedPalette = (
+		id: string,
+		defaultName: string,
+		defaultDesc: string,
+	) => {
+		const palMap: Record<string, { name: string; description: string }> = {
+			monochrome: t.color.palettes.monochrome,
+			cmyk: t.color.palettes.cmyk,
+			rgbw: t.color.palettes.rgbw,
+			'warm-sepia': t.color.palettes['warm-sepia'],
+		};
+		return palMap[id] ?? { name: defaultName, description: defaultDesc };
+	};
+
+	const getLocalizedLayerName = (layer: { id?: string; name: string }) => {
+		if (layer.id && t.color.layers[layer.id]) {
+			return t.color.layers[layer.id];
+		}
+		return layer.name;
+	};
+
 	return (
 		<div className='flex flex-col gap-4'>
 			{/* Palette Presets */}
 			<div className='flex flex-col gap-1.5'>
 				<span className='font-medium text-foreground text-xs'>
-					Paleta y Bobinas de Color
+					{t.color.title}
 				</span>
 				<div className='grid grid-cols-1 gap-2'>
 					{COLOR_PALETTES.map((palette) => {
 						const isSelected = currentPaletteId === palette.id;
+						const localized = getLocalizedPalette(
+							palette.id,
+							palette.name,
+							palette.description,
+						);
 						return (
 							<button
 								key={palette.id}
 								type='button'
 								disabled={disabled}
 								onClick={() => handleSelectPalette(palette)}
-								className={`flex flex-col items-start gap-1 rounded-xl border p-2.5 text-left transition-all ${
+								className={`flex w-full min-w-0 flex-col items-start gap-1 rounded-xl border p-2.5 text-left transition-all ${
 									isSelected
 										? 'border-primary bg-primary/5 shadow-xs'
 										: 'border-border/60 bg-muted/20 hover:border-border hover:bg-muted/40'
 								}`}
 							>
-								<div className='flex w-full items-center justify-between'>
-									<span className='font-semibold text-foreground text-xs'>
-										{palette.name}
+								<div className='flex w-full min-w-0 items-center justify-between'>
+									<span className='truncate font-semibold text-foreground text-xs'>
+										{localized.name}
 									</span>
-									<div className='flex items-center gap-1.5'>
-										{/* Color Swatch Dots */}
+									<div className='flex shrink-0 items-center gap-1.5 pl-2'>
 										<div className='flex items-center -space-x-1'>
 											{palette.layers.map((l) => (
 												<span
 													key={l.id}
 													className='size-3.5 rounded-full border border-background shadow-xs'
 													style={{ backgroundColor: l.color }}
-													title={`${l.name} (${l.color})`}
+													title={`${getLocalizedLayerName(l)} (${l.color})`}
 												/>
 											))}
 										</div>
 										{isSelected && <Check className='size-3.5 text-primary' />}
 									</div>
 								</div>
-								<span className='text-muted-foreground text-xs'>
-									{palette.description}
+								<span className='break-words text-muted-foreground text-xs leading-tight'>
+									{localized.description}
 								</span>
 							</button>
 						);
@@ -122,56 +149,61 @@ export function ColorPalettePanel({
 
 			{/* Layer Breakdown & Line Weight Adjustment */}
 			<div className='flex flex-col gap-3 rounded-xl border bg-muted/10 p-3'>
-				<div className='flex items-center justify-between'>
-					<span className='flex items-center gap-1.5 font-medium text-foreground text-xs'>
-						<Layers className='size-3.5 text-primary' />
-						Capas Secuenciales ({activeLayers.length})
+				<div className='flex items-center justify-between text-xs'>
+					<span className='flex items-center gap-1.5 font-medium text-foreground'>
+						<Layers className='size-3.5 shrink-0 text-primary' />
+						{t.color.layersTitle} ({activeLayers.length})
 					</span>
-					<span className='font-mono text-muted-foreground text-xs'>
-						Total: {config.maxLines} líneas
+					<span className='font-mono text-muted-foreground'>
+						{t.color.totalLines} {config.maxLines} {t.color.linesUnit}
 					</span>
 				</div>
 
 				<div className='flex flex-col gap-3'>
-					{activeLayers.map((layer, index) => (
-						<div key={layer.id} className='flex flex-col gap-1.5'>
-							<div className='flex items-center justify-between text-xs'>
-								<div className='flex items-center gap-2'>
-									<span
-										className='size-3 shrink-0 rounded-full border border-black/20 shadow-xs'
-										style={{ backgroundColor: layer.color }}
-									/>
-									<span className='font-medium text-foreground text-xs'>
-										{index + 1}ª {layer.name}
+					{activeLayers.map((layer, index) => {
+						const localizedName = getLocalizedLayerName(layer);
+						const prefix = locale === 'es' ? `${index + 1}ª` : `#${index + 1}`;
+
+						return (
+							<div key={layer.id} className='flex flex-col gap-1.5'>
+								<div className='flex items-center justify-between text-xs'>
+									<div className='flex min-w-0 items-center gap-2'>
+										<span
+											className='size-3 shrink-0 rounded-full border border-black/20 shadow-xs'
+											style={{ backgroundColor: layer.color }}
+										/>
+										<span className='truncate font-medium text-foreground text-xs'>
+											{prefix} {localizedName}
+										</span>
+									</div>
+									<span className='shrink-0 font-mono font-semibold text-muted-foreground text-xs'>
+										{layer.linesCount} {t.color.linesUnit}
 									</span>
 								</div>
-								<span className='font-mono font-semibold text-muted-foreground text-xs'>
-									{layer.linesCount} lín
-								</span>
+								<Slider
+									disabled={disabled}
+									value={[layer.linesCount]}
+									min={100}
+									max={2000}
+									step={50}
+									onValueChange={(vals) =>
+										handleLayerLinesChange(index, vals[0])
+									}
+									aria-label={`${t.color.layerAria} ${localizedName}`}
+								/>
 							</div>
-							<Slider
-								disabled={disabled}
-								value={[layer.linesCount]}
-								min={100}
-								max={2000}
-								step={50}
-								onValueChange={(vals) => handleLayerLinesChange(index, vals[0])}
-								aria-label={`Líneas para capa ${layer.name}`}
-							/>
-						</div>
-					))}
+						);
+					})}
 				</div>
 			</div>
 
 			{/* Physical String Art Info Banner */}
 			<div className='rounded-lg border border-primary/20 bg-primary/5 p-2.5 text-xs'>
 				<span className='font-semibold text-foreground text-xs'>
-					Producción Real por Capas:
+					{t.color.productionBannerTitle}
 				</span>
-				<p className='mt-1 text-muted-foreground text-xs'>
-					El algoritmo teje bobina por bobina en secuencia. Esto previene el
-					enredo sucio («efecto barro») y permite cambiar de hilo fácilmente en
-					el taller.
+				<p className='mt-1 text-muted-foreground text-xs leading-relaxed'>
+					{t.color.productionBannerDesc}
 				</p>
 			</div>
 		</div>
