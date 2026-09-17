@@ -1,12 +1,11 @@
-'use client';
-
-import dynamic from 'next/dynamic';
-
-const StringArtStudio = dynamic(
-	() => import('@/features/string-art').then((mod) => mod.StringArtStudio),
-	{ ssr: false },
-);
+import { StringArtStudioClient } from '@/features/string-art/components/StringArtStudioClient';
+import { SeoContent } from '@/shared/components/SeoContent';
 
 export default function HomePage() {
-	return <StringArtStudio />;
+	return (
+		<main className='relative min-h-screen'>
+			<StringArtStudioClient />
+			<SeoContent />
+		</main>
+	);
 }
