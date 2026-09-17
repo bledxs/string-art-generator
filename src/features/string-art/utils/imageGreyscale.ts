@@ -165,3 +165,120 @@ export function applyLoomMask(
 		applyCircularMask(pixels, size, loomConfig.pinOffsetRatio, 0.82, colorMode);
 	}
 }
+
+function applyRgbaContrastBrightness(
+	output: Uint8ClampedArray,
+	pixelCount: number,
+	contrast: number,
+	brightness: number,
+): void {
+	const factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
+	for (let i = 0; i < pixelCount; i++) {
+		const offset = i * 4;
+		output[offset] = Math.max(
+			0,
+			Math.min(
+				255,
+				Math.round(factor * (output[offset] - 128) + 128 + brightness),
+			),
+		);
+		output[offset + 1] = Math.max(
+			0,
+			Math.min(
+				255,
+				Math.round(factor * (output[offset + 1] - 128) + 128 + brightness),
+			),
+		);
+		output[offset + 2] = Math.max(
+			0,
+			Math.min(
+				255,
+				Math.round(factor * (output[offset + 2] - 128) + 128 + brightness),
+			),
+		);
+	}
+}
+
+function applyRgbaCircularMask(
+	output: Uint8ClampedArray,
+	size: number,
+	ratio: number,
+	bgVal: number,
+): void {
+	const center = size / 2;
+	const radius = center * ratio;
+	const radiusSq = radius * radius;
+	for (let y = 0; y < size; y++) {
+		const dy = y - center;
+		const dySq = dy * dy;
+		const row = y * size;
+		for (let x = 0; x < size; x++) {
+			const dx = x - center;
+			if (dx * dx + dySq >= radiusSq) {
+				const idx = (row + x) * 4;
+				output[idx] = bgVal;
+				output[idx + 1] = bgVal;
+				output[idx + 2] = bgVal;
+			}
+		}
+	}
+}
+
+function applyRgbaRectangularMask(
+	output: Uint8ClampedArray,
+	size: number,
+	width: number,
+	height: number,
+	bgVal: number,
+): void {
+	const center = size / 2;
+	const halfW = width / 2;
+	const halfH = height / 2;
+	const x0 = center - halfW;
+	const x1 = center + halfW;
+	const y0 = center - halfH;
+	const y1 = center + halfH;
+	for (let y = 0; y < size; y++) {
+		const row = y * size;
+		for (let x = 0; x < size; x++) {
+			if (x < x0 || x > x1 || y < y0 || y > y1) {
+				const idx = (row + x) * 4;
+				output[idx] = bgVal;
+				output[idx + 1] = bgVal;
+				output[idx + 2] = bgVal;
+			}
+		}
+	}
+}
+
+export function preprocessRgbaBuffer(
+	rgba: Uint8ClampedArray,
+	size: number,
+	contrast: number,
+	brightness: number,
+	loomConfig: LoomConfig,
+	colorMode: 'dark-on-light' | 'light-on-dark' = 'dark-on-light',
+): Uint8ClampedArray {
+	const pixelCount = size * size;
+	const output = new Uint8ClampedArray(rgba);
+	applyRgbaContrastBrightness(output, pixelCount, contrast, brightness);
+
+	const bgVal = colorMode === 'light-on-dark' ? 0 : 255;
+	if (loomConfig.shape === 'rectangle') {
+		const dims = getLoomDimensions(
+			size,
+			loomConfig.pinOffsetRatio,
+			'rectangle',
+			loomConfig.aspectRatio ?? '1:1',
+		);
+		applyRgbaRectangularMask(output, size, dims.width, dims.height, bgVal);
+	} else {
+		applyRgbaCircularMask(
+			output,
+			size,
+			loomConfig.pinOffsetRatio ?? 0.93,
+			bgVal,
+		);
+	}
+	return output;
+}

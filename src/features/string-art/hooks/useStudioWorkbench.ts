@@ -2,7 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { AlgorithmConfig, LoomConfig, PresetImage } from '../types';
-import { applyLoomMask, extractGreyscaleBuffer } from '../utils/imageGreyscale';
+import {
+	applyLoomMask,
+	extractGreyscaleBuffer,
+	preprocessRgbaBuffer,
+} from '../utils/imageGreyscale';
 import {
 	calculateCircularPins,
 	calculateRectangularPins,
@@ -150,7 +154,15 @@ export function useStudioWorkbench() {
 				loomConfig,
 				algoConfig.colorMode ?? 'dark-on-light',
 			);
-			engine.start(grey, CANVAS_SIZE, loomConfig, algoConfig, data.data);
+			const processedRgba = preprocessRgbaBuffer(
+				data.data,
+				CANVAS_SIZE,
+				algoConfig.contrast,
+				algoConfig.brightness,
+				loomConfig,
+				algoConfig.colorMode ?? 'dark-on-light',
+			);
+			engine.start(grey, CANVAS_SIZE, loomConfig, algoConfig, processedRgba);
 		};
 	}, [imageSrc, loomConfig, algoConfig, engine]);
 

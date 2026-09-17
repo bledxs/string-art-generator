@@ -20,19 +20,34 @@ export function ColorPalettePanel({
 	disabled = false,
 }: Readonly<ColorPalettePanelProps>) {
 	const currentPaletteId = config.colorPaletteType ?? 'monochrome';
-	const activeLayers: ColorLayer[] =
+	const isLightOnDark = config.colorMode === 'light-on-dark';
+	const activeLayers: ColorLayer[] = (
 		config.colorLayers && config.colorLayers.length > 0
 			? config.colorLayers
 			: (COLOR_PALETTES.find((p) => p.id === currentPaletteId)?.layers ??
-				COLOR_PALETTES[0].layers);
+				COLOR_PALETTES[0].layers)
+	).map((l) =>
+		currentPaletteId === 'monochrome'
+			? { ...l, color: isLightOnDark ? '#f4f2ed' : '#120e0b' }
+			: l,
+	);
 
 	const handleSelectPalette = (preset: ColorPalettePreset) => {
 		const totalLines = preset.layers.reduce((sum, l) => sum + l.linesCount, 0);
+		const targetMode = preset.recommendedMode;
 		onChange({
 			...config,
 			colorPaletteType: preset.id,
-			colorLayers: preset.layers.map((l) => ({ ...l })),
-			colorMode: preset.recommendedMode,
+			colorLayers: preset.layers.map((l) => ({
+				...l,
+				color:
+					preset.id === 'monochrome'
+						? targetMode === 'light-on-dark'
+							? '#f4f2ed'
+							: '#120e0b'
+						: l.color,
+			})),
+			colorMode: targetMode,
 			maxLines: totalLines,
 		});
 	};

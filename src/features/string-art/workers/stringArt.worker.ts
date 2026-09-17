@@ -254,6 +254,15 @@ function setupColorLayers(
 	isLightOnDark: boolean,
 ): ColorLayer[] {
 	if (algoConfig.colorLayers && algoConfig.colorLayers.length > 0) {
+		if (
+			algoConfig.colorPaletteType === 'monochrome' ||
+			algoConfig.colorLayers.length === 1
+		) {
+			return algoConfig.colorLayers.map((l) => ({
+				...l,
+				color: isLightOnDark ? '#f4f2ed' : '#120e0b',
+			}));
+		}
 		return algoConfig.colorLayers;
 	}
 	return [
@@ -313,21 +322,23 @@ function runGenerationLoop(
 	let layerStartIndex = 0;
 	const colorRuns: ColorRun[] = [];
 
-	let residual: Int16Array = rgbaBuffer
-		? extractLayerResidual(
-				rgbaBuffer,
-				pixelCount,
-				layers[0],
-				paletteType,
-				algoConfig.colorMode ?? 'dark-on-light',
-			)
-		: (() => {
-				const res = new Int16Array(pixelCount);
-				for (let i = 0; i < pixelCount; i++) {
-					res[i] = isLightOnDark ? pixels[i] : 255 - pixels[i];
-				}
-				return res;
-			})();
+	let residual: Int16Array =
+		rgbaBuffer && paletteType !== 'monochrome'
+			? extractLayerResidual(
+					rgbaBuffer,
+					pixels,
+					pixelCount,
+					layers[0],
+					paletteType,
+					algoConfig.colorMode ?? 'dark-on-light',
+				)
+			: (() => {
+					const res = new Int16Array(pixelCount);
+					for (let i = 0; i < pixelCount; i++) {
+						res[i] = isLightOnDark ? pixels[i] : 255 - pixels[i];
+					}
+					return res;
+				})();
 
 	const autoStop = algoConfig.autoStop ?? true;
 	const whitePenalty = algoConfig.whitePenalty ?? 1.3;
@@ -360,9 +371,10 @@ function runGenerationLoop(
 		currentLayerLinesDone = 0;
 		layerStartIndex = lineSequence.length;
 
-		if (rgbaBuffer) {
+		if (rgbaBuffer && paletteType !== 'monochrome') {
 			residual = extractLayerResidual(
 				rgbaBuffer,
+				pixels,
 				pixelCount,
 				nextLayer,
 				paletteType,
@@ -478,6 +490,14 @@ function runGenerationLoop(
 		if (batchBuffer.length > 0) {
 			const activeLayer =
 				layers[currentLayerIndex] ?? layers[layers.length - 1];
+			const currentActiveRun: ColorRun = {
+				layerId: activeLayer.id,
+				name: activeLayer.name,
+				color: activeLayer.color,
+				startIndex: layerStartIndex,
+				endIndex: lineSequence.length,
+				lineCount: lineSequence.length - layerStartIndex,
+			};
 			const progressMsg: WorkerOutMessage = {
 				type: 'PROGRESS_BATCH',
 				payload: {
@@ -488,7 +508,7 @@ function runGenerationLoop(
 					currentLayerIndex,
 					currentLayerName: activeLayer?.name,
 					currentColor: activeLayer?.color,
-					colorRuns: [...colorRuns],
+					colorRuns: [...colorRuns, currentActiveRun],
 				},
 			};
 			self.postMessage(progressMsg);

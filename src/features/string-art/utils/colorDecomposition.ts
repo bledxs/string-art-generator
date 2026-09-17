@@ -138,37 +138,52 @@ export function hexToRgb(hex: string): { r: number; g: number; b: number } {
 
 function extractCmykResidual(
 	rgba: Uint8ClampedArray,
+	baseGrey: Uint8ClampedArray,
 	pixelCount: number,
 	layerId: string,
+	colorMode: 'dark-on-light' | 'light-on-dark',
 ): Int16Array {
 	const residual = new Int16Array(pixelCount);
+	const isLightOnDark = colorMode === 'light-on-dark';
 	const isK = layerId.includes('-k');
 	const isC = layerId.includes('-c');
 	const isM = layerId.includes('-m');
-	const isY = layerId.includes('-y');
 
 	for (let i = 0; i < pixelCount; i++) {
-		const r = rgba[i * 4] / 255;
-		const g = rgba[i * 4 + 1] / 255;
-		const b = rgba[i * 4 + 2] / 255;
-		const k = 1 - Math.max(r, g, b);
+		const baseD = isLightOnDark ? baseGrey[i] : 255 - baseGrey[i];
+		if (baseD <= 4) continue;
 
+		const r = rgba[i * 4];
+		const g = rgba[i * 4 + 1];
+		const b = rgba[i * 4 + 2];
+
+		let affinity = 0.5;
 		if (isK) {
-			residual[i] = Math.round(k * 255);
-		} else if (k < 0.999) {
-			const denom = 1 - k;
-			if (isC) residual[i] = Math.round(((1 - r - k) / denom) * 255);
-			else if (isM) residual[i] = Math.round(((1 - g - k) / denom) * 255);
-			else if (isY) residual[i] = Math.round(((1 - b - k) / denom) * 255);
+			const maxC = Math.max(r, g, b);
+			const minC = Math.min(r, g, b);
+			const saturation = (maxC - minC) / (maxC + 1);
+			const depthWeight = Math.sqrt(baseD / 255);
+			affinity = 0.35 + 0.65 * (1 - saturation) * depthWeight;
+		} else if (isC) {
+			const coolness = ((g + b) / 2 - r + 255) / 510;
+			affinity = 0.25 + 0.75 * Math.max(0, Math.min(1, coolness));
+		} else if (isM) {
+			const warmth = ((r + b) / 2 - g + 255) / 510;
+			affinity = 0.25 + 0.75 * Math.max(0, Math.min(1, warmth));
 		} else {
-			residual[i] = 0;
+			// Yellow (Y)
+			const yellowness = ((r + g) / 2 - b + 255) / 510;
+			affinity = 0.25 + 0.75 * Math.max(0, Math.min(1, yellowness));
 		}
+
+		residual[i] = Math.round(baseD * affinity);
 	}
 	return residual;
 }
 
 function extractRgbwResidual(
 	rgba: Uint8ClampedArray,
+	baseGrey: Uint8ClampedArray,
 	pixelCount: number,
 	layerId: string,
 ): Int16Array {
@@ -176,31 +191,76 @@ function extractRgbwResidual(
 	const isW = layerId.includes('-w');
 	const isR = layerId.includes('-r');
 	const isB = layerId.includes('-b');
-	const isY = layerId.includes('-y');
 
 	for (let i = 0; i < pixelCount; i++) {
+		const baseD = baseGrey[i];
+		if (baseD <= 4) continue;
+
 		const r = rgba[i * 4];
 		const g = rgba[i * 4 + 1];
 		const b = rgba[i * 4 + 2];
-		const whiteShared = Math.min(r, g, b);
 
+		let affinity = 0.5;
 		if (isW) {
-			residual[i] = whiteShared;
+			const maxC = Math.max(r, g, b);
+			const minC = Math.min(r, g, b);
+			const saturation = (maxC - minC) / (maxC + 1);
+			affinity = 0.35 + 0.65 * (1 - saturation);
 		} else if (isR) {
-			residual[i] = Math.max(0, r - whiteShared);
+			const redness = (r - (g + b) / 2 + 255) / 510;
+			affinity = 0.25 + 0.75 * Math.max(0, Math.min(1, redness));
 		} else if (isB) {
-			residual[i] = Math.max(0, b - whiteShared);
-		} else if (isY) {
-			residual[i] = Math.max(0, Math.min(r, g) - whiteShared);
+			const blueness = (b - (r + g) / 2 + 255) / 510;
+			affinity = 0.25 + 0.75 * Math.max(0, Math.min(1, blueness));
 		} else {
-			residual[i] = Math.max(0, g - whiteShared);
+			// Gold (Y)
+			const goldness = ((r + g) / 2 - b + 255) / 510;
+			affinity = 0.25 + 0.75 * Math.max(0, Math.min(1, goldness));
 		}
+
+		residual[i] = Math.round(baseD * affinity);
+	}
+	return residual;
+}
+
+function extractSepiaResidual(
+	rgba: Uint8ClampedArray,
+	baseGrey: Uint8ClampedArray,
+	pixelCount: number,
+	layerId: string,
+	colorMode: 'dark-on-light' | 'light-on-dark',
+): Int16Array {
+	const residual = new Int16Array(pixelCount);
+	const isLightOnDark = colorMode === 'light-on-dark';
+	const isDark = layerId.includes('dark');
+	const isTerracotta = layerId.includes('terracotta');
+
+	for (let i = 0; i < pixelCount; i++) {
+		const baseD = isLightOnDark ? baseGrey[i] : 255 - baseGrey[i];
+		if (baseD <= 4) continue;
+
+		const r = rgba[i * 4];
+		const b = rgba[i * 4 + 2];
+
+		let affinity = 0.5;
+		if (isDark) {
+			affinity = 0.4 + 0.6 * Math.sqrt(baseD / 255);
+		} else if (isTerracotta) {
+			const warmth = (r - b + 255) / 510;
+			affinity = 0.25 + 0.75 * Math.max(0, Math.min(1, warmth));
+		} else {
+			// Cream / highlights
+			affinity = 0.25 + 0.75 * ((255 - baseD) / 255);
+		}
+
+		residual[i] = Math.round(baseD * affinity);
 	}
 	return residual;
 }
 
 function extractAffinityResidual(
 	rgba: Uint8ClampedArray,
+	baseGrey: Uint8ClampedArray,
 	pixelCount: number,
 	targetColor: { r: number; g: number; b: number },
 	colorMode: 'dark-on-light' | 'light-on-dark',
@@ -209,6 +269,9 @@ function extractAffinityResidual(
 	const isLightOnDark = colorMode === 'light-on-dark';
 
 	for (let i = 0; i < pixelCount; i++) {
+		const baseD = isLightOnDark ? baseGrey[i] : 255 - baseGrey[i];
+		if (baseD <= 4) continue;
+
 		const r = rgba[i * 4];
 		const g = rgba[i * 4 + 1];
 		const b = rgba[i * 4 + 2];
@@ -218,32 +281,50 @@ function extractAffinityResidual(
 			g - targetColor.g,
 			b - targetColor.b,
 		);
-		const affinity = Math.max(0, 255 - dist);
-		const luma = 0.299 * r + 0.587 * g + 0.114 * b;
-
-		if (isLightOnDark) {
-			residual[i] = Math.round((affinity * luma) / 255);
-		} else {
-			const darkness = 255 - luma;
-			residual[i] = Math.round((affinity * darkness) / 255);
-		}
+		const affinity = 0.25 + 0.75 * Math.max(0, (441.67 - dist) / 441.67);
+		residual[i] = Math.round(baseD * affinity);
 	}
 	return residual;
 }
 
 export function extractLayerResidual(
 	rgba: Uint8ClampedArray,
+	baseGrey: Uint8ClampedArray,
 	pixelCount: number,
 	layer: ColorLayer,
 	paletteType: string,
 	colorMode: 'dark-on-light' | 'light-on-dark',
 ): Int16Array {
+	if (paletteType === 'monochrome') {
+		const residual = new Int16Array(pixelCount);
+		const isLightOnDark = colorMode === 'light-on-dark';
+		for (let i = 0; i < pixelCount; i++) {
+			residual[i] = isLightOnDark ? baseGrey[i] : 255 - baseGrey[i];
+		}
+		return residual;
+	}
+
 	if (paletteType === 'cmyk') {
-		return extractCmykResidual(rgba, pixelCount, layer.id);
+		return extractCmykResidual(rgba, baseGrey, pixelCount, layer.id, colorMode);
 	}
 	if (paletteType === 'rgbw') {
-		return extractRgbwResidual(rgba, pixelCount, layer.id);
+		return extractRgbwResidual(rgba, baseGrey, pixelCount, layer.id);
+	}
+	if (paletteType === 'warm-sepia') {
+		return extractSepiaResidual(
+			rgba,
+			baseGrey,
+			pixelCount,
+			layer.id,
+			colorMode,
+		);
 	}
 	const targetColor = hexToRgb(layer.color);
-	return extractAffinityResidual(rgba, pixelCount, targetColor, colorMode);
+	return extractAffinityResidual(
+		rgba,
+		baseGrey,
+		pixelCount,
+		targetColor,
+		colorMode,
+	);
 }

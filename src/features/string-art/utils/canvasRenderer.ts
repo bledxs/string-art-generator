@@ -59,7 +59,7 @@ function hexToRgba(hex: string, opacity: number): string {
 	return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }
 
-function drawLineSegmentBatch(
+function drawSegmentsRange(
 	ctx: CanvasRenderingContext2D,
 	pins: Pin[],
 	lines: number[],
@@ -70,8 +70,10 @@ function drawLineSegmentBatch(
 		const from = pins[lines[i - 1]];
 		const to = pins[lines[i]];
 		if (from && to) {
+			ctx.beginPath();
 			ctx.moveTo(from.x, from.y);
 			ctx.lineTo(to.x, to.y);
+			ctx.stroke();
 		}
 	}
 }
@@ -85,13 +87,11 @@ function drawColorRunsStrings(
 ): void {
 	for (const run of colorRuns) {
 		const start = Math.max(1, run.startIndex);
-		const end = Math.min(lines.length, run.endIndex);
+		const end = Math.min(lines.length, run.endIndex + 1);
 		if (start >= end) continue;
 
-		ctx.beginPath();
 		ctx.strokeStyle = hexToRgba(run.color, opacity);
-		drawLineSegmentBatch(ctx, pins, lines, start, end);
-		ctx.stroke();
+		drawSegmentsRange(ctx, pins, lines, start, end);
 	}
 }
 
@@ -102,14 +102,12 @@ function drawSingleColorStrings(
 	opacity: number,
 	colorMode: 'dark-on-light' | 'light-on-dark',
 ): void {
-	ctx.beginPath();
 	ctx.strokeStyle =
 		colorMode === 'light-on-dark'
 			? `rgba(244, 242, 237, ${opacity})`
 			: `rgba(18, 14, 11, ${opacity})`;
 
-	drawLineSegmentBatch(ctx, pins, lines, 1, lines.length);
-	ctx.stroke();
+	drawSegmentsRange(ctx, pins, lines, 1, lines.length);
 }
 
 export function drawStrings(
