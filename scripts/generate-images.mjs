@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { generateLogoAssets } from './generate-logo.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,7 +13,6 @@ const logoPath = join(rootDir, 'logo.png');
 
 /**
  * Builds a valid multi-size Windows/Browser .ico file from an array of PNG buffers
- * Supported in all modern browsers and OSes.
  */
 function createIco(images) {
 	const count = images.length;
@@ -45,7 +45,7 @@ function createIco(images) {
 }
 
 async function generateFavicons() {
-	console.log('🔷 Generando favicons e iconos de aplicación...');
+	console.log('\n🔷 Generando favicons e iconos de aplicación...');
 
 	const sizes = [16, 32, 48];
 	const icoPngs = [];
@@ -90,7 +90,7 @@ async function generateFavicons() {
 	await sharp(logoPath)
 		.resize(180, 180, {
 			fit: 'contain',
-			background: { r: 10, g: 10, b: 15, alpha: 1 },
+			background: { r: 12, g: 10, b: 9, alpha: 1 },
 		})
 		.png()
 		.toFile(join(publicDir, 'apple-icon.png'));
@@ -111,7 +111,7 @@ async function generatePwaIcons() {
 		await sharp(logoPath)
 			.resize(size, size, {
 				fit: 'contain',
-				background: { r: 10, g: 10, b: 15, alpha: 1 },
+				background: { r: 12, g: 10, b: 9, alpha: 1 },
 			})
 			.png()
 			.toFile(join(publicDir, name));
@@ -122,7 +122,7 @@ async function generatePwaIcons() {
 async function generateSocialCard(filename, platformName) {
 	const width = 1200;
 	const height = 630;
-	const logoSize = 280;
+	const logoSize = 300;
 
 	const logoBuffer = await sharp(logoPath)
 		.resize(logoSize, logoSize, {
@@ -135,18 +135,18 @@ async function generateSocialCard(filename, platformName) {
 	const svgBanner = `
 	<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
 		<defs>
-			<radialGradient id="bgGlow" cx="50%" cy="40%" r="60%">
-				<stop offset="0%" stop-color="#1e1b4b" stop-opacity="0.9" />
-				<stop offset="50%" stop-color="#0f172a" stop-opacity="1" />
-				<stop offset="100%" stop-color="#020617" stop-opacity="1" />
+			<radialGradient id="bgGlow" cx="50%" cy="38%" r="65%">
+				<stop offset="0%" stop-color="#291809" stop-opacity="0.95" />
+				<stop offset="45%" stop-color="#140e09" stop-opacity="1" />
+				<stop offset="100%" stop-color="#080706" stop-opacity="1" />
 			</radialGradient>
-			<linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-				<stop offset="0%" stop-color="#38bdf8" />
-				<stop offset="50%" stop-color="#818cf8" />
-				<stop offset="100%" stop-color="#c084fc" />
+			<linearGradient id="amberAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#fbbf24" />
+				<stop offset="50%" stop-color="#f59e0b" />
+				<stop offset="100%" stop-color="#d97706" />
 			</linearGradient>
 			<filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-				<feGaussianBlur stdDeviation="30" result="blur" />
+				<feGaussianBlur stdDeviation="25" result="blur" />
 				<feComposite in="SourceGraphic" in2="blur" operator="over" />
 			</filter>
 		</defs>
@@ -155,13 +155,14 @@ async function generateSocialCard(filename, platformName) {
 		<rect width="${width}" height="${height}" fill="url(#bgGlow)" />
 
 		<!-- Geometric string art decorative rings -->
-		<circle cx="600" cy="220" r="180" fill="none" stroke="#6366f1" stroke-width="1" stroke-opacity="0.25" stroke-dasharray="4 8" />
-		<circle cx="600" cy="220" r="210" fill="none" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.15" />
+		<circle cx="600" cy="210" r="195" fill="none" stroke="#d97706" stroke-width="1.5" stroke-opacity="0.25" stroke-dasharray="4 8" />
+		<circle cx="600" cy="210" r="230" fill="none" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.15" />
+		<circle cx="600" cy="210" r="265" fill="none" stroke="#fbbf24" stroke-width="0.75" stroke-opacity="0.1" stroke-dasharray="2 6" />
 
 		<!-- Badge -->
-		<g transform="translate(475, 400)">
-			<rect width="250" height="32" rx="16" fill="#1e293b" stroke="#334155" stroke-width="1" />
-			<text x="125" y="21" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#38bdf8" text-anchor="middle" letter-spacing="1.5">ALGORITMO DE ALTA PRECISIÓN</text>
+		<g transform="translate(460, 395)">
+			<rect width="280" height="34" rx="17" fill="#1c1917" stroke="#78350f" stroke-width="1.5" />
+			<text x="140" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#fbbf24" text-anchor="middle" letter-spacing="1.8">ALGORITMO ARTESANAL DE ALTA PRECISIÓN</text>
 		</g>
 
 		<!-- Title -->
@@ -170,13 +171,13 @@ async function generateSocialCard(filename, platformName) {
 		</text>
 
 		<!-- Subtitle -->
-		<text x="600" y="525" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="400" fill="#94a3b8" text-anchor="middle">
+		<text x="600" y="525" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="400" fill="#d6d3d1" text-anchor="middle">
 			Convierte cualquier imagen en patrones profesionales de hilorama
 		</text>
 
 		<!-- Feature Badges -->
-		<text x="600" y="575" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="500" fill="#cbd5e1" text-anchor="middle">
-			Simulación en tiempo real • Capas de color • Exportación PDF gratuita
+		<text x="600" y="575" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="500" fill="#fed7aa" text-anchor="middle">
+			Simulación interactiva • Capas de color policromáticas • Exportación PDF gratuita
 		</text>
 	</svg>
 	`;
@@ -186,7 +187,7 @@ async function generateSocialCard(filename, platformName) {
 		.composite([
 			{
 				input: logoBuffer,
-				top: 80,
+				top: 60,
 				left: Math.round((width - logoSize) / 2),
 			},
 		])
@@ -202,15 +203,15 @@ async function generateScreenshots() {
 	// screenshot-wide.png (1280x720)
 	const wideSvg = `
 	<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
-		<rect width="1280" height="720" fill="#090d16" />
-		<circle cx="640" cy="300" r="190" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="3 6" />
-		<text x="640" y="530" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="700" fill="#ffffff" text-anchor="middle">String Art Studio — Web App</text>
-		<text x="640" y="575" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="400" fill="#64748b" text-anchor="middle">Generador interactivo de hilorama de alta fidelidad</text>
+		<rect width="1280" height="720" fill="#0c0a09" />
+		<circle cx="640" cy="290" r="195" fill="none" stroke="#d97706" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4 8" />
+		<text x="640" y="535" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="46" font-weight="800" fill="#ffffff" text-anchor="middle">String Art Studio</text>
+		<text x="640" y="580" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="21" font-weight="400" fill="#a8a29e" text-anchor="middle">Estudio interactivo de hilorama de alta precisión</text>
 	</svg>
 	`;
 
 	const logoWide = await sharp(logoPath)
-		.resize(260, 260, {
+		.resize(270, 270, {
 			fit: 'contain',
 			background: { r: 0, g: 0, b: 0, alpha: 0 },
 		})
@@ -218,7 +219,7 @@ async function generateScreenshots() {
 		.toBuffer();
 
 	await sharp(Buffer.from(wideSvg))
-		.composite([{ input: logoWide, top: 170, left: 510 }])
+		.composite([{ input: logoWide, top: 155, left: 505 }])
 		.png()
 		.toFile(join(publicDir, 'screenshot-wide.png'));
 	console.log('  ✅ screenshot-wide.png (1280x720)');
@@ -226,15 +227,15 @@ async function generateScreenshots() {
 	// screenshot-narrow.png (750x1334)
 	const narrowSvg = `
 	<svg width="750" height="1334" viewBox="0 0 750 1334" xmlns="http://www.w3.org/2000/svg">
-		<rect width="750" height="1334" fill="#090d16" />
-		<circle cx="375" cy="500" r="170" fill="none" stroke="#818cf8" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="3 6" />
-		<text x="375" y="740" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="38" font-weight="700" fill="#ffffff" text-anchor="middle">String Art Studio</text>
-		<text x="375" y="790" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="400" fill="#64748b" text-anchor="middle">Arte de hilos y clavos interactivo</text>
+		<rect width="750" height="1334" fill="#0c0a09" />
+		<circle cx="375" cy="490" r="185" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4 8" />
+		<text x="375" y="750" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="40" font-weight="800" fill="#ffffff" text-anchor="middle">String Art Studio</text>
+		<text x="375" y="800" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="400" fill="#a8a29e" text-anchor="middle">Arte de hilos y clavos interactivo</text>
 	</svg>
 	`;
 
 	const logoNarrow = await sharp(logoPath)
-		.resize(240, 240, {
+		.resize(250, 250, {
 			fit: 'contain',
 			background: { r: 0, g: 0, b: 0, alpha: 0 },
 		})
@@ -242,7 +243,7 @@ async function generateScreenshots() {
 		.toBuffer();
 
 	await sharp(Buffer.from(narrowSvg))
-		.composite([{ input: logoNarrow, top: 380, left: 255 }])
+		.composite([{ input: logoNarrow, top: 365, left: 250 }])
 		.png()
 		.toFile(join(publicDir, 'screenshot-narrow.png'));
 	console.log('  ✅ screenshot-narrow.png (750x1334)');
@@ -253,18 +254,18 @@ async function main() {
 		'🚀 Generador Integral de Recursos Gráficos y SEO para String Art Studio\n',
 	);
 
-	if (!existsSync(logoPath)) {
-		console.error(`❌ ERROR: No se encontró logo.png en: ${logoPath}`);
-		process.exit(1);
-	}
-
 	if (!existsSync(publicDir)) {
 		mkdirSync(publicDir, { recursive: true });
 	}
 
+	// 1. Generar nuevo logo si no existe o regenerarlo
+	await generateLogoAssets();
+
+	// 2. Generar favicons e iconos de apps
 	await generateFavicons();
 	await generatePwaIcons();
 
+	// 3. Generar tarjetas OpenGraph y Twitter
 	console.log('\n🌐 Generando OpenGraph y Twitter Cards...');
 	await generateSocialCard(
 		'opengraph-image.png',
@@ -272,6 +273,7 @@ async function main() {
 	);
 	await generateSocialCard('twitter-image.png', 'Twitter / X Cards');
 
+	// 4. Generar capturas PWA
 	await generateScreenshots();
 
 	console.log(

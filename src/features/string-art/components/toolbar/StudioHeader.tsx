@@ -1,6 +1,7 @@
 'use client';
 
-import { CircleDot, Moon, SlidersHorizontal, Sun } from 'lucide-react';
+import { Moon, SlidersHorizontal, Sun } from 'lucide-react';
+import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import type * as React from 'react';
 import { LanguageSelector, useTranslation } from '@/shared/i18n';
@@ -71,8 +72,15 @@ export function StudioHeader({
 					</Button>
 				)}
 
-				<div className='flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary'>
-					<CircleDot className='size-4' />
+				<div className='flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 p-1'>
+					<Image
+						src='/favicon.svg'
+						alt='String Art Studio'
+						width={24}
+						height={24}
+						priority
+						className='size-6 shrink-0 transition-transform hover:scale-105'
+					/>
 				</div>
 				<div className='flex min-w-0 flex-col'>
 					<div className='flex items-center gap-1.5 sm:gap-2'>
