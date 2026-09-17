@@ -12,7 +12,7 @@
 
 **Transform any image into stunning physical string art patterns with a computational Nordic Artisan Workshop loom, zero-latency computer vision, and real-time thread physics.**
 
-[🎯 Live Studio](https://www.stringartgenerator.app) • [📖 Documentation](./docs/) • [🚀 Quick Start](#-quick-start) • [💬 Report Bug](https://github.com/bledxs/string-art-generator/issues)
+[🎯 Live Studio](https://www.stringartgenerator.app) • [🚀 Quick Start](#-quick-start) • [✨ Features](#-features) • [💬 Report Bug](https://github.com/bledxs/string-art-generator/issues)
 
 </div>
 
@@ -62,18 +62,18 @@ Open [http://localhost:3000](http://localhost:3000) and start creating!
 - **Physical Stroke Alpha Compounding**: Every string segment is stroked individually, enabling genuine $1 - (1 - \alpha)^N$ light absorption that accumulates into deep, solid blacks in dark shadow areas.
 
 ### 📐 Precision Studio Controls & Interactive Player
-
 - **Zero-Layout-Shift Timeline Dock**: Persistent bottom dock that allows effortless scrubbing through thousands of lines with no viewport jumps.
-- **Step-by-Step Weaving Assistant**: Visual pin highlighter with interactive next/previous controls and optional audio chime cues for physical weaving guidance.
+- **Step-by-Step Weaving Assistant**: Visual pin-to-pin direction cards, progress indicator, -10/+10 navigation, and multi-color spool transition alerts for physical assembly.
+- **Loom Geometries & Color Palettes**: Circular and rectangular frames (1:1, 3:4, 4:3, 16:9) with multi-color layered runs (Monochrome, CMYK, RGBW, Warm Sepia).
 - **Interactive Image Cropper**: Modal with circular mask guides and pinch/zoom to perfectly compose faces inside the loom circle.
 - **Ultra-Responsive Layout**: Adaptive mobile drawer with gesture support and seamless auto-fit down to 320px mobile screens.
+- **Bilingual Interface (i18n)**: Instant switching between Spanish and English with automatic browser locale detection.
 
 ### 📤 Multi-Format Professional Export
-
-- **Physical Instruction Manual (PDF)**: Formatted booklet with numbered pin sequences, material requirements, circular template guide, and Pin 0 top indicators.
-- **Vector Art (SVG)**: Scalable paths preserved for CNC plotters, laser cutters, or digital illustrations.
-- **High-Res Raster (PNG)**: Crisp renders capturing the wood grain, brass pins, and thread accumulation.
-- **Raw Data (CSV & JSON)**: Full pin-index arrays and coordinate mappings for automated Arduino/CNC stringing machines.
+- **Vector Art (SVG)**: Scalable path layers with layer color metadata, opacity, and stroke weight for laser cutting, plotters, or digital editing.
+- **Physical Instruction Manual (TXT)**: Comprehensive artisan manual with board dimensions, Pin 0 orientation at 12:00, required thread meters/yards with safety buffer, and numbered pin-to-pin sequence.
+- **Machine Project Data (JSON)**: Full configuration, layer breakdown, and sequence array for CNC/Arduino automated stringing machines.
+- **Printable Pin Templates (PDF)**: High-precision printable radial templates for 100, 200, and 300 pins available in `public/templates/`.
 
 ---
 
@@ -103,35 +103,38 @@ The codebase strictly adheres to **Clean Code** and **Feature-Driven Architectur
 
 ```plaintext
 src/
-├── app/                          # Next.js App Router (Pages, SEO, Layouts)
-│   ├── (marketing)/             # SSR marketing & educational routes
-│   ├── editor/                  # String Art Studio workbench
+├── app/                          # Next.js App Router
+│   ├── favicon.ico              # Multi-resolution icon
 │   ├── globals.css              # Artisan theme tokens & precision scrollbars
-│   ├── sitemap.ts               # Dynamic XML sitemap
-│   └── robots.ts                # Crawler rules
+│   ├── layout.tsx               # Root layout with SEO & JSON-LD schema
+│   ├── page.tsx                 # String Art Studio entrypoint
+│   ├── providers.tsx            # Theme provider (next-themes)
+│   ├── robots.ts                # Search engine crawler directives
+│   └── sitemap.ts               # Dynamic XML sitemap
 ├── features/
 │   └── string-art/              # Modular String Art Studio domain
 │       ├── components/
 │       │   ├── canvas/          # Viewport, wood loom, brass pins, zoom
 │       │   ├── player/          # Timeline dock, weaving assistant modal
-│       │   ├── sidebar/         # Presets, calibration, loom & algo panels
+│       │   ├── sidebar/         # Presets, calibration, loom, algo & materials
 │       │   └── toolbar/         # Studio header, stats, export modal
 │       ├── hooks/               # useStudioWorkbench, useCanvasTransform, etc.
-│       ├── utils/               # Pure calculation (Sobel, bresenham, materials)
+│       ├── utils/               # Pure calculation (Sobel, Bresenham, materials)
 │       ├── workers/             # Dedicated Web Worker string generation
 │       ├── types.ts             # Domain contracts
 │       └── StringArtStudio.tsx  # Declarative root studio container
 └── shared/
+    ├── config/                  # Site configuration (site.ts)
+    ├── i18n/                    # Bilingual internationalization (es, en)
     ├── ui/                      # Accessible design primitives (Radix UI)
-    └── utils/                   # Shared helpers (cn, formatters)
+    └── utils/                   # Shared helpers (cn, constants)
 ```
 
 ### Strict Code Constraints
-
 - **Pure Declarative JSX**: Components strictly render UI. Business calculations live in pure utility functions (`utils/`) and custom hooks (`hooks/`).
 - **File Length Limits**: Components $< 150$ lines, Containers $< 80$ lines, Pure functions $< 30$ lines.
 - **No Cascading Render Loops**: All progress states derived via `useMemo` with batched worker messages.
-- **Zero ESLint / Biome Warnings**: 100% clean check on all files.
+- **Zero Biome Warnings**: 100% clean check on all 72 files.
 
 ---
 
@@ -141,89 +144,43 @@ Create a `.env.local` file with the following configuration:
 
 ```env
 NEXT_PUBLIC_SITE_URL=https://www.stringartgenerator.app
-NEXT_PUBLIC_SITE_NAME="String Art Generator"
-NEXT_PUBLIC_SITE_DESCRIPTION="Transform images into beautiful string art patterns"
-NEXT_PUBLIC_TWITTER_HANDLE=@stringartgen
-NEXT_PUBLIC_SUPPORT_EMAIL=support@stringartgenerator.app
-NEXT_PUBLIC_ENABLE_ADS=false  # Set to 'true' in production
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=your-google-verification-token
+NEXT_PUBLIC_UBERSUGGEST_SITE_VERIFICATION=your-ubersuggest-token
 ```
 
-| Variable                       | Description              | Required |
-| ------------------------------ | ------------------------ | -------- |
-| `NEXT_PUBLIC_SITE_URL`         | Production URL           | Yes      |
-| `NEXT_PUBLIC_SITE_NAME`        | Site name for metadata   | Yes      |
-| `NEXT_PUBLIC_SITE_DESCRIPTION` | Meta description         | Yes      |
-| `NEXT_PUBLIC_TWITTER_HANDLE`   | Twitter handle for cards | No       |
-| `NEXT_PUBLIC_SUPPORT_EMAIL`    | Support email address    | Yes      |
-| `NEXT_PUBLIC_ENABLE_ADS`       | Enable Google AdSense    | No       |
+| Variable                                    | Description                              | Required | Default                                 |
+| ------------------------------------------- | ---------------------------------------- | -------- | --------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`                      | Production site canonical URL            | Yes      | `https://www.stringartgenerator.app`    |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`      | Google Search Console verification token | No       | Configured in `src/shared/config/site.ts` |
+| `NEXT_PUBLIC_UBERSUGGEST_SITE_VERIFICATION` | Ubersuggest webmaster verification token | No       | Optional                                |
 
-> **Note:** All variables are type-safe via `src/lib/config.ts`
+> **Note:** All environment variables are centralized and type-safe via `src/shared/config/site.ts`.
 
 ---
 
-## 📊 Performance & Quality
+## 📜 Available Scripts
 
-### Quality Audit Score: 19/19 ✅
-
-**Metadata (10/10)**
-
-- ✅ Title tags optimized (50-60 chars)
-- ✅ Meta descriptions unique per page
-- ✅ Open Graph + Twitter Cards
-- ✅ Canonical URLs
-- ✅ Favicon + PWA manifest
-
-**Code Quality (4/4)**
-
-- ✅ TypeScript strict mode: 0 errors
-- ✅ ESLint: 0 warnings
-- ✅ File length limits enforced
-- ✅ SOLID principles applied
-
-**SEO (4/4)**
-
-- ✅ 6 JSON-LD schemas (WebApplication, HowTo, etc.)
-- ✅ Dynamic sitemap.xml (21 URLs)
-- ✅ Optimized robots.txt
-- ✅ Breadcrumbs with structured data
-
-**UX (1/1)**
-
-- ✅ Mobile responsive
-- ✅ Accessibility (ARIA, alt tags)
-- ✅ Dark/Light themes
-- ✅ Back to top button
-
-### Performance Targets
-
-- **Lighthouse Score:** 90+ (all categories)
-- **First Contentful Paint:** < 1.5s
-- **Time to Interactive:** < 3.5s
-- **Bundle Size:** Client JS < 200KB gzipped
-
-### Optimizations Applied
-
-- Server-side rendering for marketing pages
-- Web Workers for CPU-intensive tasks
-- Image optimization with Sharp
-- Code splitting per route
-- Turbopack build caching
-
-📋 **Full Report:** [Quality Audit](./docs/QUALITY-AUDIT.md)
+| Script                    | Command                                       | Description                                            |
+| ------------------------- | --------------------------------------------- | ------------------------------------------------------ |
+| `pnpm dev`                | `next dev --turbopack`                        | Starts local development server with Turbopack         |
+| `pnpm build`              | `next build`                                  | Compiles and optimizes production build                |
+| `pnpm start`              | `next start`                                  | Starts production server                               |
+| `pnpm lint`               | `biome check src`                             | Validates linting, formatting, and strict a11y rules   |
+| `pnpm format`             | `biome format --write src`                    | Automatically formats all source code with Biome       |
+| `pnpm commit`             | `cz`                                          | Interactive Conventional Commits wizard                |
+| `pnpm generate:images`    | `node scripts/generate-images.mjs`            | Generates multi-size icons, favicons, and social cards |
+| `pnpm generate:templates` | `node scripts/generate-templates.mjs`         | Generates printable PDF pin templates (100, 200, 300)  |
 
 ---
 
-## 📚 Documentation
+## 📊 Quality & Performance Standards
 
-- **[Quality Audit](./docs/QUALITY-AUDIT.md)** - 19/19 criteria checklist (100%
-  pass)
-- **[Tech Stack](./docs/TECH-STACK.md)** - Framework and library details
-- **[Project Structure](./docs/PROJECT-STRUCTURE.md)** - Architecture overview
-- **[SEO Images Guide](./docs/GENERATE-SEO-IMAGES.md)** - Automated image
-  generation
-- **[AdSense Integration](./docs/ADSENSE-INTEGRATION.md)** - Monetization setup
-- **[Vercel Deployment](./docs/VERCEL-DEPLOYMENT.md)** - Production deployment
-- **[Giscus Setup](./docs/GISCUS-SETUP.md)** - Blog comments configuration
+- ✅ **Biome Strict Check**: 0 errors, 0 warnings across all 72 source files.
+- ✅ **Zero Layout Shifts**: Fully coordinated and persistent docks with zero reflow on the canvas.
+- ✅ **High-Fidelity Alpha Accumulation**: Validated pixel luminance down to $13.3 / 255$ in dense shadow zones.
+- ✅ **Hardware-Accelerated 60 FPS**: Smooth pan and zoom powered by 2D canvas transforms and batched Web Worker IPC.
+- ✅ **Ultra-Compact Mobile Support**: Verified and responsive from 320px mobile viewports up to 4K displays.
+- ✅ **Search Console & SEO Ready**: Dynamic XML sitemap, robots.txt, Schema.org WebApplication JSON-LD, OpenGraph and Twitter cards.
 
 ---
 
