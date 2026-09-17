@@ -1,7 +1,7 @@
 'use client';
 
 import type { useCanvasTransform } from '../../hooks/useCanvasTransform';
-import type { Pin } from '../../types';
+import type { LoomConfig, Pin } from '../../types';
 import { CanvasViewport } from './CanvasViewport';
 import { StudioCanvas } from './StudioCanvas';
 import { ZoomControls } from './ZoomControls';
@@ -15,6 +15,7 @@ interface StudioWorkspaceStageProps {
 	opacity: number;
 	transform: ReturnType<typeof useCanvasTransform>;
 	colorMode?: 'dark-on-light' | 'light-on-dark';
+	loomConfig?: LoomConfig;
 }
 
 export function StudioWorkspaceStage({
@@ -26,6 +27,7 @@ export function StudioWorkspaceStage({
 	opacity,
 	transform,
 	colorMode = 'dark-on-light',
+	loomConfig,
 }: StudioWorkspaceStageProps) {
 	return (
 		<main className='relative flex flex-1 flex-col overflow-hidden'>
@@ -38,6 +40,7 @@ export function StudioWorkspaceStage({
 					lineWeight={lineWeight}
 					opacity={opacity}
 					colorMode={colorMode}
+					loomConfig={loomConfig}
 				/>
 			</CanvasViewport>
 

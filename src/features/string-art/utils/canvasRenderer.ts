@@ -1,26 +1,45 @@
-import type { Pin } from '../types';
+import type { LoomConfig, Pin } from '../types';
 import {
 	drawBirchBoard,
 	drawBrassPin,
 	drawEbonyBoard,
 	drawRadialTicks,
+	drawRectangularBirchBoard,
+	drawRectangularEbonyBoard,
 	drawSilverPin,
 } from './loomMaterials';
+import { getLoomDimensions } from './pinGeometry';
 
 export function drawLoomBackground(
 	ctx: CanvasRenderingContext2D,
 	size: number,
 	colorMode: 'dark-on-light' | 'light-on-dark' = 'dark-on-light',
+	loomConfig?: LoomConfig,
 ): void {
 	const center = size / 2;
-	const radius = center * 0.93;
+	const isLightOnDark = colorMode === 'light-on-dark';
 
-	if (colorMode === 'light-on-dark') {
-		drawEbonyBoard(ctx, center, radius);
+	if (loomConfig?.shape === 'rectangle') {
+		const dims = getLoomDimensions(
+			size,
+			loomConfig.pinOffsetRatio,
+			'rectangle',
+			loomConfig.aspectRatio ?? '1:1',
+		);
+		if (isLightOnDark) {
+			drawRectangularEbonyBoard(ctx, center, dims.width, dims.height);
+		} else {
+			drawRectangularBirchBoard(ctx, center, dims.width, dims.height);
+		}
 	} else {
-		drawBirchBoard(ctx, center, radius);
+		const radius = center * (loomConfig?.pinOffsetRatio ?? 0.93);
+		if (isLightOnDark) {
+			drawEbonyBoard(ctx, center, radius);
+		} else {
+			drawBirchBoard(ctx, center, radius);
+		}
+		drawRadialTicks(ctx, center, radius);
 	}
-	drawRadialTicks(ctx, center, radius);
 }
 
 export function drawStrings(

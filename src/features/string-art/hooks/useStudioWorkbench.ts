@@ -2,11 +2,12 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { AlgorithmConfig, LoomConfig, PresetImage } from '../types';
+import { applyLoomMask, extractGreyscaleBuffer } from '../utils/imageGreyscale';
 import {
-	applyCircularMask,
-	extractGreyscaleBuffer,
-} from '../utils/imageGreyscale';
-import { calculateCircularPins } from '../utils/pinGeometry';
+	calculateCircularPins,
+	calculateRectangularPins,
+	getLoomDimensions,
+} from '../utils/pinGeometry';
 import { SAMPLE_PRESETS } from '../utils/samplePresets';
 import { useStringArtEngine } from './useStringArtEngine';
 
@@ -47,10 +48,29 @@ export function useStudioWorkbench() {
 	const engine = useStringArtEngine();
 
 	const pins = useMemo(() => {
-		const radius = (CANVAS_SIZE / 2) * loomConfig.pinOffsetRatio;
 		const center = { x: CANVAS_SIZE / 2, y: CANVAS_SIZE / 2 };
+		if (loomConfig.shape === 'rectangle') {
+			const dims = getLoomDimensions(
+				CANVAS_SIZE,
+				loomConfig.pinOffsetRatio,
+				'rectangle',
+				loomConfig.aspectRatio ?? '1:1',
+			);
+			return calculateRectangularPins(
+				loomConfig.pinCount,
+				dims.width,
+				dims.height,
+				center,
+			);
+		}
+		const radius = (CANVAS_SIZE / 2) * loomConfig.pinOffsetRatio;
 		return calculateCircularPins(loomConfig.pinCount, radius, center);
-	}, [loomConfig.pinCount, loomConfig.pinOffsetRatio]);
+	}, [
+		loomConfig.shape,
+		loomConfig.aspectRatio,
+		loomConfig.pinCount,
+		loomConfig.pinOffsetRatio,
+	]);
 
 	const totalLines = engine.progress.lineSequence.length;
 
@@ -124,11 +144,10 @@ export function useStudioWorkbench() {
 				algoConfig.edgeWeight ?? 0.25,
 				algoConfig.colorMode ?? 'dark-on-light',
 			);
-			applyCircularMask(
+			applyLoomMask(
 				grey,
 				CANVAS_SIZE,
-				loomConfig.pinOffsetRatio,
-				0.82,
+				loomConfig,
 				algoConfig.colorMode ?? 'dark-on-light',
 			);
 			engine.start(grey, CANVAS_SIZE, loomConfig, algoConfig);

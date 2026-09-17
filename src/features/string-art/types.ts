@@ -3,13 +3,15 @@ export interface Pin {
 	x: number;
 	y: number;
 	angle: number;
+	edge?: 'top' | 'right' | 'bottom' | 'left' | 'circle';
 }
 
 export interface LoomConfig {
-	shape: 'circle';
+	shape: 'circle' | 'rectangle';
 	pinCount: number;
 	physicalDiameterCm: number;
 	pinOffsetRatio: number;
+	aspectRatio?: '1:1' | '3:4' | '4:3' | '16:9';
 }
 
 export interface AlgorithmConfig {

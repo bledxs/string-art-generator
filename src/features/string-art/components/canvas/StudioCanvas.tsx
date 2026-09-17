@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import type { Pin } from '../../types';
+import type { LoomConfig, Pin } from '../../types';
 import {
 	drawLoomBackground,
 	drawPins,
@@ -17,6 +17,7 @@ interface StudioCanvasProps {
 	opacity: number;
 	showPins?: boolean;
 	colorMode?: 'dark-on-light' | 'light-on-dark';
+	loomConfig?: LoomConfig;
 }
 
 export function StudioCanvas({
@@ -28,6 +29,7 @@ export function StudioCanvas({
 	opacity,
 	showPins = true,
 	colorMode = 'dark-on-light',
+	loomConfig,
 }: Readonly<StudioCanvasProps>) {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -38,17 +40,29 @@ export function StudioCanvas({
 		if (!ctx) return;
 
 		ctx.clearRect(0, 0, size, size);
-		drawLoomBackground(ctx, size, colorMode);
+		drawLoomBackground(ctx, size, colorMode, loomConfig);
 		drawStrings(ctx, pins, lines, opacity, lineWeight, colorMode);
 		drawPins(ctx, pins, currentPin, showPins, colorMode);
-	}, [size, pins, lines, currentPin, lineWeight, opacity, showPins, colorMode]);
+	}, [
+		size,
+		pins,
+		lines,
+		currentPin,
+		lineWeight,
+		opacity,
+		showPins,
+		colorMode,
+		loomConfig,
+	]);
+
+	const isRect = loomConfig?.shape === 'rectangle';
 
 	return (
 		<canvas
 			ref={canvasRef}
 			width={size}
 			height={size}
-			className='rounded-full shadow-2xl transition-shadow'
+			className={`${isRect ? 'rounded-xl' : 'rounded-full'} shadow-2xl transition-shadow`}
 			style={{ width: size, height: size }}
 		/>
 	);

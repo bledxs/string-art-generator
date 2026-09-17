@@ -7,6 +7,7 @@ export function generateSvgString(
 	opacity: number,
 	lineWeight: number,
 	colorMode: 'dark-on-light' | 'light-on-dark' = 'dark-on-light',
+	loom?: LoomConfig,
 ): string {
 	let pathData = '';
 	if (lines.length > 1 && pins.length > 0) {
@@ -24,9 +25,14 @@ export function generateSvgString(
 	const rimColor = isLightOnDark ? '#27272a' : '#e2e8f0';
 	const strokeColor = isLightOnDark ? '#f8fafc' : '#0f172a';
 
+	const isRect = loom?.shape === 'rectangle';
+	const outline = isRect
+		? `<rect x="${size * 0.05}" y="${size * 0.05}" width="${size * 0.9}" height="${size * 0.9}" rx="6" fill="none" stroke="${rimColor}" stroke-width="2" />`
+		: `<circle cx="${size / 2}" cy="${size / 2}" r="${(size / 2) * 0.95}" fill="none" stroke="${rimColor}" stroke-width="2" />`;
+
 	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
   <rect width="${size}" height="${size}" fill="${bgColor}" />
-  <circle cx="${size / 2}" cy="${size / 2}" r="${(size / 2) * 0.95}" fill="none" stroke="${rimColor}" stroke-width="2" />
+  ${outline}
   <path d="${pathData}" fill="none" stroke="${strokeColor}" stroke-width="${lineWeight}" stroke-opacity="${opacity}" stroke-linecap="round" stroke-linejoin="round" />
 </svg>`;
 }

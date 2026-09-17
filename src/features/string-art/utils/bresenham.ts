@@ -41,20 +41,36 @@ export function calculateLineScore(
 	opacityStep: number,
 	whitePenalty = 1.3,
 	lengthPenalty = 0.5,
+	ux = 0,
+	uy = 0,
+	gradX?: Int16Array | null,
+	gradY?: Int16Array | null,
+	edgeWeight = 0,
 ): number {
 	const len = lineIndices.length;
 	if (len === 0) return -Infinity;
 
 	let totalGain = 0;
+	const useGradient = edgeWeight > 0.01 && gradX != null && gradY != null;
 
 	for (let i = 0; i < len; i++) {
-		const r = residual[lineIndices[i]];
+		const idx = lineIndices[i];
+		const r = residual[idx];
 		// Squared error reduction: Delta E = 2 * r - opacityStep
 		if (r > 0) {
 			totalGain += 2 * r - opacityStep;
 		} else {
 			// When r <= 0, placing thread overshoots the target, apply background penalty
 			totalGain += Math.round((2 * r - opacityStep) * whitePenalty);
+		}
+
+		// Sobel Tangential Edge Guidance (Perspicere style):
+		// |-ux * gy + uy * gx| represents alignment with the contour tangent (-gy, gx)
+		if (useGradient) {
+			const gx = gradX[idx];
+			const gy = gradY[idx];
+			const align = Math.abs(-ux * gy + uy * gx);
+			totalGain += align * edgeWeight;
 		}
 	}
 

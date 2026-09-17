@@ -1,3 +1,6 @@
+import type { LoomConfig } from '../types';
+import { getLoomDimensions } from './pinGeometry';
+
 export function extractGreyscaleBuffer(
 	rgba: Uint8ClampedArray,
 	size: number,
@@ -98,5 +101,67 @@ export function applyCircularMask(
 				);
 			}
 		}
+	}
+}
+
+export function applyRectangularMask(
+	pixels: Uint8ClampedArray,
+	size: number,
+	width: number,
+	height: number,
+	colorMode: 'dark-on-light' | 'light-on-dark' = 'dark-on-light',
+): void {
+	const center = size / 2;
+	const halfW = width / 2;
+	const halfH = height / 2;
+	const x0 = center - halfW;
+	const x1 = center + halfW;
+	const y0 = center - halfH;
+	const y1 = center + halfH;
+	const bgVal = colorMode === 'light-on-dark' ? 0 : 255;
+	const fade = 6;
+
+	for (let y = 0; y < size; y++) {
+		const rowOffset = y * size;
+		for (let x = 0; x < size; x++) {
+			const idx = rowOffset + x;
+			if (x < x0 || x > x1 || y < y0 || y > y1) {
+				pixels[idx] = bgVal;
+			} else {
+				const distEdgeX = Math.min(x - x0, x1 - x);
+				const distEdgeY = Math.min(y - y0, y1 - y);
+				const distMin = Math.min(distEdgeX, distEdgeY);
+				if (distMin < fade) {
+					const t = distMin / fade;
+					const smoothT = t * t * (3 - 2 * t);
+					pixels[idx] = Math.max(
+						0,
+						Math.min(
+							255,
+							Math.round(pixels[idx] * smoothT + bgVal * (1 - smoothT)),
+						),
+					);
+				}
+			}
+		}
+	}
+}
+
+export function applyLoomMask(
+	pixels: Uint8ClampedArray,
+	size: number,
+	loomConfig: LoomConfig,
+	colorMode: 'dark-on-light' | 'light-on-dark' = 'dark-on-light',
+): void {
+	if (loomConfig.shape === 'rectangle') {
+		const dims = getLoomDimensions(
+			size,
+			loomConfig.pinOffsetRatio,
+			'rectangle',
+			loomConfig.aspectRatio ?? '1:1',
+		);
+		applyRectangularMask(pixels, size, dims.width, dims.height, colorMode);
+	} else {
+		applyCircularMask(pixels, size, loomConfig.pinOffsetRatio, 0.82, colorMode);
 	}
 }

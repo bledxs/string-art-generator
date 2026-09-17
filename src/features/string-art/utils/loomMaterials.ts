@@ -183,3 +183,111 @@ export function drawSilverPin(
 	ctx.fillStyle = silver;
 	ctx.fill();
 }
+
+export function drawRectangularBirchBoard(
+	ctx: CanvasRenderingContext2D,
+	center: number,
+	width: number,
+	height: number,
+): void {
+	const x = center - width / 2;
+	const y = center - height / 2;
+	const frameThickness = 14;
+
+	ctx.save();
+	// Outer mitered wooden frame with shadow
+	ctx.beginPath();
+	ctx.roundRect(
+		x - frameThickness,
+		y - frameThickness,
+		width + frameThickness * 2,
+		height + frameThickness * 2,
+		8,
+	);
+	const frameGradient = ctx.createLinearGradient(
+		x - frameThickness,
+		y - frameThickness,
+		x + width + frameThickness,
+		y + height + frameThickness,
+	);
+	frameGradient.addColorStop(0, '#ebdccb');
+	frameGradient.addColorStop(0.5, '#dfcbba');
+	frameGradient.addColorStop(1, '#c5ab94');
+	ctx.fillStyle = frameGradient;
+	ctx.shadowColor = 'rgba(25, 18, 12, 0.3)';
+	ctx.shadowBlur = 24;
+	ctx.shadowOffsetY = 8;
+	ctx.fill();
+	ctx.restore();
+
+	// Main pale birch inner wood surface
+	ctx.save();
+	ctx.beginPath();
+	ctx.roundRect(x, y, width, height, 4);
+	const woodGradient = ctx.createLinearGradient(x, y, x + width, y + height);
+	woodGradient.addColorStop(0, '#fdfbf7');
+	woodGradient.addColorStop(0.65, '#f7f1e6');
+	woodGradient.addColorStop(1, '#ece0cd');
+	ctx.fillStyle = woodGradient;
+	ctx.fill();
+
+	// Bevel inner shadow
+	ctx.strokeStyle = 'rgba(180, 150, 120, 0.25)';
+	ctx.lineWidth = 1.5;
+	ctx.stroke();
+	ctx.restore();
+}
+
+export function drawRectangularEbonyBoard(
+	ctx: CanvasRenderingContext2D,
+	center: number,
+	width: number,
+	height: number,
+): void {
+	const x = center - width / 2;
+	const y = center - height / 2;
+	const frameThickness = 14;
+
+	ctx.save();
+	// Outer mitered matte obsidian frame with shadow
+	ctx.beginPath();
+	ctx.roundRect(
+		x - frameThickness,
+		y - frameThickness,
+		width + frameThickness * 2,
+		height + frameThickness * 2,
+		8,
+	);
+	const frameGradient = ctx.createLinearGradient(
+		x - frameThickness,
+		y - frameThickness,
+		x + width + frameThickness,
+		y + height + frameThickness,
+	);
+	frameGradient.addColorStop(0, '#2d2d2d');
+	frameGradient.addColorStop(0.5, '#1f1f1f');
+	frameGradient.addColorStop(1, '#0d0d0d');
+	ctx.fillStyle = frameGradient;
+	ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+	ctx.shadowBlur = 28;
+	ctx.shadowOffsetY = 10;
+	ctx.fill();
+	ctx.restore();
+
+	// Main deep matte ebony inner surface
+	ctx.save();
+	ctx.beginPath();
+	ctx.roundRect(x, y, width, height, 4);
+	const woodGradient = ctx.createLinearGradient(x, y, x + width, y + height);
+	woodGradient.addColorStop(0, '#1c1a19');
+	woodGradient.addColorStop(0.65, '#121110');
+	woodGradient.addColorStop(1, '#080808');
+	ctx.fillStyle = woodGradient;
+	ctx.fill();
+
+	// Bevel inner highlight
+	ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+	ctx.lineWidth = 1.5;
+	ctx.stroke();
+	ctx.restore();
+}

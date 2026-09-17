@@ -57,6 +57,7 @@ export function StringArtStudio() {
 					lineWeight={studio.algoConfig.lineWeight}
 					opacity={studio.algoConfig.opacityStep / 100}
 					colorMode={studio.algoConfig.colorMode}
+					loomConfig={studio.loomConfig}
 					transform={transform}
 				/>
 			</div>
