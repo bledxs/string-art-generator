@@ -38,7 +38,7 @@ export function LoomConfigPanel({
 				<Slider
 					value={[config.pinCount]}
 					min={100}
-					max={360}
+					max={400}
 					step={10}
 					disabled={disabled}
 					onValueChange={handlePinCountChange}

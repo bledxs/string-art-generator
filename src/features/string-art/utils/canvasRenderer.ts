@@ -21,21 +21,21 @@ export function drawStrings(
 ): void {
 	if (lines.length <= 1 || pins.length === 0) return;
 	ctx.save();
-	ctx.beginPath();
-	// Warm charcoal cotton thread
-	ctx.strokeStyle = `rgba(28, 22, 18, ${opacity})`;
+	// Warm charcoal cotton thread with compounded opacity
+	ctx.strokeStyle = `rgba(18, 14, 11, ${opacity})`;
 	ctx.lineWidth = lineWeight;
 	ctx.lineCap = 'round';
-	ctx.lineJoin = 'round';
-
-	const first = pins[lines[0]];
-	if (first) ctx.moveTo(first.x, first.y);
 
 	for (let i = 1; i < lines.length; i++) {
-		const pin = pins[lines[i]];
-		if (pin) ctx.lineTo(pin.x, pin.y);
+		const from = pins[lines[i - 1]];
+		const to = pins[lines[i]];
+		if (from && to) {
+			ctx.beginPath();
+			ctx.moveTo(from.x, from.y);
+			ctx.lineTo(to.x, to.y);
+			ctx.stroke();
+		}
 	}
-	ctx.stroke();
 	ctx.restore();
 }
 

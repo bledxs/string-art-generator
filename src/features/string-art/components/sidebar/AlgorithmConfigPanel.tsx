@@ -103,7 +103,7 @@ export function AlgorithmConfigPanel({
 				<Slider
 					value={[config.maxLines]}
 					min={500}
-					max={4500}
+					max={7000}
 					step={100}
 					disabled={disabled}
 					onValueChange={(val) => updateField('maxLines', val[0])}
@@ -123,7 +123,7 @@ export function AlgorithmConfigPanel({
 				</div>
 				<Slider
 					value={[config.opacityStep]}
-					min={5}
+					min={3}
 					max={50}
 					step={1}
 					disabled={disabled}

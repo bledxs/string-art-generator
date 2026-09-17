@@ -2,7 +2,10 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { AlgorithmConfig, LoomConfig, PresetImage } from '../types';
-import { extractGreyscaleBuffer } from '../utils/imageGreyscale';
+import {
+	applyCircularMask,
+	extractGreyscaleBuffer,
+} from '../utils/imageGreyscale';
 import { calculateCircularPins } from '../utils/pinGeometry';
 import { SAMPLE_PRESETS } from '../utils/samplePresets';
 import { useStringArtEngine } from './useStringArtEngine';
@@ -113,6 +116,7 @@ export function useStudioWorkbench() {
 				algoConfig.contrast,
 				algoConfig.brightness,
 			);
+			applyCircularMask(grey, CANVAS_SIZE, loomConfig.pinOffsetRatio);
 			engine.start(grey, CANVAS_SIZE, loomConfig, algoConfig);
 		};
 	}, [imageSrc, loomConfig, algoConfig, engine]);
