@@ -2,18 +2,17 @@
 
 # String Art Generator 🎨
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.0-black?style=flat&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.2-blue?style=flat&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Version](https://img.shields.io/badge/version-2.0.0-amber.svg)](https://github.com/bledxs/string-art-generator/releases/tag/v2.0.0)
+[![Next.js](https://img.shields.io/badge/Next.js-16.3-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.3-blue?style=flat&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-7.0-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Biome](https://img.shields.io/badge/Linter-Biome_2.5-60a5fa?style=flat&logo=biome)](https://biomejs.dev/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-**Transform any image into stunning string art patterns using advanced
-algorithms and modern web technologies.**
+**Transform any image into stunning physical string art patterns with a computational Nordic Artisan Workshop loom, zero-latency computer vision, and real-time thread physics.**
 
-[🎯 Live Demo](https://www.stringartgenerator.app) • [📖 Documentation](./docs/)
-• [🚀 Getting Started](#quick-start) •
-[💬 Report Bug](https://github.com/bledxs/string-art-generator/issues)
+[🎯 Live Studio](https://www.stringartgenerator.app) • [📖 Documentation](./docs/) • [🚀 Quick Start](#-quick-start) • [💬 Report Bug](https://github.com/bledxs/string-art-generator/issues)
 
 </div>
 
@@ -38,159 +37,103 @@ Open [http://localhost:3000](http://localhost:3000) and start creating!
 
 ---
 
-## ✨ Features
+## ✨ What's New in v2.0 (Nordic Artisan Workshop)
 
-### Core Functionality
+### 🪵 Nordic Atelier Aesthetic & Tangible Materials
 
-- 🖼️ **Smart Image Processing** - Upload PNG, JPG, WebP with automatic
-  optimization
-- 🎨 **Advanced Algorithms** - Custom pathfinding with configurable pins & lines
-- ⚡ **Web Workers** - Background processing for smooth 60fps UI
-- 📤 **Multi-Format Export** - PNG, SVG, JSON, and physical build instructions
+- **Baltic Birch Wood Loom**: Authentic circular wooden board with natural grain gradients, stratified plywood outer bevel, and laser-engraved radial graduation incisions every 5° and 30°.
+- **Polished Brass Pins**: Individually rendered golden brass pins with directional shadows and warm incandescent laser guidance halos on active pins.
+- **Warm Studio Spotlight**: Atmospheric focal lighting that softly illuminates the loom and fades into the workbench dark grid.
+- **Tactile Thread Spool Widget**: Displays real-time consumed thread length (in physical meters), thread material specs, and estimated spools needed.
+- **Artisan Precision Scrollbar**: Custom floating pill capsule with dark bronze-slate resting tone and warm brass hover illumination.
 
-### User Experience
+### 🧠 Computer Vision Auto-Calibration
 
-- 🎯 **Real-time Preview** - See changes instantly with React 19.2 optimizations
-- 📱 **Fully Responsive** - Desktop, tablet, and mobile optimized
-- 🔄 **Activity Pre-loading** - Next.js 16 hidden rendering for instant
-  navigation
-- ⬆️ **Back to Top** - Smooth scroll on long pages
-- 🧭 **Breadcrumbs** - Clear navigation with structured data
-- 🎭 **Dark/Light Themes** - System-aware theme switching
+- **Client-Side Edge & Frequency Detection**: Analyzes luminance histograms, dynamic contrast range, and Sobel gradient spatial frequencies to determine optimal pin counts, line limits, and thread opacities with 0ms server latency.
+- **1-Click Smart Calibration**: Instantly tune algorithm parameters tailored to each photo (portraits, landscapes, architectural geometry, or minimal sketches).
 
-### Developer Experience
+### 🧵 Physical Thread Simulation & Material Gauges
 
-- 🚀 **SSR-First Architecture** - Server components by default
-- 🔥 **Turbopack** - 2-5x faster builds with file system caching
-- 📦 **Feature-Based Structure** - Scalable and maintainable
-- 🛡️ **TypeScript Strict** - Full type safety
-- 🎨 **Tailwind 4.1** - Modern CSS with design tokens
-- 🧩 **shadcn/ui** - Accessible component system
+- **Universal Gauge Presets**:
+  - **Silk #50 (0.12 mm)**: Ultra-fine thread for micro-detail and hyper-realistic portraits.
+  - **Mercerized Cotton #40 (0.20 mm)**: Universal Gütermann standard for living-room art.
+  - **Embroidery #20 (0.35 mm)**: High-impact bold geometric mandalas and graphic silhouettes.
+  - **Linen Cord (0.60 mm)**: Rustic handcrafted looms with low line counts.
+- **Physical Stroke Alpha Compounding**: Every string segment is stroked individually, enabling genuine $1 - (1 - \alpha)^N$ light absorption that accumulates into deep, solid blacks in dark shadow areas.
 
-### Content & SEO
+### 📐 Precision Studio Controls & Interactive Player
 
-- 📚 **Rich Content** - 28,000+ words across 21 pages
-- 📝 **Active Blog** - 7 articles with Giscus comments
-- 🎓 **Learning Resources** - Tutorials, FAQ (22 questions), tips
-- 🔍 **SEO Optimized** - 6 JSON-LD schemas, Open Graph, sitemaps
-- 🔒 **Legal Compliance** - GDPR/CCPA ready (Privacy, Terms, Cookies)
-- ✅ **AdSense Ready** - 2,300+ verified visitors (Nov 2025)
+- **Zero-Layout-Shift Timeline Dock**: Persistent bottom dock that allows effortless scrubbing through thousands of lines with no viewport jumps.
+- **Step-by-Step Weaving Assistant**: Visual pin highlighter with interactive next/previous controls and optional audio chime cues for physical weaving guidance.
+- **Interactive Image Cropper**: Modal with circular mask guides and pinch/zoom to perfectly compose faces inside the loom circle.
+- **Ultra-Responsive Layout**: Adaptive mobile drawer with gesture support and seamless auto-fit down to 320px mobile screens.
 
-## 🛠️ Tech Stack
+### 📤 Multi-Format Professional Export
 
-### Core Framework
-
-- **Next.js** 16.0.1 - App Router with SSR-first architecture
-- **React** 19.2.0 - Latest features (Activity, useEffectEvent)
-- **TypeScript** 5.9.3 - Strict mode enabled
-- **Node.js** 20.9+ - Required runtime
-
-### UI & Styling
-
-- **Tailwind CSS** 4.1.16 - Modern CSS with design tokens
-- **shadcn/ui** - Accessible component library (Radix UI)
-- **Lucide React** 0.552.0 - Icon system
-- **next-themes** 0.4.6 - Theme management
-
-### State & Data
-
-- **Zustand** 5.0.8 - Lightweight state management
-- **LocalStorage** - Persistent client-side storage
-- **React Hook Form** 7.66.0 + Zod 4.1.12 - Form validation
-
-### Performance
-
-- **Web Workers** - Background image processing
-- **OffscreenCanvas** - Non-blocking rendering
-- **Turbopack** - 2-5x faster builds
-- **React Compiler** - Automatic optimizations
-- **Sharp** 0.34.4 - Server-side image optimization
-
-### Developer Tools
-
-- **ESLint** 9.39.1 - Code linting
-- **Commitizen** + Husky - Conventional commits
-- **pnpm** - Fast, efficient package manager
-
-## 🏗️ Architecture
-
-### SSR-First Design
-
-- **Default:** Server Components for all pages
-- **Client islands:** Only for interactivity (canvas, forms, events)
-- **Benefits:** Better SEO, faster initial load, reduced bundle size
-
-### Feature-Based Structure
-
-```
-src/features/string-art/
-├── algorithms/      # Core processing logic
-├── components/      # UI components
-├── hooks/          # Custom React hooks
-├── store/          # Zustand state
-├── types.ts        # TypeScript definitions
-└── workers/        # Web Worker threads
-```
-
-### Performance Patterns
-
-- **Web Workers:** Heavy algorithms run in background threads
-- **Code Splitting:** Lazy loading with React.lazy() + Suspense
-- **Activity API:** Pre-render hidden components (React 19.2)
-- **Image Optimization:** next/image with Sharp processing
-- **Caching:** Next.js 16 "use cache" for expensive operations
-
-### Code Quality Rules
-
-- **Max file length:** Components 100 lines, Utils 150 lines
-- **Single Responsibility:** One feature per file
-- **No prop drilling:** Zustand for global state
-- **Type safety:** No `any` types, strict TypeScript
-- **SOLID principles:** DRY, KISS, YAGNI enforced
+- **Physical Instruction Manual (PDF)**: Formatted booklet with numbered pin sequences, material requirements, circular template guide, and Pin 0 top indicators.
+- **Vector Art (SVG)**: Scalable paths preserved for CNC plotters, laser cutters, or digital illustrations.
+- **High-Res Raster (PNG)**: Crisp renders capturing the wood grain, brass pins, and thread accumulation.
+- **Raw Data (CSV & JSON)**: Full pin-index arrays and coordinate mappings for automated Arduino/CNC stringing machines.
 
 ---
 
-## 📁 Project Structure
+## 🛠️ Tech Stack
+
+### Core Framework & Tooling
+
+- **Next.js 16.3** — App Router with Turbopack and SSR-first marketing routes
+- **React 19.3** — React Compiler, pure declarative state with zero cascading effects
+- **TypeScript 7.0** — Strict typing with zero `any` allowance
+- **Tailwind CSS 4.3** — Modern CSS engine with OKLCH color spaces and fluid design tokens
+- **Biome 2.5** — Ultra-fast linting, formatting, and strict accessibility checks
+- **pnpm** — Fast, disk-efficient package manager
+
+### Studio Engine & Graphics
+
+- **Dedicated Web Worker** — Non-blocking multi-thousand chord optimization with batched IPC
+- **Bresenham & Signed Residuals** — Integer-grid line calculation, whitespace protection, and anti-moiré chord penalties
+- **Canvas 2D Engine** — Hardware-accelerated 60 FPS pan, zoom, and alpha-compounding stroke pipelines
+- **PDFKit** — Client-side printable PDF generation for physical crafting manuals
+
+---
+
+## 🏗️ Architecture & Clean Code Standards
+
+The codebase strictly adheres to **Clean Code** and **Feature-Driven Architecture**:
 
 ```plaintext
 src/
-├── app/                          # Next.js App Router
-│   ├── (marketing)/             # Marketing pages (SSR)
-│   │   ├── page.tsx            # Landing page
-│   │   ├── about/              # About page
-│   │   ├── how-it-works/       # Tutorial
-│   │   ├── blog/               # Blog with comments
-│   │   └── ...                 # FAQ, tutorials, legal
-│   ├── editor/                  # String art editor (client)
-│   ├── sitemap.ts              # Dynamic sitemap
-│   ├── robots.ts               # Robots.txt
-│   └── layout.tsx              # Root layout
-├── components/
-│   ├── ads/                    # Google AdSense
-│   ├── layout/                 # Header, Footer, Menu
-│   ├── seo/                    # Structured Data (JSON-LD)
-│   └── ui/                     # shadcn/ui components (40+)
-├── features/string-art/        # Main feature module
-│   ├── algorithms/             # Image processing
-│   │   ├── imageProcessor.ts  # Canvas manipulation
-│   │   ├── pathOptimizer.ts   # Line generation
-│   │   └── stringArtEngine.ts # Core algorithm
-│   ├── components/             # Editor UI
-│   ├── hooks/                  # useStringArt, useCanvas
-│   ├── store/                  # Zustand state
-│   ├── types.ts                # TypeScript types
-│   └── workers/                # Web Worker threads
-├── lib/
-│   ├── config.ts               # Environment config
-│   └── utils.ts                # Shared utilities
-├── types/
-│   └── index.ts                # Global types
-docs/                           # Documentation (MD files)
-public/                         # Static assets
-├── images/                     # SEO images
-├── manifest.json               # PWA manifest
-└── ads.txt                     # AdSense verification
+├── app/                          # Next.js App Router (Pages, SEO, Layouts)
+│   ├── (marketing)/             # SSR marketing & educational routes
+│   ├── editor/                  # String Art Studio workbench
+│   ├── globals.css              # Artisan theme tokens & precision scrollbars
+│   ├── sitemap.ts               # Dynamic XML sitemap
+│   └── robots.ts                # Crawler rules
+├── features/
+│   └── string-art/              # Modular String Art Studio domain
+│       ├── components/
+│       │   ├── canvas/          # Viewport, wood loom, brass pins, zoom
+│       │   ├── player/          # Timeline dock, weaving assistant modal
+│       │   ├── sidebar/         # Presets, calibration, loom & algo panels
+│       │   └── toolbar/         # Studio header, stats, export modal
+│       ├── hooks/               # useStudioWorkbench, useCanvasTransform, etc.
+│       ├── utils/               # Pure calculation (Sobel, bresenham, materials)
+│       ├── workers/             # Dedicated Web Worker string generation
+│       ├── types.ts             # Domain contracts
+│       └── StringArtStudio.tsx  # Declarative root studio container
+└── shared/
+    ├── ui/                      # Accessible design primitives (Radix UI)
+    └── utils/                   # Shared helpers (cn, formatters)
 ```
+
+### Strict Code Constraints
+
+- **Pure Declarative JSX**: Components strictly render UI. Business calculations live in pure utility functions (`utils/`) and custom hooks (`hooks/`).
+- **File Length Limits**: Components $< 150$ lines, Containers $< 80$ lines, Pure functions $< 30$ lines.
+- **No Cascading Render Loops**: All progress states derived via `useMemo` with batched worker messages.
+- **Zero ESLint / Biome Warnings**: 100% clean check on all files.
+
+---
 
 ## ⚙️ Environment Variables
 
@@ -350,7 +293,7 @@ specification.
 
 ## 📝 License
 
-MIT License © 2025 [Luis C. Rojas](https://github.com/bledxs)
+MIT License © 2026 [Luis C. Rojas](https://github.com/bledxs)
 
 See [LICENSE](LICENSE) for details.
 
@@ -364,6 +307,7 @@ Built with amazing open-source projects:
 - **[shadcn/ui](https://ui.shadcn.com/)** - Re-usable component library
 - **[Radix UI](https://www.radix-ui.com/)** - Accessible component primitives
 - **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[Biome](https://biomejs.dev/)** - High-performance toolchain for the web
 - **[Vercel](https://vercel.com/)** - Deployment and hosting platform
 - **[Lucide](https://lucide.dev/)** - Beautiful icon library
 
@@ -373,9 +317,9 @@ Special thanks to all open-source contributors!
 
 <div align="center">
 
-### ⭐ If this project helped you, give it a star!
+### ⭐ If this project helped you, give it a star
 
-**Built with ❤️ using Next.js 16 + React 19.2**
+**Built with ❤️ using Next.js 16.3 + React 19.3 + Biome**
 
 [⭐ Star on GitHub](https://github.com/bledxs/string-art-generator) •
 [🐛 Report Bug](https://github.com/bledxs/string-art-generator/issues) •
