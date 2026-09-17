@@ -160,9 +160,9 @@ async function generateSocialCard(filename, platformName) {
 		<circle cx="600" cy="210" r="265" fill="none" stroke="#fbbf24" stroke-width="0.75" stroke-opacity="0.1" stroke-dasharray="2 6" />
 
 		<!-- Badge -->
-		<g transform="translate(460, 395)">
-			<rect width="280" height="34" rx="17" fill="#1c1917" stroke="#78350f" stroke-width="1.5" />
-			<text x="140" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" fill="#fbbf24" text-anchor="middle" letter-spacing="1.8">ALGORITMO ARTESANAL DE ALTA PRECISIÓN</text>
+		<g transform="translate(385, 395)">
+			<rect width="430" height="34" rx="17" fill="#1c1917" stroke="#78350f" stroke-width="1.5" />
+			<text x="215" y="21.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" fill="#fbbf24" text-anchor="middle" letter-spacing="1.2">ALGORITMO ARTESANAL DE ALTA PRECISIÓN</text>
 		</g>
 
 		<!-- Title -->
