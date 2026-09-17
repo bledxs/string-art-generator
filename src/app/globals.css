@@ -27,6 +27,10 @@
 	--radius: 0.5rem;
 	--canvas-bg: oklch(0.94 0.012 80);
 	--canvas-grid: oklch(0.88 0.02 75 / 0.45);
+	--scrollbar-track: transparent;
+	--scrollbar-thumb: oklch(0.72 0.03 65 / 0.45);
+	--scrollbar-thumb-hover: oklch(0.58 0.16 65 / 0.85);
+	--scrollbar-thumb-active: oklch(0.52 0.18 60);
 }
 
 .dark {
@@ -52,6 +56,10 @@
 	--radius: 0.5rem;
 	--canvas-bg: oklch(0.1 0.012 55);
 	--canvas-grid: oklch(0.22 0.02 65 / 0.5);
+	--scrollbar-track: transparent;
+	--scrollbar-thumb: oklch(0.36 0.025 60 / 0.55);
+	--scrollbar-thumb-hover: oklch(0.72 0.16 75 / 0.85);
+	--scrollbar-thumb-active: oklch(0.78 0.18 78);
 }
 
 @theme inline {
@@ -76,6 +84,10 @@
 	--color-ring: var(--ring);
 	--color-canvas-bg: var(--canvas-bg);
 	--color-canvas-grid: var(--canvas-grid);
+	--color-scrollbar-track: var(--scrollbar-track);
+	--color-scrollbar-thumb: var(--scrollbar-thumb);
+	--color-scrollbar-thumb-hover: var(--scrollbar-thumb-hover);
+	--color-scrollbar-thumb-active: var(--scrollbar-thumb-active);
 
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
@@ -85,6 +97,8 @@
 
 * {
 	border-color: var(--border);
+	scrollbar-width: thin;
+	scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 body {
@@ -114,22 +128,33 @@ body {
 	);
 }
 
-/* Precision Scrollbars */
+/* Nordic Artisan Precision Scrollbars */
 ::-webkit-scrollbar {
-	width: 6px;
-	height: 6px;
+	width: 8px;
+	height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-	background: transparent;
+	background: var(--scrollbar-track);
+	border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--muted-foreground);
+	background-color: var(--scrollbar-thumb);
 	border-radius: 9999px;
-	opacity: 0.4;
+	border: 2px solid transparent;
+	background-clip: padding-box;
+	transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	opacity: 0.8;
+	background-color: var(--scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-thumb:active {
+	background-color: var(--scrollbar-thumb-active);
+}
+
+::-webkit-scrollbar-corner {
+	background: transparent;
 }
