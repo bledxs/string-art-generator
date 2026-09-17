@@ -14,6 +14,7 @@ interface StudioWorkspaceStageProps {
 	lineWeight: number;
 	opacity: number;
 	transform: ReturnType<typeof useCanvasTransform>;
+	colorMode?: 'dark-on-light' | 'light-on-dark';
 }
 
 export function StudioWorkspaceStage({
@@ -24,6 +25,7 @@ export function StudioWorkspaceStage({
 	lineWeight,
 	opacity,
 	transform,
+	colorMode = 'dark-on-light',
 }: StudioWorkspaceStageProps) {
 	return (
 		<main className='relative flex flex-1 flex-col overflow-hidden'>
@@ -35,6 +37,7 @@ export function StudioWorkspaceStage({
 					currentPin={currentPin}
 					lineWeight={lineWeight}
 					opacity={opacity}
+					colorMode={colorMode}
 				/>
 			</CanvasViewport>
 

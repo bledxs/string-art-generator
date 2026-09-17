@@ -29,6 +29,9 @@ export function useStudioWorkbench() {
 		edgeWeight: 0.25,
 		whitePenalty: 1.3,
 		autoStop: true,
+		colorMode: 'dark-on-light',
+		lengthPenalty: 0.5,
+		reboundPenalty: 0.85,
 	});
 	const [selectedPreset, setSelectedPreset] = useState<PresetImage | null>(
 		SAMPLE_PRESETS[0],
@@ -119,8 +122,15 @@ export function useStudioWorkbench() {
 				algoConfig.contrast,
 				algoConfig.brightness,
 				algoConfig.edgeWeight ?? 0.25,
+				algoConfig.colorMode ?? 'dark-on-light',
 			);
-			applyCircularMask(grey, CANVAS_SIZE, loomConfig.pinOffsetRatio);
+			applyCircularMask(
+				grey,
+				CANVAS_SIZE,
+				loomConfig.pinOffsetRatio,
+				0.82,
+				algoConfig.colorMode ?? 'dark-on-light',
+			);
 			engine.start(grey, CANVAS_SIZE, loomConfig, algoConfig);
 		};
 	}, [imageSrc, loomConfig, algoConfig, engine]);

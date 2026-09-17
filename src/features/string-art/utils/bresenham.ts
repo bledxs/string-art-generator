@@ -40,6 +40,7 @@ export function calculateLineScore(
 	lineIndices: Uint32Array,
 	opacityStep: number,
 	whitePenalty = 1.3,
+	lengthPenalty = 0.5,
 ): number {
 	const len = lineIndices.length;
 	if (len === 0) return -Infinity;
@@ -52,12 +53,19 @@ export function calculateLineScore(
 		if (r > 0) {
 			totalGain += 2 * r - opacityStep;
 		} else {
-			// When r <= 0, placing thread over-darkens, apply whitePenalty
+			// When r <= 0, placing thread overshoots the target, apply background penalty
 			totalGain += Math.round((2 * r - opacityStep) * whitePenalty);
 		}
 	}
 
-	return totalGain;
+	if (lengthPenalty <= 0) {
+		return totalGain;
+	}
+
+	// Fractional length normalization: Delta E / (L ^ gamma)
+	// Prevents long chords through the center from dominating over short structural lines.
+	const normalizer = len ** lengthPenalty;
+	return totalGain > 0 ? totalGain / normalizer : totalGain * normalizer;
 }
 
 export function applyLineToPixels(

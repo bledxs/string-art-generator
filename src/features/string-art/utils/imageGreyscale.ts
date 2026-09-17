@@ -4,10 +4,12 @@ export function extractGreyscaleBuffer(
 	contrast: number,
 	brightness: number,
 	edgeWeight = 0.25,
+	colorMode: 'dark-on-light' | 'light-on-dark' = 'dark-on-light',
 ): Uint8ClampedArray {
 	const pixelCount = size * size;
 	const output = new Uint8ClampedArray(pixelCount);
 	const factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
+	const isLightOnDark = colorMode === 'light-on-dark';
 
 	for (let i = 0; i < pixelCount; i++) {
 		const r = rgba[i * 4];
@@ -38,10 +40,18 @@ export function extractGreyscaleBuffer(
 					(temp[idx - size - 1] + 2 * temp[idx - size] + temp[idx - size + 1]);
 
 				const grad = Math.min(255, (Math.abs(gx) + Math.abs(gy)) >> 2);
-				// Reinforce edges that have dark components, without dirtying bright highlights
-				const darkAffinity = (255 - temp[idx]) / 255;
-				const edgeBoost = Math.round(grad * edgeWeight * darkAffinity);
-				output[idx] = Math.max(0, output[idx] - edgeBoost);
+
+				if (isLightOnDark) {
+					// Reinforce luminous edges on dark background
+					const lightAffinity = temp[idx] / 255;
+					const edgeBoost = Math.round(grad * edgeWeight * lightAffinity);
+					output[idx] = Math.min(255, output[idx] + edgeBoost);
+				} else {
+					// Reinforce dark edges without dirtying bright highlights
+					const darkAffinity = (255 - temp[idx]) / 255;
+					const edgeBoost = Math.round(grad * edgeWeight * darkAffinity);
+					output[idx] = Math.max(0, output[idx] - edgeBoost);
+				}
 			}
 		}
 	}
@@ -54,12 +64,14 @@ export function applyCircularMask(
 	size: number,
 	radiusRatio = 0.98,
 	vignetteRatio = 0.82,
+	colorMode: 'dark-on-light' | 'light-on-dark' = 'dark-on-light',
 ): void {
 	const center = size / 2;
 	const maxRadius = center * radiusRatio;
 	const maxRadiusSq = maxRadius * maxRadius;
 	const vignetteStart = maxRadius * vignetteRatio;
 	const fadeRange = maxRadius - vignetteStart;
+	const bgVal = colorMode === 'light-on-dark' ? 0 : 255;
 
 	for (let y = 0; y < size; y++) {
 		const dy = y - center;
@@ -72,14 +84,17 @@ export function applyCircularMask(
 			const idx = rowOffset + x;
 
 			if (distSq >= maxRadiusSq) {
-				pixels[idx] = 255; // Blanco absoluto fuera del bastidor
+				pixels[idx] = bgVal;
 			} else if (distSq > vignetteStart * vignetteStart) {
 				const dist = Math.sqrt(distSq);
 				const t = (dist - vignetteStart) / fadeRange;
 				const smoothT = t * t * (3 - 2 * t);
-				pixels[idx] = Math.min(
-					255,
-					Math.round(pixels[idx] * (1 - smoothT) + 255 * smoothT),
+				pixels[idx] = Math.max(
+					0,
+					Math.min(
+						255,
+						Math.round(pixels[idx] * (1 - smoothT) + bgVal * smoothT),
+					),
 				);
 			}
 		}

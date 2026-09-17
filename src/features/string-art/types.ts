@@ -22,6 +22,9 @@ export interface AlgorithmConfig {
 	edgeWeight?: number;
 	whitePenalty?: number;
 	autoStop?: boolean;
+	colorMode?: 'dark-on-light' | 'light-on-dark';
+	lengthPenalty?: number;
+	reboundPenalty?: number;
 }
 
 export type EngineStatus = 'idle' | 'running' | 'paused' | 'completed';

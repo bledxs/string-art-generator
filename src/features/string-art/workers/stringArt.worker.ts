@@ -49,6 +49,24 @@ function isCandidatePinAcceptable(
 	return true;
 }
 
+function applyReboundDamping(
+	score: number,
+	pCurr: Pin,
+	pNext: Pin,
+	v1x: number,
+	v1y: number,
+	mag1: number,
+	reboundPenalty: number,
+): number {
+	if (score <= 0 || reboundPenalty >= 1.0 || mag1 <= 0) return score;
+	const v2x = pNext.x - pCurr.x;
+	const v2y = pNext.y - pCurr.y;
+	const mag2 = Math.hypot(v2x, v2y);
+	if (mag2 <= 0) return score;
+	const cosTheta = (v1x * v2x + v1y * v2y) / (mag1 * mag2);
+	return cosTheta < -0.85 ? score * reboundPenalty : score;
+}
+
 function findBestNextPin(
 	currentPinId: number,
 	prevPinId: number,
@@ -59,12 +77,19 @@ function findBestNextPin(
 	usedLines: Set<number>,
 	opacityStep: number,
 	whitePenalty: number,
+	lengthPenalty = 0.5,
+	reboundPenalty = 0.85,
 ): { bestPin: number; bestRaster: Uint32Array; bestScore: number } {
 	let bestScore = -Infinity;
 	let bestPin = -1;
 	let bestRaster: Uint32Array = new Uint32Array(0);
 	const currentPin = pins[currentPinId];
 	const pinCount = pins.length;
+
+	const pPrev = prevPinId >= 0 ? pins[prevPinId] : null;
+	const v1x = pPrev ? currentPin.x - pPrev.x : 0;
+	const v1y = pPrev ? currentPin.y - pPrev.y : 0;
+	const mag1 = pPrev ? Math.hypot(v1x, v1y) : 0;
 
 	for (let nextId = 0; nextId < pinCount; nextId++) {
 		if (
@@ -83,11 +108,22 @@ function findBestNextPin(
 		if (usedLines.has(lineKey)) continue;
 
 		const raster = getLineRaster(currentPin, pins[nextId], size, lineKey);
-		const score = calculateLineScore(
+		const rawScore = calculateLineScore(
 			residual,
 			raster,
 			opacityStep,
 			whitePenalty,
+			lengthPenalty,
+		);
+
+		const score = applyReboundDamping(
+			rawScore,
+			currentPin,
+			pins[nextId],
+			v1x,
+			v1y,
+			mag1,
+			reboundPenalty,
 		);
 
 		if (score > bestScore) {
@@ -109,6 +145,8 @@ function findBestNextPin(
 			usedLines,
 			opacityStep,
 			whitePenalty,
+			lengthPenalty,
+			reboundPenalty,
 		);
 	}
 
@@ -126,15 +164,17 @@ function runGenerationLoop(
 	const center = { x: size / 2, y: size / 2 };
 	const pins = calculateCircularPins(loomConfig.pinCount, radius, center);
 
-	// Initialize signed residual matrix: target darkness is 255 - pixelValue
+	const isLightOnDark = algoConfig.colorMode === 'light-on-dark';
 	const pixelCount = pixels.length;
 	const residual = new Int16Array(pixelCount);
 	for (let i = 0; i < pixelCount; i++) {
-		residual[i] = 255 - pixels[i];
+		residual[i] = isLightOnDark ? pixels[i] : 255 - pixels[i];
 	}
 
 	const autoStop = algoConfig.autoStop ?? true;
 	const whitePenalty = algoConfig.whitePenalty ?? 1.3;
+	const lengthPenalty = algoConfig.lengthPenalty ?? 0.5;
+	const reboundPenalty = algoConfig.reboundPenalty ?? 0.85;
 
 	let currentPin = 0;
 	const lineSequence: number[] = [currentPin];
@@ -161,6 +201,8 @@ function runGenerationLoop(
 				usedLines,
 				algoConfig.opacityStep,
 				whitePenalty,
+				lengthPenalty,
+				reboundPenalty,
 			);
 
 			if (bestPin === -1) {

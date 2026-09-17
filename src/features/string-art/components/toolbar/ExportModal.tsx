@@ -41,6 +41,7 @@ export function ExportModal({
 			700,
 			algo.opacityStep / 100,
 			algo.lineWeight,
+			algo.colorMode ?? 'dark-on-light',
 		);
 		triggerDownload(svg, 'string-art-vector.svg', 'image/svg+xml');
 	};

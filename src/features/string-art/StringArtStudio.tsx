@@ -56,6 +56,7 @@ export function StringArtStudio() {
 					currentPin={studio.engine.progress.currentPin}
 					lineWeight={studio.algoConfig.lineWeight}
 					opacity={studio.algoConfig.opacityStep / 100}
+					colorMode={studio.algoConfig.colorMode}
 					transform={transform}
 				/>
 			</div>

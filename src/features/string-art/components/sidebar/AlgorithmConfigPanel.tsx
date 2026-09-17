@@ -6,8 +6,12 @@ import {
 	Feather,
 	Focus,
 	Layers,
+	Moon,
 	MoveHorizontal,
+	Route,
+	Scale,
 	Shield,
+	Sun,
 } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 import { Slider } from '@/shared/ui/slider';
@@ -30,6 +34,7 @@ export function AlgorithmConfigPanel({
 	disabled = false,
 }: AlgorithmConfigPanelProps) {
 	const currentMaterial = findMaterialByWeight(config.lineWeight);
+	const isLightOnDark = config.colorMode === 'light-on-dark';
 
 	const updateField = (field: keyof AlgorithmConfig, value: number) => {
 		onChange({ ...config, [field]: value });
@@ -43,8 +48,56 @@ export function AlgorithmConfigPanel({
 		});
 	};
 
+	const setColorMode = (mode: 'dark-on-light' | 'light-on-dark') => {
+		onChange({
+			...config,
+			colorMode: mode,
+		});
+	};
+
 	return (
 		<div className='flex flex-col gap-4'>
+			{/* Mode Selection: Subtractive vs Additive */}
+			<div className='flex flex-col gap-1.5'>
+				<span className='font-medium text-foreground text-xs'>
+					Modo de Representación
+				</span>
+				<div className='grid grid-cols-2 gap-1.5'>
+					<Button
+						type='button'
+						variant={!isLightOnDark ? 'default' : 'outline'}
+						size='sm'
+						disabled={disabled}
+						onClick={() => setColorMode('dark-on-light')}
+						className='h-auto flex-col items-start p-2 text-left'
+					>
+						<span className='flex items-center gap-1.5 font-semibold text-xs'>
+							<Sun className='size-3.5 text-amber-500' />
+							Sustractivo
+						</span>
+						<span className='text-muted-foreground text-xs opacity-80'>
+							Hilo oscuro · Fondo claro
+						</span>
+					</Button>
+					<Button
+						type='button'
+						variant={isLightOnDark ? 'default' : 'outline'}
+						size='sm'
+						disabled={disabled}
+						onClick={() => setColorMode('light-on-dark')}
+						className='h-auto flex-col items-start p-2 text-left'
+					>
+						<span className='flex items-center gap-1.5 font-semibold text-xs'>
+							<Moon className='size-3.5 text-indigo-400' />
+							Aditivo (Luz)
+						</span>
+						<span className='text-muted-foreground text-xs opacity-80'>
+							Hilo claro · Fondo ébano
+						</span>
+					</Button>
+				</div>
+			</div>
+
 			{/* Thread Material Presets */}
 			<div className='flex flex-col gap-1.5'>
 				<span className='font-medium text-foreground text-xs'>
@@ -133,12 +186,14 @@ export function AlgorithmConfigPanel({
 				/>
 			</div>
 
-			{/* White Background Protection */}
+			{/* Background / Shadow Protection */}
 			<div className='flex flex-col gap-2'>
 				<div className='flex items-center justify-between text-xs'>
 					<span className='flex items-center gap-1.5 font-medium text-foreground'>
 						<Shield className='size-3.5 text-primary' />
-						Protección de blancos
+						{isLightOnDark
+							? 'Protección de sombras (Negro)'
+							: 'Protección de blancos'}
 					</span>
 					<span className='font-mono text-muted-foreground'>
 						{(config.whitePenalty ?? 1.3).toFixed(1)}x
@@ -147,11 +202,59 @@ export function AlgorithmConfigPanel({
 				<Slider
 					value={[config.whitePenalty ?? 1.3]}
 					min={1.0}
-					max={2.5}
+					max={3.0}
 					step={0.1}
 					disabled={disabled}
 					onValueChange={(val) => updateField('whitePenalty', val[0])}
 				/>
+			</div>
+
+			{/* Fractional Length Normalization */}
+			<div className='flex flex-col gap-2'>
+				<div className='flex items-center justify-between text-xs'>
+					<span className='flex items-center gap-1.5 font-medium text-foreground'>
+						<Scale className='size-3.5 text-primary' />
+						Normalización de longitud
+					</span>
+					<span className='font-mono text-muted-foreground'>
+						γ = {(config.lengthPenalty ?? 0.5).toFixed(2)}
+					</span>
+				</div>
+				<Slider
+					value={[config.lengthPenalty ?? 0.5]}
+					min={0.0}
+					max={0.9}
+					step={0.05}
+					disabled={disabled}
+					onValueChange={(val) => updateField('lengthPenalty', val[0])}
+				/>
+				<span className='text-muted-foreground text-xs opacity-75'>
+					Atenúa cuerdas largas por el centro y prioriza detalles locales
+				</span>
+			</div>
+
+			{/* Angular Anti-Rebound / Anti-Ping-Pong */}
+			<div className='flex flex-col gap-2'>
+				<div className='flex items-center justify-between text-xs'>
+					<span className='flex items-center gap-1.5 font-medium text-foreground'>
+						<Route className='size-3.5 text-primary' />
+						Filtro anti-rebote
+					</span>
+					<span className='font-mono text-muted-foreground'>
+						{Math.round((1 - (config.reboundPenalty ?? 0.85)) * 100)}%
+					</span>
+				</div>
+				<Slider
+					value={[config.reboundPenalty ?? 0.85]}
+					min={0.5}
+					max={1.0}
+					step={0.05}
+					disabled={disabled}
+					onValueChange={(val) => updateField('reboundPenalty', val[0])}
+				/>
+				<span className='text-muted-foreground text-xs opacity-75'>
+					Evita oscilaciones opuestas y hace que el trazo camine por el contorno
+				</span>
 			</div>
 
 			{/* Opacity Step */}

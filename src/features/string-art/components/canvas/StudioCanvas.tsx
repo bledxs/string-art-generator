@@ -16,6 +16,7 @@ interface StudioCanvasProps {
 	lineWeight: number;
 	opacity: number;
 	showPins?: boolean;
+	colorMode?: 'dark-on-light' | 'light-on-dark';
 }
 
 export function StudioCanvas({
@@ -26,6 +27,7 @@ export function StudioCanvas({
 	lineWeight,
 	opacity,
 	showPins = true,
+	colorMode = 'dark-on-light',
 }: Readonly<StudioCanvasProps>) {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -36,10 +38,10 @@ export function StudioCanvas({
 		if (!ctx) return;
 
 		ctx.clearRect(0, 0, size, size);
-		drawLoomBackground(ctx, size);
-		drawStrings(ctx, pins, lines, opacity, lineWeight);
-		drawPins(ctx, pins, currentPin, showPins);
-	}, [size, pins, lines, currentPin, lineWeight, opacity, showPins]);
+		drawLoomBackground(ctx, size, colorMode);
+		drawStrings(ctx, pins, lines, opacity, lineWeight, colorMode);
+		drawPins(ctx, pins, currentPin, showPins, colorMode);
+	}, [size, pins, lines, currentPin, lineWeight, opacity, showPins, colorMode]);
 
 	return (
 		<canvas

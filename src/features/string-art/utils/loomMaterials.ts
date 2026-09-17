@@ -105,3 +105,81 @@ export function drawBrassPin(
 	ctx.fillStyle = brass;
 	ctx.fill();
 }
+
+export function drawEbonyBoard(
+	ctx: CanvasRenderingContext2D,
+	center: number,
+	radius: number,
+): void {
+	ctx.save();
+	// Layered Matte Obsidian outer rim
+	ctx.beginPath();
+	ctx.arc(center, center, radius * 1.035, 0, Math.PI * 2);
+	const rimGradient = ctx.createRadialGradient(
+		center - 15,
+		center - 20,
+		radius * 0.9,
+		center,
+		center,
+		radius * 1.04,
+	);
+	rimGradient.addColorStop(0, '#2d2d2d');
+	rimGradient.addColorStop(0.7, '#1f1f1f');
+	rimGradient.addColorStop(1, '#0d0d0d');
+	ctx.fillStyle = rimGradient;
+	ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+	ctx.shadowBlur = 28;
+	ctx.shadowOffsetY = 10;
+	ctx.fill();
+	ctx.restore();
+
+	// Main deep matte ebony wood surface
+	ctx.save();
+	ctx.beginPath();
+	ctx.arc(center, center, radius, 0, Math.PI * 2);
+	const woodGradient = ctx.createRadialGradient(
+		center - 30,
+		center - 40,
+		radius * 0.1,
+		center,
+		center,
+		radius,
+	);
+	woodGradient.addColorStop(0, '#1c1a19');
+	woodGradient.addColorStop(0.65, '#121110');
+	woodGradient.addColorStop(1, '#080808');
+	ctx.fillStyle = woodGradient;
+	ctx.fill();
+
+	// Subtle satin grain ring
+	ctx.beginPath();
+	ctx.arc(center, center, radius * 0.62, 0, Math.PI * 2);
+	ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+	ctx.lineWidth = 1.5;
+	ctx.stroke();
+	ctx.restore();
+}
+
+export function drawSilverPin(
+	ctx: CanvasRenderingContext2D,
+	x: number,
+	y: number,
+	center: number,
+): void {
+	const dx = (x - center) / center;
+	const dy = (y - center) / center;
+	ctx.beginPath();
+	ctx.arc(x + dx * 1.2, y + dy * 1.2, 1.8, 0, Math.PI * 2);
+	ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+	ctx.fill();
+
+	// Chrome/Silver pin head with bright specular highlight
+	ctx.beginPath();
+	ctx.arc(x, y, 1.8, 0, Math.PI * 2);
+	const silver = ctx.createRadialGradient(x - 0.5, y - 0.5, 0.2, x, y, 1.8);
+	silver.addColorStop(0, '#ffffff');
+	silver.addColorStop(0.5, '#cbd5e1');
+	silver.addColorStop(1, '#475569');
+	ctx.fillStyle = silver;
+	ctx.fill();
+}
