@@ -1,5 +1,45 @@
 # Changelog
 
+## [2.0.0](https://github.com/bledxs/string-art-generator/compare/v1.12.0...v2.0.0) (2026-09-17)
+
+### 🚀 Major Architectural Transformation & Studio Rewrite
+
+Complete ground-up rewrite of String Art Studio following Clean Code and Impeccable Craft principles, transforming the application into a tactile **Nordic Artisan Workshop** computational loom workbench.
+
+### Features
+
+* **atelier:** transform canvas into a Nordic Artisan Workshop with Baltic birch wood grain, layered plywood bevel, laser-engraved graduation marks, and polished brass pins ([3840364](https://github.com/bledxs/string-art-generator/commit/3840364))
+* **atelier:** add tactile artisan thread spool widget with real-time thread length calculation and physical spool estimates ([3840364](https://github.com/bledxs/string-art-generator/commit/3840364))
+* **ai:** implement zero-latency computer vision auto-calibration analyzing luminance histogram, dynamic range, and Sobel spatial edge density ([54dda7b](https://github.com/bledxs/string-art-generator/commit/54dda7b))
+* **materials:** add physical thread material gauge selector with millimetric line rendering (Silk #50, Cotton #40, Embroidery #20, Linen cord) ([54dda7b](https://github.com/bledxs/string-art-generator/commit/54dda7b))
+* **string-art:** implement multi-color layered runs and palette decomposition ([c4fde28](https://github.com/bledxs/string-art-generator/commit/c4fde28))
+* **string-art:** add rectangular loom support, Sobel edge guidance, additive mode, and thread length normalization ([2435c99](https://github.com/bledxs/string-art-generator/commit/2435c99))
+* **player:** add persistent interactive timeline scrubber and physical weaving assistant with audio/visual pin step guidance ([c3db14c](https://github.com/bledxs/string-art-generator/commit/c3db14c))
+* **export:** format export instructions manual as comprehensive artisan guide with pin 0 orientation badges, multi-format PDF, SVG, PNG, CSV, and JSON ([81d9643](https://github.com/bledxs/string-art-generator/commit/81d9643), [5c1402d](https://github.com/bledxs/string-art-generator/commit/5c1402d))
+* **image:** add active image feedback card and interactive circular cropper modal ([dd6ad36](https://github.com/bledxs/string-art-generator/commit/dd6ad36))
+* **responsive:** add mobile drawer, touch gestures, and ultra-compact responsive layout down to 320px viewport ([39b7287](https://github.com/bledxs/string-art-generator/commit/39b7287))
+* **brand:** redesign site brand identity, logo, favicon suite, social share cards, and printable workshop templates ([625c7b7](https://github.com/bledxs/string-art-generator/commit/625c7b7), [9afa5ce](https://github.com/bledxs/string-art-generator/commit/9afa5ce))
+* **seo:** configure dynamic sitemap, robots.txt, OpenGraph metadata, Google Search Console verification, and JSON-LD schema ([aa3cd12](https://github.com/bledxs/string-art-generator/commit/aa3cd12), [6c8d288](https://github.com/bledxs/string-art-generator/commit/6c8d288), [d8b94e8](https://github.com/bledxs/string-art-generator/commit/d8b94e8))
+
+### Bug Fixes
+
+* **renderer:** enable individual stroke alpha compounding and circular mask to produce deep blacks, rich shadows, and high-fidelity string art ([024b388](https://github.com/bledxs/string-art-generator/commit/024b388))
+* **player:** eliminate layout shift with persistent dock and fix maximum update depth loop in workbench hook ([e8af3e9](https://github.com/bledxs/string-art-generator/commit/e8af3e9))
+* **canvas:** auto-fit circular loom to screen width on mobile viewports ([9be82f7](https://github.com/bledxs/string-art-generator/commit/9be82f7))
+* **ui:** polish export modal cards design, eliminate autofocus highlight, and ensure English instructions manual ([4a3df98](https://github.com/bledxs/string-art-generator/commit/4a3df98))
+* **assets:** widen badge in social cards to comfortably fit subtitle text ([3818bc4](https://github.com/bledxs/string-art-generator/commit/3818bc4))
+
+### Performance & Engine Improvements
+
+* **algorithm:** optimize string art with signed residual error buffer, white space protection, and anti-moiré chord penalty ([9e08307](https://github.com/bledxs/string-art-generator/commit/9e08307))
+* **engine:** implement zero-blocking Web Worker generation with batched IPC messaging and pure calculation utilities ([7c63b96](https://github.com/bledxs/string-art-generator/commit/7c63b96))
+* **canvas:** optimize 60 FPS interactive canvas rendering with pan, zoom, and hardware-accelerated 2D strokes ([07915ae](https://github.com/bledxs/string-art-generator/commit/07915ae))
+
+### Styles & Design System
+
+* **ui:** customize precision scrollbar with Nordic artisan floating capsule, dark bronze-slate idle tone, and warm brass hover illumination ([aee0501](https://github.com/bledxs/string-art-generator/commit/aee0501))
+* **tokens:** setup artisan theme tokens, OKLCH color spaces, and clean shared UI primitives ([684f483](https://github.com/bledxs/string-art-generator/commit/684f483))
+
 ## [1.12.0](https://github.com/bledxs/string-art-generator/compare/v1.11.0...v1.12.0) (2025-12-12)
 
 
