@@ -190,4 +190,36 @@ export interface TranslationDictionary {
 		highDetailReasoning: string;
 		smoothReasoning: string;
 	};
+	statusPages: {
+		notFound: {
+			badge: string;
+			title: string;
+			description: string;
+			homeBtn: string;
+		};
+		error: {
+			badge: string;
+			title: string;
+			description: string;
+			retryBtn: string;
+			homeBtn: string;
+			detailsSummary: string;
+		};
+		forbidden: {
+			badge: string;
+			title: string;
+			description: string;
+			homeBtn: string;
+		};
+		unauthorized: {
+			badge: string;
+			title: string;
+			description: string;
+			homeBtn: string;
+		};
+		loading: {
+			title: string;
+			description: string;
+		};
+	};
 }

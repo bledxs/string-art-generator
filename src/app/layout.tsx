@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import type * as React from 'react';
 import { Toaster } from 'sonner';
 import { siteConfig } from '@/shared/config/site';
+import { DEFAULT_LOCALE, LOCALE_COOKIE_NAME } from '@/shared/i18n';
 import './globals.css';
 import { ThemeProvider } from './providers';
 
@@ -91,18 +93,25 @@ const jsonLd = {
 	],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const cookieStore = await cookies();
+	const cookieLocale = cookieStore.get(LOCALE_COOKIE_NAME)?.value;
+	const locale =
+		cookieLocale === 'en' || cookieLocale === 'es'
+			? cookieLocale
+			: DEFAULT_LOCALE;
+
 	return (
-		<html lang='es' suppressHydrationWarning>
+		<html lang={locale} suppressHydrationWarning>
 			<head>
 				<script type='application/ld+json'>{JSON.stringify(jsonLd)}</script>
 			</head>
 			<body className='min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary/20 selection:text-primary'>
-				<ThemeProvider>
+				<ThemeProvider initialLocale={locale}>
 					{children}
 					<Toaster richColors closeButton position='bottom-right' />
 				</ThemeProvider>
