@@ -32,7 +32,7 @@ export function generateSvgString(
 				const sanitizedId = `layer-${idx + 1}-${run.name.replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase()}`;
 				const count = run.lineCount ?? runLines.length;
 				return `  <g id="${sanitizedId}" stroke="${run.color}" stroke-width="${lineWeight}" stroke-opacity="${opacity}" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <desc>${run.name} (${run.color}) - ${count} lineas</desc>
+    <desc>${run.name} (${run.color}) - ${count} lines</desc>
     <path d="${d}" />
   </g>`;
 			})
@@ -73,11 +73,14 @@ function formatProjectInfo(
 	const weight = algo?.lineWeight ?? 0.85;
 	const isLightOnDark = algo?.colorMode === 'light-on-dark';
 	const bgColor = isLightOnDark
-		? '#09090b (Ébano / Negro)'
-		: '#ffffff (Abedul / Blanco)';
+		? '#09090b (Ebony / Dark)'
+		: '#ffffff (Birch / White)';
 	const timeStr =
 		timeElapsedMs != null ? `${(timeElapsedMs / 1000).toFixed(2)}s` : 'N/A';
-	const dateStr = new Date().toLocaleString();
+	const dateStr = new Date().toLocaleString('en-US', {
+		dateStyle: 'medium',
+		timeStyle: 'medium',
+	});
 
 	return `PROJECT INFORMATION:
 - Total Pins: ${totalPins}
