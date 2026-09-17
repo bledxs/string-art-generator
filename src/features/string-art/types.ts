@@ -1,76 +1,120 @@
-// Core types for String Art feature
-
-export interface StringArtParameters {
-  pins: number;
-  lines: number;
-  lineWeight: number;
-  lineOpacity: number;
-  backgroundColor: string;
+export interface Pin {
+	id: number;
+	x: number;
+	y: number;
+	angle: number;
+	edge?: 'top' | 'right' | 'bottom' | 'left' | 'circle';
 }
 
-export interface ImageData {
-  url: string;
-  width: number;
-  height: number;
-  file?: File;
+export interface LoomConfig {
+	shape: 'circle' | 'rectangle';
+	pinCount: number;
+	physicalDiameterCm: number;
+	pinOffsetRatio: number;
+	aspectRatio?: '1:1' | '3:4' | '4:3' | '16:9';
 }
 
-export interface StringArtResult {
-  paths: Path[];
-  canvas?: HTMLCanvasElement;
-  metadata: {
-    totalLines: number;
-    processingTime: number;
-    parameters: StringArtParameters;
-    optimization?: {
-      originalCrossings: number;
-      optimizedCrossings: number;
-      crossingsReduced: number;
-      pathsSimplified: number;
-      processingTime: number;
-    };
-  };
+export interface ColorLayer {
+	id: string;
+	name: string;
+	color: string;
+	linesCount: number;
+	opacityStep?: number;
 }
 
-export interface Path {
-  from: number;
-  to: number;
-  weight: number;
+export interface ColorRun {
+	layerId: string;
+	name: string;
+	color: string;
+	startIndex: number;
+	endIndex: number;
+	lineCount?: number;
 }
 
-// Worker message types
-export interface WorkerRequest {
-  type: 'GENERATE' | 'CANCEL';
-  payload?: {
-    imageData: string;
-    parameters: StringArtParameters;
-  };
+export interface AlgorithmConfig {
+	maxLines: number;
+	lineWeight: number;
+	opacityStep: number;
+	minDistance: number;
+	contrast: number;
+	brightness: number;
+	edgeWeight?: number;
+	whitePenalty?: number;
+	autoStop?: boolean;
+	colorMode?: 'dark-on-light' | 'light-on-dark';
+	lengthPenalty?: number;
+	reboundPenalty?: number;
+	colorPaletteType?: 'monochrome' | 'cmyk' | 'rgbw' | 'warm-sepia';
+	colorLayers?: ColorLayer[];
 }
 
-export interface WorkerResponse {
-  type: 'PROGRESS' | 'PARTIAL_PATHS' | 'COMPLETE' | 'ERROR';
-  payload?: {
-    progress?: number;
-    partialPaths?: Path[]; // Paths generated so far
-    result?: StringArtResult;
-    error?: string;
-  };
+export type EngineStatus = 'idle' | 'running' | 'paused' | 'completed';
+
+export interface GenerationProgress {
+	status: EngineStatus;
+	currentStep: number;
+	totalSteps: number;
+	currentPin: number;
+	lineSequence: number[];
+	timeElapsedMs: number;
+	converged?: boolean;
+	colorRuns?: ColorRun[];
+	currentLayerIndex?: number;
+	currentLayerName?: string;
+	currentColor?: string;
 }
 
-// Export formats
-export type ExportFormat = 'png' | 'svg' | 'json' | 'txt';
-
-export interface ExportOptions {
-  format: ExportFormat;
-  quality?: number;
-  scale?: number;
+export interface PresetImage {
+	id: string;
+	title: string;
+	subtitle: string;
+	url: string;
+	recommendedLines: number;
+	recommendedPins: number;
 }
 
-// Physical configuration for real-world builds
-export type PhysicalUnit = 'cm' | 'inches';
+export type WorkerInMessage =
+	| {
+			type: 'START';
+			payload: {
+				pixelBuffer: Uint8ClampedArray;
+				rgbaBuffer?: Uint8ClampedArray;
+				canvasSize: number;
+				loomConfig: LoomConfig;
+				algoConfig: AlgorithmConfig;
+			};
+	  }
+	| { type: 'PAUSE' }
+	| { type: 'RESUME' }
+	| { type: 'STOP' };
 
-export interface PhysicalConfig {
-  diameter: number; // Circle diameter in selected unit
-  unit: PhysicalUnit;
-  pinHeight: number; // How far pins stick out from board
-}
+export type WorkerOutMessage =
+	| {
+			type: 'PROGRESS_BATCH';
+			payload: {
+				currentStep: number;
+				totalSteps: number;
+				currentPin: number;
+				newLines: number[];
+				currentLayerIndex?: number;
+				currentLayerName?: string;
+				currentColor?: string;
+				colorRuns?: ColorRun[];
+			};
+	  }
+	| {
+			type: 'COMPLETED';
+			payload: {
+				totalLines: number;
+				lineSequence: number[];
+				timeElapsedMs: number;
+				converged?: boolean;
+				colorRuns?: ColorRun[];
+			};
+	  }
+	| {
+			type: 'ERROR';
+			payload: {
+				message: string;
+			};
+	  };

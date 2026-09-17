@@ -1,307 +1,287 @@
-#!/usr/bin/env node
-
-/**
- * Script para generar todas las imágenes necesarias para SEO y PWA
- * desde el logo.png de la raíz del proyecto
- *
- * Uso: node scripts/generate-images.mjs
- */
-
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
-import { readFileSync, existsSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { generateLogoAssets } from './generate-logo.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = join(__dirname, '..');
 const publicDir = join(rootDir, 'public');
-
-// Configuración de las imágenes a generar
-const images = [
-  // Favicons e iconos
-  {
-    name: 'icon-192.png',
-    width: 192,
-    height: 192,
-    fit: 'contain',
-    background: { r: 0, g: 0, b: 0, alpha: 1 },
-  },
-  {
-    name: 'icon-512.png',
-    width: 512,
-    height: 512,
-    fit: 'contain',
-    background: { r: 0, g: 0, b: 0, alpha: 1 },
-  },
-  {
-    name: 'apple-icon.png',
-    width: 180,
-    height: 180,
-    fit: 'contain',
-    background: { r: 0, g: 0, b: 0, alpha: 1 },
-  },
-  {
-    name: 'favicon-96x96.png',
-    width: 96,
-    height: 96,
-    fit: 'contain',
-    background: { r: 0, g: 0, b: 0, alpha: 1 },
-  },
-  {
-    name: 'favicon.ico',
-    width: 32,
-    height: 32,
-    fit: 'contain',
-    background: { r: 0, g: 0, b: 0, alpha: 1 },
-    format: 'ico',
-  },
-
-  // Web App Manifest
-  {
-    name: 'web-app-manifest-192x192.png',
-    width: 192,
-    height: 192,
-    fit: 'contain',
-    background: { r: 0, g: 0, b: 0, alpha: 1 },
-  },
-  {
-    name: 'web-app-manifest-512x512.png',
-    width: 512,
-    height: 512,
-    fit: 'contain',
-    background: { r: 0, g: 0, b: 0, alpha: 1 },
-  },
-
-  // Social Media (Open Graph y Twitter)
-  {
-    name: 'opengraph-image.png',
-    width: 1200,
-    height: 630,
-    fit: 'contain',
-    background: { r: 0, g: 0, b: 0, alpha: 1 },
-    composite: true, // Logo centrado con texto
-  },
-  {
-    name: 'twitter-image.png',
-    width: 1200,
-    height: 630,
-    fit: 'contain',
-    background: { r: 0, g: 0, b: 0, alpha: 1 },
-    composite: true,
-  },
-];
-
-// Screenshots (estos requieren un enfoque diferente - placeholders por ahora)
-const screenshots = [
-  {
-    name: 'screenshot-wide.png',
-    width: 1280,
-    height: 720,
-    text: 'String Art Generator\nCreate beautiful string art from images',
-    isScreenshot: true,
-  },
-  {
-    name: 'screenshot-narrow.png',
-    width: 750,
-    height: 1334,
-    text: 'String Art Generator\nCreate beautiful string art from images',
-    isScreenshot: true,
-  },
-];
+const appDir = join(rootDir, 'src', 'app');
+const logoPath = join(rootDir, 'logo.png');
 
 /**
- * Genera una imagen con texto (para screenshots y social media)
+ * Builds a valid multi-size Windows/Browser .ico file from an array of PNG buffers
  */
-async function generateImageWithText(config) {
-  const { name, width, height, text, isScreenshot } = config;
-  const outputPath = join(publicDir, name);
+function createIco(images) {
+	const count = images.length;
+	const headerSize = 6;
+	const entrySize = 16;
+	let currentOffset = headerSize + entrySize * count;
 
-  try {
-    const logoPath = join(rootDir, 'logo.png');
+	const entries = [];
+	for (const img of images) {
+		const entry = Buffer.alloc(entrySize);
+		entry.writeUInt8(img.width >= 256 ? 0 : img.width, 0);
+		entry.writeUInt8(img.height >= 256 ? 0 : img.height, 1);
+		entry.writeUInt8(0, 2); // color count
+		entry.writeUInt8(0, 3); // reserved
+		entry.writeUInt16LE(1, 4); // color planes
+		entry.writeUInt16LE(32, 6); // bit depth
+		entry.writeUInt32LE(img.buffer.length, 8); // image byte size
+		entry.writeUInt32LE(currentOffset, 12); // image data offset
 
-    if (!existsSync(logoPath)) {
-      console.error('❌ No se encontró logo.png en la raíz del proyecto');
-      return;
-    }
+		entries.push(entry);
+		currentOffset += img.buffer.length;
+	}
 
-    // Leer el logo
-    const logoBuffer = await sharp(logoPath)
-      .resize(Math.floor(width * 0.4), Math.floor(width * 0.4), {
-        fit: 'contain',
-      })
-      .png()
-      .toBuffer();
+	const header = Buffer.alloc(headerSize);
+	header.writeUInt16LE(0, 0); // reserved
+	header.writeUInt16LE(1, 2); // icon type (1 = ICO)
+	header.writeUInt16LE(count, 4); // number of images
 
-    const logoMetadata = await sharp(logoBuffer).metadata();
-
-    // Crear fondo negro
-    let image = sharp({
-      create: {
-        width,
-        height,
-        channels: 4,
-        background: { r: 0, g: 0, b: 0, alpha: 1 },
-      },
-    });
-
-    // SVG para el texto
-    const lines = text.split('\n');
-    const fontSize = isScreenshot ? 48 : 64;
-    const lineHeight = fontSize * 1.4;
-    const totalTextHeight = lines.length * lineHeight;
-    const logoHeight = logoMetadata.height || 200;
-    const spacing = 40;
-
-    // Calcular posiciones
-    const totalHeight = logoHeight + spacing + totalTextHeight;
-    const startY = (height - totalHeight) / 2;
-    const logoY = startY;
-    const textStartY = logoY + logoHeight + spacing;
-
-    const textSvg = `
-      <svg width="${width}" height="${height}">
-        ${lines
-          .map(
-            (line, index) => `
-          <text 
-            x="${width / 2}" 
-            y="${textStartY + index * lineHeight}" 
-            font-family="Arial, sans-serif" 
-            font-size="${fontSize}" 
-            font-weight="bold" 
-            fill="white" 
-            text-anchor="middle"
-            dominant-baseline="middle"
-          >${line}</text>
-        `,
-          )
-          .join('')}
-      </svg>
-    `;
-
-    // Componer imagen con logo y texto
-    await image
-      .composite([
-        {
-          input: logoBuffer,
-          top: Math.floor(logoY),
-          left: Math.floor((width - logoMetadata.width) / 2),
-        },
-        {
-          input: Buffer.from(textSvg),
-          top: 0,
-          left: 0,
-        },
-      ])
-      .png()
-      .toFile(outputPath);
-
-    console.log(`✅ Generado: ${name}`);
-  } catch (error) {
-    console.error(`❌ Error generando ${name}:`, error.message);
-  }
+	return Buffer.concat([header, ...entries, ...images.map((i) => i.buffer)]);
 }
 
-/**
- * Genera imágenes de iconos simples
- */
-async function generateIcon(config) {
-  const { name, width, height, fit, background, format } = config;
-  const logoPath = join(rootDir, 'logo.png');
-  const outputPath = join(publicDir, name);
+async function generateFavicons() {
+	console.log('\n🔷 Generando favicons e iconos de aplicación...');
 
-  if (!existsSync(logoPath)) {
-    console.error('❌ No se encontró logo.png en la raíz del proyecto');
-    return;
-  }
+	const sizes = [16, 32, 48];
+	const icoPngs = [];
 
-  try {
-    let pipeline = sharp(logoPath).resize(width, height, {
-      fit: fit || 'contain',
-      background: background || { r: 0, g: 0, b: 0, alpha: 0 },
-    });
+	for (const size of sizes) {
+		const buffer = await sharp(logoPath)
+			.resize(size, size, {
+				fit: 'contain',
+				background: { r: 0, g: 0, b: 0, alpha: 0 },
+			})
+			.png()
+			.toBuffer();
+		icoPngs.push({ width: size, height: size, buffer });
+	}
 
-    // Aplicar formato específico si es necesario
-    if (format === 'ico') {
-      // Para ICO, primero convertimos a PNG y luego a ICO
-      await pipeline.png().toFile(outputPath.replace('.ico', '.png'));
-      // Nota: Sharp no soporta ICO directamente, usar el PNG generado
-      console.log(
-        `⚠️  ${name}: Sharp no genera .ico directamente. Usar favicon-96x96.png o convertir manualmente.`,
-      );
-      return;
-    } else {
-      await pipeline.png().toFile(outputPath);
-    }
+	const icoBuffer = createIco(icoPngs);
+	writeFileSync(join(publicDir, 'favicon.ico'), icoBuffer);
+	writeFileSync(join(appDir, 'favicon.ico'), icoBuffer);
+	console.log(
+		'  ✅ favicon.ico (16x16, 32x32, 48x48) generado en public/ y src/app/',
+	);
 
-    console.log(`✅ Generado: ${name}`);
-  } catch (error) {
-    console.error(`❌ Error generando ${name}:`, error.message);
-  }
+	// favicon.png & favicon-96x96.png
+	await sharp(logoPath)
+		.resize(32, 32, {
+			fit: 'contain',
+			background: { r: 0, g: 0, b: 0, alpha: 0 },
+		})
+		.png()
+		.toFile(join(publicDir, 'favicon.png'));
+
+	await sharp(logoPath)
+		.resize(96, 96, {
+			fit: 'contain',
+			background: { r: 0, g: 0, b: 0, alpha: 0 },
+		})
+		.png()
+		.toFile(join(publicDir, 'favicon-96x96.png'));
+	console.log('  ✅ favicon.png y favicon-96x96.png generados');
+
+	// apple-icon.png (180x180)
+	await sharp(logoPath)
+		.resize(180, 180, {
+			fit: 'contain',
+			background: { r: 12, g: 10, b: 9, alpha: 1 },
+		})
+		.png()
+		.toFile(join(publicDir, 'apple-icon.png'));
+	console.log('  ✅ apple-icon.png (180x180) generado');
 }
 
-/**
- * Genera imágenes con composición (logo + texto centrado)
- */
-async function generateCompositeImage(config) {
-  const { name, width, height, background } = config;
-  await generateImageWithText({
-    name,
-    width,
-    height,
-    text: 'String Art Generator\nTransform images into beautiful string art',
-    isScreenshot: false,
-  });
+async function generatePwaIcons() {
+	console.log('\n📱 Generando iconos PWA y Web Manifest...');
+
+	const pwaSizes = [
+		{ name: 'icon-192.png', size: 192 },
+		{ name: 'icon-512.png', size: 512 },
+		{ name: 'web-app-manifest-192x192.png', size: 192 },
+		{ name: 'web-app-manifest-512x512.png', size: 512 },
+	];
+
+	for (const { name, size } of pwaSizes) {
+		await sharp(logoPath)
+			.resize(size, size, {
+				fit: 'contain',
+				background: { r: 12, g: 10, b: 9, alpha: 1 },
+			})
+			.png()
+			.toFile(join(publicDir, name));
+		console.log(`  ✅ ${name} (${size}x${size})`);
+	}
 }
 
-/**
- * Función principal
- */
+async function generateSocialCard(filename, platformName) {
+	const width = 1200;
+	const height = 630;
+	const logoSize = 300;
+
+	const logoBuffer = await sharp(logoPath)
+		.resize(logoSize, logoSize, {
+			fit: 'contain',
+			background: { r: 0, g: 0, b: 0, alpha: 0 },
+		})
+		.png()
+		.toBuffer();
+
+	const svgBanner = `
+	<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+		<defs>
+			<radialGradient id="bgGlow" cx="50%" cy="38%" r="65%">
+				<stop offset="0%" stop-color="#291809" stop-opacity="0.95" />
+				<stop offset="45%" stop-color="#140e09" stop-opacity="1" />
+				<stop offset="100%" stop-color="#080706" stop-opacity="1" />
+			</radialGradient>
+			<linearGradient id="amberAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#fbbf24" />
+				<stop offset="50%" stop-color="#f59e0b" />
+				<stop offset="100%" stop-color="#d97706" />
+			</linearGradient>
+			<filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+				<feGaussianBlur stdDeviation="25" result="blur" />
+				<feComposite in="SourceGraphic" in2="blur" operator="over" />
+			</filter>
+		</defs>
+
+		<!-- Background -->
+		<rect width="${width}" height="${height}" fill="url(#bgGlow)" />
+
+		<!-- Geometric string art decorative rings -->
+		<circle cx="600" cy="210" r="195" fill="none" stroke="#d97706" stroke-width="1.5" stroke-opacity="0.25" stroke-dasharray="4 8" />
+		<circle cx="600" cy="210" r="230" fill="none" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.15" />
+		<circle cx="600" cy="210" r="265" fill="none" stroke="#fbbf24" stroke-width="0.75" stroke-opacity="0.1" stroke-dasharray="2 6" />
+
+		<!-- Badge -->
+		<g transform="translate(385, 395)">
+			<rect width="430" height="34" rx="17" fill="#1c1917" stroke="#78350f" stroke-width="1.5" />
+			<text x="215" y="21.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" fill="#fbbf24" text-anchor="middle" letter-spacing="1.2">ALGORITMO ARTESANAL DE ALTA PRECISIÓN</text>
+		</g>
+
+		<!-- Title -->
+		<text x="600" y="475" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="52" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="-1">
+			String Art Studio
+		</text>
+
+		<!-- Subtitle -->
+		<text x="600" y="525" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="400" fill="#d6d3d1" text-anchor="middle">
+			Convierte cualquier imagen en patrones profesionales de hilorama
+		</text>
+
+		<!-- Feature Badges -->
+		<text x="600" y="575" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="500" fill="#fed7aa" text-anchor="middle">
+			Simulación interactiva • Capas de color policromáticas • Exportación PDF gratuita
+		</text>
+	</svg>
+	`;
+
+	const baseImage = sharp(Buffer.from(svgBanner));
+	await baseImage
+		.composite([
+			{
+				input: logoBuffer,
+				top: 60,
+				left: Math.round((width - logoSize) / 2),
+			},
+		])
+		.png({ quality: 95 })
+		.toFile(join(publicDir, filename));
+
+	console.log(`  ✅ ${filename} (${width}x${height}) para ${platformName}`);
+}
+
+async function generateScreenshots() {
+	console.log('\n📸 Generando screenshots de demostración...');
+
+	// screenshot-wide.png (1280x720)
+	const wideSvg = `
+	<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+		<rect width="1280" height="720" fill="#0c0a09" />
+		<circle cx="640" cy="290" r="195" fill="none" stroke="#d97706" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4 8" />
+		<text x="640" y="535" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="46" font-weight="800" fill="#ffffff" text-anchor="middle">String Art Studio</text>
+		<text x="640" y="580" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="21" font-weight="400" fill="#a8a29e" text-anchor="middle">Estudio interactivo de hilorama de alta precisión</text>
+	</svg>
+	`;
+
+	const logoWide = await sharp(logoPath)
+		.resize(270, 270, {
+			fit: 'contain',
+			background: { r: 0, g: 0, b: 0, alpha: 0 },
+		})
+		.png()
+		.toBuffer();
+
+	await sharp(Buffer.from(wideSvg))
+		.composite([{ input: logoWide, top: 155, left: 505 }])
+		.png()
+		.toFile(join(publicDir, 'screenshot-wide.png'));
+	console.log('  ✅ screenshot-wide.png (1280x720)');
+
+	// screenshot-narrow.png (750x1334)
+	const narrowSvg = `
+	<svg width="750" height="1334" viewBox="0 0 750 1334" xmlns="http://www.w3.org/2000/svg">
+		<rect width="750" height="1334" fill="#0c0a09" />
+		<circle cx="375" cy="490" r="185" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4 8" />
+		<text x="375" y="750" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="40" font-weight="800" fill="#ffffff" text-anchor="middle">String Art Studio</text>
+		<text x="375" y="800" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="400" fill="#a8a29e" text-anchor="middle">Arte de hilos y clavos interactivo</text>
+	</svg>
+	`;
+
+	const logoNarrow = await sharp(logoPath)
+		.resize(250, 250, {
+			fit: 'contain',
+			background: { r: 0, g: 0, b: 0, alpha: 0 },
+		})
+		.png()
+		.toBuffer();
+
+	await sharp(Buffer.from(narrowSvg))
+		.composite([{ input: logoNarrow, top: 365, left: 250 }])
+		.png()
+		.toFile(join(publicDir, 'screenshot-narrow.png'));
+	console.log('  ✅ screenshot-narrow.png (750x1334)');
+}
+
 async function main() {
-  console.log('🎨 Iniciando generación de imágenes...\n');
+	console.log(
+		'🚀 Generador Integral de Recursos Gráficos y SEO para String Art Studio\n',
+	);
 
-  const logoPath = join(rootDir, 'logo.png');
+	if (!existsSync(publicDir)) {
+		mkdirSync(publicDir, { recursive: true });
+	}
 
-  if (!existsSync(logoPath)) {
-    console.error('❌ ERROR: No se encontró logo.png en la raíz del proyecto');
-    console.error('   Por favor, coloca el archivo logo.png en:', rootDir);
-    process.exit(1);
-  }
+	// 1. Generar nuevo logo si no existe o regenerarlo
+	await generateLogoAssets();
 
-  console.log('📁 Logo encontrado:', logoPath);
-  console.log('📁 Directorio de salida:', publicDir);
-  console.log('');
+	// 2. Generar favicons e iconos de apps
+	await generateFavicons();
+	await generatePwaIcons();
 
-  // Generar iconos simples
-  console.log('🔷 Generando iconos...');
-  for (const config of images) {
-    if (config.composite) {
-      await generateCompositeImage(config);
-    } else {
-      await generateIcon(config);
-    }
-  }
+	// 3. Generar tarjetas OpenGraph y Twitter
+	console.log('\n🌐 Generando OpenGraph y Twitter Cards...');
+	await generateSocialCard(
+		'opengraph-image.png',
+		'OpenGraph / Facebook / LinkedIn',
+	);
+	await generateSocialCard('twitter-image.png', 'Twitter / X Cards');
 
-  console.log('\n📸 Generando screenshots...');
-  for (const config of screenshots) {
-    await generateImageWithText(config);
-  }
+	// 4. Generar capturas PWA
+	await generateScreenshots();
 
-  console.log('\n✨ ¡Proceso completado!');
-  console.log('\n📋 Imágenes generadas:');
-  console.log(
-    '   - Iconos: icon-192.png, icon-512.png, apple-icon.png, favicon-96x96.png',
-  );
-  console.log(
-    '   - Manifest: web-app-manifest-192x192.png, web-app-manifest-512x512.png',
-  );
-  console.log('   - Social: opengraph-image.png, twitter-image.png');
-  console.log('   - Screenshots: screenshot-wide.png, screenshot-narrow.png');
-  console.log(
-    '\n⚠️  Nota: favicon.ico debe ser convertido manualmente o usa favicon-96x96.png',
-  );
+	console.log(
+		'\n🎉 ¡Todas las imágenes y favicons fueron generados con éxito!',
+	);
 }
 
-// Ejecutar script
-main().catch(console.error);
+main().catch((err) => {
+	console.error('Error generando imágenes:', err);
+	process.exit(1);
+});

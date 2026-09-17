@@ -1,3 +1,2 @@
-onlyBuiltDependencies:
-  - sharp
-  - unrs-resolver
+allowBuilds:
+  unrs-resolver: true

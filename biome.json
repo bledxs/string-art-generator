@@ -1,0 +1,141 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.5.13/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"includes": [
+			"**/*.js",
+			"**/*.jsx",
+			"**/*.ts",
+			"**/*.tsx",
+			"**/*.json",
+			"**/*.mjs",
+			"**/*.cjs",
+			"**/*.css",
+			"!**/node_modules",
+			"!**/dist",
+			"!**/.next",
+			"!**/coverage",
+			"!**/out",
+			"!**/build",
+			"!**/pnpm-lock.yaml",
+			"!**/apps/api/drizzle",
+			"!**/.agents",
+			"!**/.claude",
+			"!**/.impeccable"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineWidth": 80
+	},
+	"linter": {
+		"enabled": true,
+		"domains": {
+			"tailwind": "all",
+			"react": "recommended",
+			"next": "recommended"
+		},
+		"rules": {
+			"preset": "recommended",
+			"a11y": {
+				"noStaticElementInteractions": "error",
+				"noNoninteractiveTabindex": "error",
+				"noPositiveTabindex": "error",
+				"useKeyWithClickEvents": "error",
+				"useSemanticElements": "error",
+				"useButtonType": "error",
+				"useAltText": "error",
+				"useAriaPropsForRole": "error",
+				"noAriaHiddenOnFocusable": "error"
+			},
+			"complexity": {
+				"noExcessiveCognitiveComplexity": {
+					"level": "error",
+					"options": {
+						"maxAllowedComplexity": 15
+					}
+				},
+				"noUselessTernary": "error",
+				"useSimplifiedLogicExpression": "error"
+			},
+			"correctness": {
+				"noUnusedVariables": "error",
+				"noUnusedImports": "error",
+				"noUndeclaredVariables": "error",
+				"noUnresolvedImports": "error"
+			},
+			"suspicious": {
+				"noExplicitAny": "error",
+				"noConsole": "warn",
+				"noDoubleEquals": "error",
+				"noImportCycles": "error"
+			},
+			"style": {
+				"useConst": "error",
+				"noNonNullAssertion": "error",
+				"useAsConstAssertion": "error",
+				"useImportType": "error",
+				"useExportType": "error",
+				"useNodejsImportProtocol": "error"
+			},
+			"nursery": {
+				"noUnsafeTypeAssertion": "error",
+				"useImportsFirst": "error",
+				"useSortedClasses": {
+					"level": "error",
+					"options": {
+						"attributes": ["classList"],
+						"functions": ["clsx", "cva", "tw", "twMerge", "cn"]
+					}
+				},
+				"useTailwindShorthandClasses": "error",
+				"noTailwindArbitraryValue": "warn"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"jsxQuoteStyle": "single",
+			"trailingCommas": "all",
+			"semicolons": "always",
+			"arrowParentheses": "always"
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["scripts/**"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noConsole": "off"
+					},
+					"complexity": {
+						"noExcessiveCognitiveComplexity": "off"
+					}
+				}
+			}
+		}
+	]
+}
