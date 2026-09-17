@@ -9,6 +9,7 @@ import type {
 	LoomConfig,
 	PresetImage,
 } from '../../types';
+import { findMaterialByWeight } from '../../utils/threadMaterials';
 import { AlgorithmConfigPanel } from './AlgorithmConfigPanel';
 import { LoomConfigPanel } from './LoomConfigPanel';
 import { PresetGallery } from './PresetGallery';
@@ -25,6 +26,9 @@ export interface StudioSidebarProps {
 		onSelect: (p: PresetImage) => void;
 		onUpload: (url: string) => void;
 		onOpenCropper: () => void;
+		onAutoCalibrate?: (
+			rec: import('../../utils/imageAnalyzer').CalibrationRecommendation,
+		) => void;
 	};
 	execution: {
 		status: EngineStatus;
@@ -78,6 +82,7 @@ export function StudioSidebar({
 							onSelectPreset={presets.onSelect}
 							onCustomImageUpload={presets.onUpload}
 							onOpenCropper={presets.onOpenCropper}
+							onAutoCalibrate={presets.onAutoCalibrate}
 						/>
 					</TabsContent>
 
@@ -103,6 +108,7 @@ export function StudioSidebar({
 				<ThreadSpoolWidget
 					linesCount={linesCount}
 					diameterCm={loom.config.physicalDiameterCm}
+					materialName={findMaterialByWeight(algo.config.lineWeight).name}
 				/>
 				<SidebarActions
 					status={execution.status}

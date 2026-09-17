@@ -117,6 +117,22 @@ export function useStudioWorkbench() {
 		};
 	}, [imageSrc, loomConfig, algoConfig, engine]);
 
+	const handleAutoCalibrate = useCallback(
+		(rec: import('../utils/imageAnalyzer').CalibrationRecommendation) => {
+			setLoomConfig((p) => ({ ...p, pinCount: rec.pinCount }));
+			setAlgoConfig((p) => ({
+				...p,
+				maxLines: rec.maxLines,
+				lineWeight: rec.lineWeight,
+				opacityStep: rec.opacityStep,
+				contrast: rec.contrast,
+				brightness: rec.brightness,
+				minDistance: rec.minDistance,
+			}));
+		},
+		[],
+	);
+
 	const sidebarProps = useMemo(
 		() => ({
 			linesCount: displayedLines.length,
@@ -128,6 +144,7 @@ export function useStudioWorkbench() {
 				onSelect: handleSelectPreset,
 				onUpload: handleCustomUpload,
 				onOpenCropper: handleOpenCropper,
+				onAutoCalibrate: handleAutoCalibrate,
 			},
 			execution: {
 				status: engine.status,
@@ -147,6 +164,7 @@ export function useStudioWorkbench() {
 			handleSelectPreset,
 			handleCustomUpload,
 			handleOpenCropper,
+			handleAutoCalibrate,
 			startGeneration,
 		],
 	);

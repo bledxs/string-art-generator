@@ -1,8 +1,20 @@
 'use client';
 
-import { Activity, Contrast, Layers, MoveHorizontal } from 'lucide-react';
+import {
+	Activity,
+	Contrast,
+	Feather,
+	Layers,
+	MoveHorizontal,
+} from 'lucide-react';
+import { Button } from '@/shared/ui/button';
 import { Slider } from '@/shared/ui/slider';
 import type { AlgorithmConfig } from '../../types';
+import {
+	findMaterialByWeight,
+	THREAD_MATERIALS,
+	type ThreadMaterial,
+} from '../../utils/threadMaterials';
 
 interface AlgorithmConfigPanelProps {
 	config: AlgorithmConfig;
@@ -15,12 +27,69 @@ export function AlgorithmConfigPanel({
 	onChange,
 	disabled = false,
 }: AlgorithmConfigPanelProps) {
+	const currentMaterial = findMaterialByWeight(config.lineWeight);
+
 	const updateField = (field: keyof AlgorithmConfig, value: number) => {
 		onChange({ ...config, [field]: value });
 	};
 
+	const handleSelectMaterial = (mat: ThreadMaterial) => {
+		onChange({
+			...config,
+			lineWeight: mat.lineWeight,
+			opacityStep: mat.recommendedOpacity,
+		});
+	};
+
 	return (
 		<div className='flex flex-col gap-4'>
+			{/* Thread Material Presets */}
+			<div className='flex flex-col gap-1.5'>
+				<span className='font-medium text-foreground text-xs'>
+					Tipo y Grosor de Hilo
+				</span>
+				<div className='grid grid-cols-2 gap-1.5'>
+					{THREAD_MATERIALS.map((mat) => (
+						<Button
+							key={mat.id}
+							type='button'
+							variant={currentMaterial.id === mat.id ? 'default' : 'outline'}
+							size='sm'
+							disabled={disabled}
+							onClick={() => handleSelectMaterial(mat)}
+							className='h-auto flex-col items-start p-2 text-left'
+						>
+							<span className='font-semibold text-xs'>{mat.name}</span>
+							<span className='font-mono text-xs opacity-75'>
+								{mat.thicknessMm}mm
+							</span>
+						</Button>
+					))}
+				</div>
+			</div>
+
+			{/* Calibrated Line Weight Slider */}
+			<div className='flex flex-col gap-2'>
+				<div className='flex items-center justify-between text-xs'>
+					<span className='flex items-center gap-1.5 font-medium text-foreground'>
+						<Feather className='size-3.5 text-primary' />
+						Grosor de trazo
+					</span>
+					<span className='font-mono text-muted-foreground'>
+						{config.lineWeight}px
+					</span>
+				</div>
+				<Slider
+					value={[config.lineWeight]}
+					min={0.4}
+					max={2.5}
+					step={0.05}
+					disabled={disabled}
+					onValueChange={(val) => updateField('lineWeight', val[0])}
+				/>
+			</div>
+
+			{/* Line Count Limit */}
 			<div className='flex flex-col gap-2'>
 				<div className='flex items-center justify-between text-xs'>
 					<span className='flex items-center gap-1.5 font-medium text-foreground'>
@@ -41,6 +110,7 @@ export function AlgorithmConfigPanel({
 				/>
 			</div>
 
+			{/* Opacity Step */}
 			<div className='flex flex-col gap-2'>
 				<div className='flex items-center justify-between text-xs'>
 					<span className='flex items-center gap-1.5 font-medium text-foreground'>
@@ -61,6 +131,7 @@ export function AlgorithmConfigPanel({
 				/>
 			</div>
 
+			{/* Min Distance */}
 			<div className='flex flex-col gap-2'>
 				<div className='flex items-center justify-between text-xs'>
 					<span className='flex items-center gap-1.5 font-medium text-foreground'>
@@ -81,6 +152,7 @@ export function AlgorithmConfigPanel({
 				/>
 			</div>
 
+			{/* Contrast */}
 			<div className='flex flex-col gap-2'>
 				<div className='flex items-center justify-between text-xs'>
 					<span className='flex items-center gap-1.5 font-medium text-foreground'>

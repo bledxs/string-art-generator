@@ -1,18 +1,13 @@
 'use client';
 
-import {
-	Check,
-	Crop,
-	Image as ImageIcon,
-	Sparkles,
-	Upload,
-} from 'lucide-react';
+import { Check, Sparkles } from 'lucide-react';
 import type * as React from 'react';
 import { useRef } from 'react';
-import { Badge } from '@/shared/ui/badge';
-import { Button } from '@/shared/ui/button';
 import type { PresetImage } from '../../types';
+import type { CalibrationRecommendation } from '../../utils/imageAnalyzer';
 import { SAMPLE_PRESETS } from '../../utils/samplePresets';
+import { ActiveImageCard } from './ActiveImageCard';
+import { AutoCalibrateCard } from './AutoCalibrateCard';
 
 interface PresetGalleryProps {
 	selectedPresetId: string | null;
@@ -20,6 +15,7 @@ interface PresetGalleryProps {
 	onSelectPreset: (preset: PresetImage) => void;
 	onCustomImageUpload: (dataUrl: string) => void;
 	onOpenCropper: () => void;
+	onAutoCalibrate?: (rec: CalibrationRecommendation) => void;
 }
 
 export function PresetGallery({
@@ -28,6 +24,7 @@ export function PresetGallery({
 	onSelectPreset,
 	onCustomImageUpload,
 	onOpenCropper,
+	onAutoCalibrate,
 }: Readonly<PresetGalleryProps>) {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -44,64 +41,30 @@ export function PresetGallery({
 		reader.readAsDataURL(file);
 	};
 
-	const triggerUpload = () => {
-		fileInputRef.current?.click();
-	};
-
 	const isCustom = selectedPresetId === null;
+	const title = isCustom
+		? 'Tu imagen cargada'
+		: (SAMPLE_PRESETS.find((p) => p.id === selectedPresetId)?.title ??
+			'Muestra seleccionada');
 
 	return (
 		<div className='flex flex-col gap-4'>
-			{/* Active Image Card with Immediate Feedback */}
-			<div className='flex flex-col gap-2 rounded-xl border border-primary/30 bg-primary/5 p-3'>
-				<div className='flex items-center justify-between'>
-					<div className='flex items-center gap-1.5 font-medium text-foreground text-xs'>
-						<ImageIcon className='size-3.5 text-primary' />
-						<span>Imagen Seleccionada</span>
-					</div>
-					<Badge
-						variant={isCustom ? 'accent' : 'secondary'}
-						className='text-xs'
-					>
-						{isCustom ? 'Personalizada' : 'Muestra'}
-					</Badge>
-				</div>
+			{/* Active Image Preview & Actions */}
+			<ActiveImageCard
+				activeImageSrc={activeImageSrc}
+				isCustom={isCustom}
+				title={title}
+				onOpenCropper={onOpenCropper}
+				onTriggerUpload={() => fileInputRef.current?.click()}
+			/>
 
-				<div className='flex items-center gap-3'>
-					<div className='relative flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-primary bg-background shadow-xs'>
-						{/* biome-ignore lint/performance/noImgElement: user image preview */}
-						{/* biome-ignore lint/a11y/useAltText: preview active image */}
-						<img src={activeImageSrc} className='size-full object-cover' />
-					</div>
-					<div className='flex flex-1 flex-col gap-1.5'>
-						<span className='font-medium text-foreground text-xs'>
-							{isCustom
-								? 'Tu imagen cargada'
-								: SAMPLE_PRESETS.find((p) => p.id === selectedPresetId)?.title}
-						</span>
-						<div className='flex items-center gap-1.5'>
-							<Button
-								variant='outline'
-								size='sm'
-								onClick={onOpenCropper}
-								className='h-7 gap-1 px-2 text-xs'
-							>
-								<Crop className='size-3 text-primary' />
-								Recortar
-							</Button>
-							<Button
-								variant='ghost'
-								size='sm'
-								onClick={triggerUpload}
-								className='h-7 gap-1 px-2 text-muted-foreground text-xs'
-							>
-								<Upload className='size-3' />
-								Cambiar
-							</Button>
-						</div>
-					</div>
-				</div>
-			</div>
+			{/* Intelligent Auto-Calibration Card */}
+			{onAutoCalibrate && (
+				<AutoCalibrateCard
+					imageSrc={activeImageSrc}
+					onApply={onAutoCalibrate}
+				/>
+			)}
 
 			{/* Curated Presets */}
 			<div className='flex flex-col gap-1.5'>
