@@ -34,7 +34,9 @@ export const siteConfig = {
 	],
 	author: 'String Art Studio',
 	verification: {
-		google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+		google:
+			process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+			'pxbqTo-ydIEU4kjrFBWaU6OLQ6-ucjPQ0t3mfL4l0yE',
 		ubersuggest: process.env.NEXT_PUBLIC_UBERSUGGEST_SITE_VERIFICATION,
 	},
 } as const;
