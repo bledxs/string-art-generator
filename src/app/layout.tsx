@@ -2,6 +2,11 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import type * as React from 'react';
 import { Toaster } from 'sonner';
+import {
+	getFaqPageSchema,
+	getHowToSchema,
+	getWebApplicationSchema,
+} from '@/shared/config/schema';
 import { siteConfig } from '@/shared/config/site';
 import { DEFAULT_LOCALE, LOCALE_COOKIE_NAME } from '@/shared/i18n';
 import './globals.css';
@@ -19,6 +24,11 @@ export const metadata: Metadata = {
 	creator: siteConfig.author,
 	alternates: {
 		canonical: '/',
+		languages: {
+			es: '/',
+			en: '/en',
+			'x-default': '/',
+		},
 	},
 	icons: {
 		icon: [
@@ -71,28 +81,6 @@ export const metadata: Metadata = {
 	},
 };
 
-const jsonLd = {
-	'@context': 'https://schema.org',
-	'@type': 'WebApplication',
-	name: siteConfig.name,
-	url: siteConfig.url,
-	description: siteConfig.description,
-	applicationCategory: 'MultimediaApplication',
-	operatingSystem: 'All',
-	browserRequirements: 'Requires JavaScript. Requires HTML5 Canvas support.',
-	offers: {
-		'@type': 'Offer',
-		price: '0',
-		priceCurrency: 'USD',
-	},
-	featureList: [
-		'Generador automático de patrones de hilorama a partir de imágenes',
-		'Visualización interactiva y simulación de tejido paso a paso',
-		'Soporte para múltiples colores e hilos superpuestos',
-		'Exportación en alta resolución de instrucciones para armado físico en PDF',
-	],
-};
-
 export default async function RootLayout({
 	children,
 }: Readonly<{
@@ -105,10 +93,20 @@ export default async function RootLayout({
 			? cookieLocale
 			: DEFAULT_LOCALE;
 
+	const webAppJsonLd = getWebApplicationSchema(locale);
+	const faqJsonLd = getFaqPageSchema(locale);
+	const howToJsonLd = getHowToSchema(locale);
+
 	return (
 		<html lang={locale} suppressHydrationWarning>
 			<head>
-				<script type='application/ld+json'>{JSON.stringify(jsonLd)}</script>
+				<script type='application/ld+json'>
+					{JSON.stringify(webAppJsonLd)}
+				</script>
+				<script type='application/ld+json'>{JSON.stringify(faqJsonLd)}</script>
+				<script type='application/ld+json'>
+					{JSON.stringify(howToJsonLd)}
+				</script>
 			</head>
 			<body className='min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary/20 selection:text-primary'>
 				<ThemeProvider initialLocale={locale}>

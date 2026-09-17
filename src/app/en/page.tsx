@@ -2,12 +2,12 @@ import { StringArtStudioClient } from '@/features/string-art/components/StringAr
 import { SeoContent } from '@/shared/components/SeoContent';
 import { LocaleSync } from '@/shared/i18n';
 
-export default function HomePage() {
+export default function EnglishHomePage() {
 	return (
 		<main className='relative min-h-screen'>
-			<LocaleSync locale='es' />
+			<LocaleSync locale='en' />
 			<StringArtStudioClient />
-			<SeoContent locale='es' />
+			<SeoContent locale='en' />
 		</main>
 	);
 }

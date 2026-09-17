@@ -1,10 +1,33 @@
 'use client';
 
 import { Globe } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import type { SupportedLocale } from './types';
 import { useTranslation } from './useTranslation';
+
+function getNextPath(target: SupportedLocale, path: string): string | null {
+	if (target === 'en') {
+		if (path === '/plantillas') return '/en/templates';
+		if (path === '/' || path === '') return '/en';
+		return null;
+	}
+	if (path === '/en/templates') return '/plantillas';
+	if (path === '/en') return '/';
+	return null;
+}
 
 export function LanguageSelector() {
 	const { locale, setLocale, t } = useTranslation();
+	const pathname = usePathname();
+	const router = useRouter();
+
+	const handleSelectLocale = (targetLocale: SupportedLocale) => {
+		setLocale(targetLocale);
+		const nextPath = getNextPath(targetLocale, pathname);
+		if (nextPath) {
+			router.push(nextPath);
+		}
+	};
 
 	return (
 		<div
@@ -16,7 +39,7 @@ export function LanguageSelector() {
 			</span>
 			<button
 				type='button'
-				onClick={() => setLocale('es')}
+				onClick={() => handleSelectLocale('es')}
 				aria-pressed={locale === 'es'}
 				aria-label='Español'
 				className={`cursor-pointer rounded-md px-2 py-0.5 font-semibold text-xs transition-all ${
@@ -29,7 +52,7 @@ export function LanguageSelector() {
 			</button>
 			<button
 				type='button'
-				onClick={() => setLocale('en')}
+				onClick={() => handleSelectLocale('en')}
 				aria-pressed={locale === 'en'}
 				aria-label='English'
 				className={`cursor-pointer rounded-md px-2 py-0.5 font-semibold text-xs transition-all ${
