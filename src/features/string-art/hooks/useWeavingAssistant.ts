@@ -2,7 +2,12 @@
 
 import { useCallback, useState } from 'react';
 
-export function useWeavingAssistant(lineSequence: number[]) {
+import type { ColorRun } from '../types';
+
+export function useWeavingAssistant(
+	lineSequence: number[],
+	colorRuns?: ColorRun[],
+) {
 	const [currentStep, setCurrentStep] = useState(0);
 	const totalSteps = Math.max(0, lineSequence.length - 1);
 
@@ -37,12 +42,26 @@ export function useWeavingAssistant(lineSequence: number[]) {
 	const progressPercent =
 		totalSteps > 0 ? Math.round((currentStep / totalSteps) * 100) : 0;
 
+	const activeRun =
+		colorRuns && colorRuns.length > 0
+			? (colorRuns.find(
+					(r) => currentStep >= r.startIndex && currentStep <= r.endIndex,
+				) ?? colorRuns[colorRuns.length - 1])
+			: undefined;
+
+	const isSpoolTransition =
+		activeRun !== undefined &&
+		activeRun.startIndex === currentStep &&
+		activeRun.startIndex > 0;
+
 	return {
 		currentStep,
 		totalSteps,
 		fromPin,
 		toPin,
 		progressPercent,
+		activeRun,
+		isSpoolTransition,
 		nextStep,
 		prevStep,
 		jumpSteps,

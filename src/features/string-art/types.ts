@@ -14,6 +14,23 @@ export interface LoomConfig {
 	aspectRatio?: '1:1' | '3:4' | '4:3' | '16:9';
 }
 
+export interface ColorLayer {
+	id: string;
+	name: string;
+	color: string;
+	linesCount: number;
+	opacityStep?: number;
+}
+
+export interface ColorRun {
+	layerId: string;
+	name: string;
+	color: string;
+	startIndex: number;
+	endIndex: number;
+	lineCount?: number;
+}
+
 export interface AlgorithmConfig {
 	maxLines: number;
 	lineWeight: number;
@@ -27,6 +44,8 @@ export interface AlgorithmConfig {
 	colorMode?: 'dark-on-light' | 'light-on-dark';
 	lengthPenalty?: number;
 	reboundPenalty?: number;
+	colorPaletteType?: 'monochrome' | 'cmyk' | 'rgbw' | 'warm-sepia';
+	colorLayers?: ColorLayer[];
 }
 
 export type EngineStatus = 'idle' | 'running' | 'paused' | 'completed';
@@ -39,6 +58,10 @@ export interface GenerationProgress {
 	lineSequence: number[];
 	timeElapsedMs: number;
 	converged?: boolean;
+	colorRuns?: ColorRun[];
+	currentLayerIndex?: number;
+	currentLayerName?: string;
+	currentColor?: string;
 }
 
 export interface PresetImage {
@@ -55,6 +78,7 @@ export type WorkerInMessage =
 			type: 'START';
 			payload: {
 				pixelBuffer: Uint8ClampedArray;
+				rgbaBuffer?: Uint8ClampedArray;
 				canvasSize: number;
 				loomConfig: LoomConfig;
 				algoConfig: AlgorithmConfig;
@@ -72,6 +96,10 @@ export type WorkerOutMessage =
 				totalSteps: number;
 				currentPin: number;
 				newLines: number[];
+				currentLayerIndex?: number;
+				currentLayerName?: string;
+				currentColor?: string;
+				colorRuns?: ColorRun[];
 			};
 	  }
 	| {
@@ -81,6 +109,7 @@ export type WorkerOutMessage =
 				lineSequence: number[];
 				timeElapsedMs: number;
 				converged?: boolean;
+				colorRuns?: ColorRun[];
 			};
 	  }
 	| {

@@ -15,7 +15,10 @@ import { useWeavingAssistant } from './hooks/useWeavingAssistant';
 export function StringArtStudio() {
 	const studio = useStudioWorkbench();
 	const transform = useCanvasTransform(studio.canvasSize);
-	const assistant = useWeavingAssistant(studio.engine.progress.lineSequence);
+	const assistant = useWeavingAssistant(
+		studio.engine.progress.lineSequence,
+		studio.engine.progress.colorRuns,
+	);
 	const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
 	const exportAction = (
@@ -53,6 +56,7 @@ export function StringArtStudio() {
 					size={studio.canvasSize}
 					pins={studio.pins}
 					lines={studio.displayedLines}
+					colorRuns={studio.engine.progress.colorRuns}
 					currentPin={studio.engine.progress.currentPin}
 					lineWeight={studio.algoConfig.lineWeight}
 					opacity={studio.algoConfig.opacityStep / 100}

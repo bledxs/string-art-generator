@@ -16,6 +16,7 @@ interface StudioWorkspaceStageProps {
 	transform: ReturnType<typeof useCanvasTransform>;
 	colorMode?: 'dark-on-light' | 'light-on-dark';
 	loomConfig?: LoomConfig;
+	colorRuns?: import('../../types').ColorRun[];
 }
 
 export function StudioWorkspaceStage({
@@ -28,6 +29,7 @@ export function StudioWorkspaceStage({
 	transform,
 	colorMode = 'dark-on-light',
 	loomConfig,
+	colorRuns,
 }: StudioWorkspaceStageProps) {
 	return (
 		<main className='relative flex flex-1 flex-col overflow-hidden'>
@@ -41,6 +43,7 @@ export function StudioWorkspaceStage({
 					opacity={opacity}
 					colorMode={colorMode}
 					loomConfig={loomConfig}
+					colorRuns={colorRuns}
 				/>
 			</CanvasViewport>
 

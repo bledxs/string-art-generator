@@ -9,7 +9,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/shared/ui/dialog';
-import type { AlgorithmConfig, LoomConfig, Pin } from '../../types';
+import type { AlgorithmConfig, ColorRun, LoomConfig, Pin } from '../../types';
 import {
 	generatePinSequenceText,
 	generateProjectJson,
@@ -24,6 +24,7 @@ export interface ExportModalProps {
 	lines: number[];
 	loom: LoomConfig;
 	algo: AlgorithmConfig;
+	colorRuns?: ColorRun[];
 }
 
 export function ExportModal({
@@ -33,6 +34,7 @@ export function ExportModal({
 	lines,
 	loom,
 	algo,
+	colorRuns,
 }: Readonly<ExportModalProps>) {
 	const handleDownloadSvg = () => {
 		const svg = generateSvgString(
@@ -43,17 +45,18 @@ export function ExportModal({
 			algo.lineWeight,
 			algo.colorMode ?? 'dark-on-light',
 			loom,
+			colorRuns,
 		);
 		triggerDownload(svg, 'string-art-vector.svg', 'image/svg+xml');
 	};
 
 	const handleDownloadTxt = () => {
-		const txt = generatePinSequenceText(lines);
+		const txt = generatePinSequenceText(lines, colorRuns);
 		triggerDownload(txt, 'secuencia-clavos.txt', 'text/plain');
 	};
 
 	const handleDownloadJson = () => {
-		const json = generateProjectJson(lines, loom, algo);
+		const json = generateProjectJson(lines, loom, algo, colorRuns);
 		triggerDownload(json, 'proyecto-string-art.json', 'application/json');
 	};
 

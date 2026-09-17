@@ -1,6 +1,7 @@
 'use client';
 
 import {
+	AlertTriangle,
 	ArrowRight,
 	ChevronLeft,
 	ChevronRight,
@@ -16,6 +17,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/shared/ui/dialog';
+import type { ColorRun } from '../../types';
 
 export interface WeavingAssistantModalProps {
 	isOpen: boolean;
@@ -26,6 +28,8 @@ export interface WeavingAssistantModalProps {
 		fromPin: number;
 		toPin: number;
 		progressPercent: number;
+		activeRun?: ColorRun;
+		isSpoolTransition?: boolean;
 	};
 	onNext: () => void;
 	onPrev: () => void;
@@ -40,7 +44,15 @@ export function WeavingAssistantModal({
 	onPrev,
 	onJump,
 }: Readonly<WeavingAssistantModalProps>) {
-	const { currentStep, totalSteps, fromPin, toPin, progressPercent } = stepData;
+	const {
+		currentStep,
+		totalSteps,
+		fromPin,
+		toPin,
+		progressPercent,
+		activeRun,
+		isSpoolTransition,
+	} = stepData;
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onClose}>
@@ -56,6 +68,32 @@ export function WeavingAssistantModal({
 				</DialogHeader>
 
 				<div className='flex flex-col items-center gap-4 py-2 sm:gap-6 sm:py-4'>
+					{isSpoolTransition && activeRun && (
+						<div className='flex w-full items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-amber-600 dark:text-amber-400'>
+							<AlertTriangle className='size-4 shrink-0 animate-bounce' />
+							<div className='font-medium text-xs'>
+								<span className='font-bold'>¡Cambio de Bobina!</span> Cortar,
+								atar y cambiar a{' '}
+								<span className='font-bold underline'>{activeRun.name}</span>.
+							</div>
+						</div>
+					)}
+
+					{activeRun && (
+						<div className='flex w-full items-center justify-between rounded-lg border bg-muted/20 px-3 py-1.5 text-xs'>
+							<span className='text-muted-foreground'>Bobina en uso:</span>
+							<div className='flex items-center gap-2'>
+								<span
+									className='size-3 rounded-full border border-black/20 shadow-xs'
+									style={{ backgroundColor: activeRun.color }}
+								/>
+								<span className='font-medium text-foreground'>
+									{activeRun.name}
+								</span>
+							</div>
+						</div>
+					)}
+
 					<div className='flex w-full items-center justify-between text-muted-foreground text-xs'>
 						<span>Progreso</span>
 						<span className='font-mono font-semibold text-foreground'>

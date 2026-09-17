@@ -37,6 +37,12 @@ export function useStringArtEngine() {
 					totalSteps: data.payload.totalSteps,
 					currentPin: data.payload.currentPin,
 					lineSequence: [...prev.lineSequence, ...data.payload.newLines],
+					colorRuns: data.payload.colorRuns ?? prev.colorRuns,
+					currentLayerIndex:
+						data.payload.currentLayerIndex ?? prev.currentLayerIndex,
+					currentLayerName:
+						data.payload.currentLayerName ?? prev.currentLayerName,
+					currentColor: data.payload.currentColor ?? prev.currentColor,
 				}));
 			} else if (data.type === 'COMPLETED') {
 				setStatus('completed');
@@ -46,6 +52,7 @@ export function useStringArtEngine() {
 					timeElapsedMs: data.payload.timeElapsedMs,
 					lineSequence: data.payload.lineSequence,
 					converged: data.payload.converged,
+					colorRuns: data.payload.colorRuns ?? prev.colorRuns,
 				}));
 			}
 		};
@@ -59,6 +66,7 @@ export function useStringArtEngine() {
 			size: number,
 			loom: LoomConfig,
 			algo: AlgorithmConfig,
+			rgbaBuffer?: Uint8ClampedArray,
 		) => {
 			setStatus('running');
 			setProgress({ ...initialProgress, status: 'running' });
@@ -69,6 +77,7 @@ export function useStringArtEngine() {
 					canvasSize: size,
 					loomConfig: loom,
 					algoConfig: algo,
+					rgbaBuffer,
 				},
 			});
 		},

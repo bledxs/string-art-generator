@@ -1,19 +1,40 @@
 'use client';
 
+import type { ColorLayer, ColorRun } from '../../types';
+
 interface ThreadSpoolWidgetProps {
 	linesCount: number;
 	diameterCm: number;
 	materialName?: string;
+	colorRuns?: ColorRun[];
+	colorLayers?: ColorLayer[];
 }
 
 export function ThreadSpoolWidget({
 	linesCount,
 	diameterCm,
-	materialName = 'Algodón Negro #40 Gütermann',
+	materialName = 'Algodón #40 Gütermann',
+	colorRuns,
+	colorLayers,
 }: Readonly<ThreadSpoolWidgetProps>) {
 	const meters = Math.round((linesCount * (diameterCm * 0.65)) / 100);
 	const spoolCapacityMeters = 2000;
 	const spoolsNeeded = Math.max(1, Math.ceil(meters / spoolCapacityMeters));
+
+	// If multi-color runs exist, display detailed multi-spool breakdown
+	const activeMultiRuns =
+		colorRuns && colorRuns.length > 1
+			? colorRuns
+			: colorLayers && colorLayers.length > 1
+				? colorLayers.map((l, _idx) => ({
+						layerId: l.id,
+						name: l.name,
+						color: l.color,
+						startIndex: 0,
+						endIndex: l.linesCount,
+						lineCount: l.linesCount,
+					}))
+				: null;
 
 	return (
 		<div className='rounded-xl border border-amber-900/20 bg-amber-950/10 p-3 shadow-xs transition-colors dark:border-amber-500/20 dark:bg-amber-950/20'>
@@ -22,7 +43,9 @@ export function ThreadSpoolWidget({
 					Carrete de Artesano
 				</span>
 				<span className='font-mono text-amber-700 text-xs dark:text-amber-400'>
-					{spoolsNeeded} {spoolsNeeded === 1 ? 'bobina' : 'bobinas'}
+					{activeMultiRuns
+						? `${activeMultiRuns.length} bobinas`
+						: `${spoolsNeeded} ${spoolsNeeded === 1 ? 'bobina' : 'bobinas'}`}
 				</span>
 			</div>
 
@@ -69,6 +92,39 @@ export function ThreadSpoolWidget({
 					</div>
 				</div>
 			</div>
+
+			{/* Multi-spool breakdown list */}
+			{activeMultiRuns && (
+				<div className='mt-2.5 flex flex-col gap-1.5 border-amber-900/10 border-t pt-2 dark:border-amber-500/10'>
+					{activeMultiRuns.map((run) => {
+						const count =
+							run.lineCount ?? Math.max(0, run.endIndex - run.startIndex);
+						const runMeters = Math.round((count * (diameterCm * 0.65)) / 100);
+						return (
+							<div
+								key={run.layerId}
+								className='flex items-center justify-between text-xs'
+							>
+								<div className='flex items-center gap-1.5 overflow-hidden'>
+									<span
+										className='size-2.5 shrink-0 rounded-full border border-black/30'
+										style={{ backgroundColor: run.color }}
+									/>
+									<span className='truncate text-muted-foreground text-xs'>
+										{run.name}
+									</span>
+								</div>
+								<div className='flex items-center gap-2 font-mono text-xs'>
+									<span className='text-muted-foreground'>{count} lín</span>
+									<span className='font-medium text-foreground'>
+										{runMeters} m
+									</span>
+								</div>
+							</div>
+						);
+					})}
+				</div>
+			)}
 		</div>
 	);
 }

@@ -150,7 +150,7 @@ export function useStudioWorkbench() {
 				loomConfig,
 				algoConfig.colorMode ?? 'dark-on-light',
 			);
-			engine.start(grey, CANVAS_SIZE, loomConfig, algoConfig);
+			engine.start(grey, CANVAS_SIZE, loomConfig, algoConfig, data.data);
 		};
 	}, [imageSrc, loomConfig, algoConfig, engine]);
 
@@ -176,6 +176,7 @@ export function useStudioWorkbench() {
 	const sidebarProps = useMemo(
 		() => ({
 			linesCount: displayedLines.length,
+			colorRuns: engine.progress.colorRuns,
 			loom: { config: loomConfig, onChange: setLoomConfig },
 			algo: { config: algoConfig, onChange: setAlgoConfig },
 			presets: {
@@ -196,6 +197,7 @@ export function useStudioWorkbench() {
 		}),
 		[
 			displayedLines.length,
+			engine.progress.colorRuns,
 			loomConfig,
 			algoConfig,
 			selectedPreset,
@@ -218,6 +220,7 @@ export function useStudioWorkbench() {
 				lines: displayedLines,
 				loom: loomConfig,
 				algo: algoConfig,
+				colorRuns: engine.progress.colorRuns,
 			},
 			cropperModal: {
 				isOpen: isCropperOpen,
@@ -235,6 +238,7 @@ export function useStudioWorkbench() {
 			isCropperOpen,
 			cropperImageSrc,
 			handleCropComplete,
+			engine.progress.colorRuns,
 		],
 	);
 

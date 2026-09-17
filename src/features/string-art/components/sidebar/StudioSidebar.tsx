@@ -5,12 +5,14 @@ import { Button } from '@/shared/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import type {
 	AlgorithmConfig,
+	ColorRun,
 	EngineStatus,
 	LoomConfig,
 	PresetImage,
 } from '../../types';
 import { findMaterialByWeight } from '../../utils/threadMaterials';
 import { AlgorithmConfigPanel } from './AlgorithmConfigPanel';
+import { ColorPalettePanel } from './ColorPalettePanel';
 import { LoomConfigPanel } from './LoomConfigPanel';
 import { PresetGallery } from './PresetGallery';
 import { SidebarActions } from './SidebarActions';
@@ -18,6 +20,7 @@ import { ThreadSpoolWidget } from './ThreadSpoolWidget';
 
 export interface StudioSidebarProps {
 	linesCount?: number;
+	colorRuns?: ColorRun[];
 	loom: { config: LoomConfig; onChange: (cfg: LoomConfig) => void };
 	algo: { config: AlgorithmConfig; onChange: (cfg: AlgorithmConfig) => void };
 	presets: {
@@ -42,6 +45,7 @@ export interface StudioSidebarProps {
 
 export function StudioSidebar({
 	linesCount = 0,
+	colorRuns,
 	loom,
 	algo,
 	presets,
@@ -69,10 +73,11 @@ export function StudioSidebar({
 
 			<div className='flex-1 overflow-y-auto p-4'>
 				<Tabs defaultValue='image' className='w-full'>
-					<TabsList className='grid w-full grid-cols-3'>
+					<TabsList className='grid w-full grid-cols-4'>
 						<TabsTrigger value='image'>Muestras</TabsTrigger>
 						<TabsTrigger value='loom'>Bastidor</TabsTrigger>
-						<TabsTrigger value='algo'>Algoritmo</TabsTrigger>
+						<TabsTrigger value='color'>Color</TabsTrigger>
+						<TabsTrigger value='algo'>Motor</TabsTrigger>
 					</TabsList>
 
 					<TabsContent value='image' className='mt-4'>
@@ -94,6 +99,14 @@ export function StudioSidebar({
 						/>
 					</TabsContent>
 
+					<TabsContent value='color' className='mt-4'>
+						<ColorPalettePanel
+							config={algo.config}
+							disabled={isBusy}
+							onChange={algo.onChange}
+						/>
+					</TabsContent>
+
 					<TabsContent value='algo' className='mt-4'>
 						<AlgorithmConfigPanel
 							config={algo.config}
@@ -109,6 +122,8 @@ export function StudioSidebar({
 					linesCount={linesCount}
 					diameterCm={loom.config.physicalDiameterCm}
 					materialName={findMaterialByWeight(algo.config.lineWeight).name}
+					colorRuns={colorRuns}
+					colorLayers={algo.config.colorLayers}
 				/>
 				<SidebarActions
 					status={execution.status}

@@ -1,5 +1,7 @@
 import type {
 	AlgorithmConfig,
+	ColorLayer,
+	ColorRun,
 	LoomConfig,
 	Pin,
 	WorkerInMessage,
@@ -11,6 +13,7 @@ import {
 	getLineSymmetricKey,
 	rasterizeLine,
 } from '../utils/bresenham';
+import { extractLayerResidual } from '../utils/colorDecomposition';
 import {
 	calculateCircularPins,
 	calculateRectangularPins,
@@ -246,11 +249,30 @@ function findBestNextPin(
 	return { bestPin, bestRaster, bestScore };
 }
 
+function setupColorLayers(
+	algoConfig: AlgorithmConfig,
+	isLightOnDark: boolean,
+): ColorLayer[] {
+	if (algoConfig.colorLayers && algoConfig.colorLayers.length > 0) {
+		return algoConfig.colorLayers;
+	}
+	return [
+		{
+			id: 'default-layer',
+			name: 'Hilo Principal',
+			color: isLightOnDark ? '#f4f2ed' : '#120e0b',
+			linesCount: algoConfig.maxLines,
+			opacityStep: algoConfig.opacityStep,
+		},
+	];
+}
+
 function runGenerationLoop(
 	pixels: Uint8ClampedArray,
 	size: number,
 	loomConfig: LoomConfig,
 	algoConfig: AlgorithmConfig,
+	rgbaBuffer?: Uint8ClampedArray,
 ) {
 	const startTime = performance.now();
 	const center = { x: size / 2, y: size / 2 };
@@ -281,11 +303,31 @@ function runGenerationLoop(
 			: { gradX: null, gradY: null };
 
 	const isLightOnDark = algoConfig.colorMode === 'light-on-dark';
+	const layers = setupColorLayers(algoConfig, isLightOnDark);
+	const paletteType = algoConfig.colorPaletteType ?? 'monochrome';
 	const pixelCount = pixels.length;
-	const residual = new Int16Array(pixelCount);
-	for (let i = 0; i < pixelCount; i++) {
-		residual[i] = isLightOnDark ? pixels[i] : 255 - pixels[i];
-	}
+	const totalTargetLines = layers.reduce((sum, l) => sum + l.linesCount, 0);
+
+	let currentLayerIndex = 0;
+	let currentLayerLinesDone = 0;
+	let layerStartIndex = 0;
+	const colorRuns: ColorRun[] = [];
+
+	let residual: Int16Array = rgbaBuffer
+		? extractLayerResidual(
+				rgbaBuffer,
+				pixelCount,
+				layers[0],
+				paletteType,
+				algoConfig.colorMode ?? 'dark-on-light',
+			)
+		: (() => {
+				const res = new Int16Array(pixelCount);
+				for (let i = 0; i < pixelCount; i++) {
+					res[i] = isLightOnDark ? pixels[i] : 255 - pixels[i];
+				}
+				return res;
+			})();
 
 	const autoStop = algoConfig.autoStop ?? true;
 	const whitePenalty = algoConfig.whitePenalty ?? 1.3;
@@ -299,51 +341,114 @@ function runGenerationLoop(
 	const batchSize = 50;
 	let hasConverged = false;
 
-	function processBatch(): boolean {
-		for (
-			let i = 0;
-			i < batchSize && lineSequence.length < algoConfig.maxLines;
-			i++
-		) {
-			const prevPin =
-				lineSequence.length > 1 ? lineSequence[lineSequence.length - 2] : -1;
-			const { bestPin, bestRaster, bestScore } = findBestNextPin(
-				currentPin,
-				prevPin,
-				pins,
-				residual,
-				size,
-				algoConfig.minDistance,
-				usedLines,
-				algoConfig.opacityStep,
-				whitePenalty,
-				lengthPenalty,
-				reboundPenalty,
-				gradX,
-				gradY,
-				edgeWeight,
+	function advanceToNextLayer(): boolean {
+		const currentLayer = layers[currentLayerIndex];
+		const count = lineSequence.length - layerStartIndex;
+		colorRuns.push({
+			layerId: currentLayer.id,
+			name: currentLayer.name,
+			color: currentLayer.color,
+			startIndex: layerStartIndex,
+			endIndex: lineSequence.length,
+			lineCount: count,
+		});
+
+		currentLayerIndex++;
+		if (currentLayerIndex >= layers.length) return true;
+
+		const nextLayer = layers[currentLayerIndex];
+		currentLayerLinesDone = 0;
+		layerStartIndex = lineSequence.length;
+
+		if (rgbaBuffer) {
+			residual = extractLayerResidual(
+				rgbaBuffer,
+				pixelCount,
+				nextLayer,
+				paletteType,
+				algoConfig.colorMode ?? 'dark-on-light',
 			);
-
-			if (bestPin === -1) {
-				return true;
-			}
-
-			if (autoStop && lineSequence.length >= 300 && bestScore <= 0) {
-				return true;
-			}
-
-			applyLineToPixels(residual, bestRaster, algoConfig.opacityStep);
-			const lineKey = getLineSymmetricKey(currentPin, bestPin);
-			usedLines.add(lineKey);
-
-			currentPin = bestPin;
-			lineSequence.push(currentPin);
-			batchBuffer.push(currentPin);
 		}
 		return false;
 	}
 
+	function processSingleStep(): boolean {
+		if (currentLayerIndex >= layers.length) return true;
+
+		const currentLayer = layers[currentLayerIndex];
+		if (currentLayerLinesDone >= currentLayer.linesCount) {
+			const finishedAll = advanceToNextLayer();
+			if (finishedAll) return true;
+		}
+
+		const activeLayer = layers[currentLayerIndex];
+		const activeOpacity = activeLayer.opacityStep ?? algoConfig.opacityStep;
+		const prevPin =
+			lineSequence.length > 1 ? lineSequence[lineSequence.length - 2] : -1;
+
+		const { bestPin, bestRaster, bestScore } = findBestNextPin(
+			currentPin,
+			prevPin,
+			pins,
+			residual,
+			size,
+			algoConfig.minDistance,
+			usedLines,
+			activeOpacity,
+			whitePenalty,
+			lengthPenalty,
+			reboundPenalty,
+			gradX,
+			gradY,
+			edgeWeight,
+		);
+
+		if (
+			bestPin === -1 ||
+			(autoStop && currentLayerLinesDone >= 200 && bestScore <= 0)
+		) {
+			currentLayerLinesDone = activeLayer.linesCount;
+			return false;
+		}
+
+		applyLineToPixels(residual, bestRaster, activeOpacity);
+		const lineKey = getLineSymmetricKey(currentPin, bestPin);
+		usedLines.add(lineKey);
+
+		currentPin = bestPin;
+		lineSequence.push(currentPin);
+		batchBuffer.push(currentPin);
+		currentLayerLinesDone++;
+		return false;
+	}
+
+	function processBatch(): boolean {
+		for (let i = 0; i < batchSize; i++) {
+			const isDone = processSingleStep();
+			if (isDone) return true;
+		}
+		return currentLayerIndex >= layers.length;
+	}
+
+	function finalizeColorRuns() {
+		if (
+			currentLayerIndex < layers.length &&
+			lineSequence.length > layerStartIndex
+		) {
+			const l = layers[currentLayerIndex];
+			colorRuns.push({
+				layerId: l.id,
+				name: l.name,
+				color: l.color,
+				startIndex: layerStartIndex,
+				endIndex: lineSequence.length,
+				lineCount: lineSequence.length - layerStartIndex,
+			});
+		}
+	}
+
 	function finishGeneration(converged: boolean) {
+		finalizeColorRuns();
 		_isRunning = false;
 		const completeMsg: WorkerOutMessage = {
 			type: 'COMPLETED',
@@ -352,6 +457,7 @@ function runGenerationLoop(
 				lineSequence,
 				timeElapsedMs: Math.round(performance.now() - startTime),
 				converged,
+				colorRuns,
 			},
 		};
 		self.postMessage(completeMsg);
@@ -370,20 +476,26 @@ function runGenerationLoop(
 		hasConverged = processBatch();
 
 		if (batchBuffer.length > 0) {
+			const activeLayer =
+				layers[currentLayerIndex] ?? layers[layers.length - 1];
 			const progressMsg: WorkerOutMessage = {
 				type: 'PROGRESS_BATCH',
 				payload: {
 					currentStep: lineSequence.length,
-					totalSteps: algoConfig.maxLines,
+					totalSteps: totalTargetLines,
 					currentPin,
 					newLines: [...batchBuffer],
+					currentLayerIndex,
+					currentLayerName: activeLayer?.name,
+					currentColor: activeLayer?.color,
+					colorRuns: [...colorRuns],
 				},
 			};
 			self.postMessage(progressMsg);
 			batchBuffer.length = 0;
 		}
 
-		if (!hasConverged && lineSequence.length < algoConfig.maxLines) {
+		if (!hasConverged && lineSequence.length < totalTargetLines) {
 			setTimeout(step, 0);
 		} else {
 			finishGeneration(hasConverged);
@@ -405,6 +517,7 @@ self.onmessage = (e: MessageEvent<WorkerInMessage>) => {
 			message.payload.canvasSize,
 			message.payload.loomConfig,
 			message.payload.algoConfig,
+			message.payload.rgbaBuffer,
 		);
 	} else if (message.type === 'PAUSE') {
 		isPaused = true;

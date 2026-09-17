@@ -1,6 +1,6 @@
 'use client';
 
-import type { AlgorithmConfig, LoomConfig, Pin } from '../types';
+import type { AlgorithmConfig, ColorRun, LoomConfig, Pin } from '../types';
 import { WeavingAssistantModal } from './player/WeavingAssistantModal';
 import { ImageCropperModal } from './sidebar/ImageCropperModal';
 import { ExportModal } from './toolbar/ExportModal';
@@ -13,6 +13,7 @@ interface StudioModalsProps {
 		lines: number[];
 		loom: LoomConfig;
 		algo: AlgorithmConfig;
+		colorRuns?: ColorRun[];
 	};
 	assistantModal: {
 		isOpen: boolean;
@@ -23,6 +24,8 @@ interface StudioModalsProps {
 			fromPin: number;
 			toPin: number;
 			progressPercent: number;
+			activeRun?: ColorRun;
+			isSpoolTransition?: boolean;
 		};
 		onNext: () => void;
 		onPrev: () => void;

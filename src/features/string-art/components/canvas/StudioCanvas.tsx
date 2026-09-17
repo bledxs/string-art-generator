@@ -18,6 +18,7 @@ interface StudioCanvasProps {
 	showPins?: boolean;
 	colorMode?: 'dark-on-light' | 'light-on-dark';
 	loomConfig?: LoomConfig;
+	colorRuns?: import('../../types').ColorRun[];
 }
 
 export function StudioCanvas({
@@ -30,6 +31,7 @@ export function StudioCanvas({
 	showPins = true,
 	colorMode = 'dark-on-light',
 	loomConfig,
+	colorRuns,
 }: Readonly<StudioCanvasProps>) {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -41,7 +43,7 @@ export function StudioCanvas({
 
 		ctx.clearRect(0, 0, size, size);
 		drawLoomBackground(ctx, size, colorMode, loomConfig);
-		drawStrings(ctx, pins, lines, opacity, lineWeight, colorMode);
+		drawStrings(ctx, pins, lines, opacity, lineWeight, colorMode, colorRuns);
 		drawPins(ctx, pins, currentPin, showPins, colorMode);
 	}, [
 		size,
@@ -53,6 +55,7 @@ export function StudioCanvas({
 		showPins,
 		colorMode,
 		loomConfig,
+		colorRuns,
 	]);
 
 	const isRect = loomConfig?.shape === 'rectangle';

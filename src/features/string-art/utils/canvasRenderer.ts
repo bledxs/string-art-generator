@@ -42,6 +42,76 @@ export function drawLoomBackground(
 	}
 }
 
+function hexToRgba(hex: string, opacity: number): string {
+	const sanitized = hex.replace('#', '');
+	const num = Number.parseInt(
+		sanitized.length === 3
+			? sanitized
+					.split('')
+					.map((c) => c + c)
+					.join('')
+			: sanitized,
+		16,
+	);
+	const r = (num >> 16) & 255;
+	const g = (num >> 8) & 255;
+	const b = num & 255;
+	return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+}
+
+function drawLineSegmentBatch(
+	ctx: CanvasRenderingContext2D,
+	pins: Pin[],
+	lines: number[],
+	start: number,
+	end: number,
+): void {
+	for (let i = start; i < end; i++) {
+		const from = pins[lines[i - 1]];
+		const to = pins[lines[i]];
+		if (from && to) {
+			ctx.moveTo(from.x, from.y);
+			ctx.lineTo(to.x, to.y);
+		}
+	}
+}
+
+function drawColorRunsStrings(
+	ctx: CanvasRenderingContext2D,
+	pins: Pin[],
+	lines: number[],
+	opacity: number,
+	colorRuns: import('../types').ColorRun[],
+): void {
+	for (const run of colorRuns) {
+		const start = Math.max(1, run.startIndex);
+		const end = Math.min(lines.length, run.endIndex);
+		if (start >= end) continue;
+
+		ctx.beginPath();
+		ctx.strokeStyle = hexToRgba(run.color, opacity);
+		drawLineSegmentBatch(ctx, pins, lines, start, end);
+		ctx.stroke();
+	}
+}
+
+function drawSingleColorStrings(
+	ctx: CanvasRenderingContext2D,
+	pins: Pin[],
+	lines: number[],
+	opacity: number,
+	colorMode: 'dark-on-light' | 'light-on-dark',
+): void {
+	ctx.beginPath();
+	ctx.strokeStyle =
+		colorMode === 'light-on-dark'
+			? `rgba(244, 242, 237, ${opacity})`
+			: `rgba(18, 14, 11, ${opacity})`;
+
+	drawLineSegmentBatch(ctx, pins, lines, 1, lines.length);
+	ctx.stroke();
+}
+
 export function drawStrings(
 	ctx: CanvasRenderingContext2D,
 	pins: Pin[],
@@ -49,30 +119,17 @@ export function drawStrings(
 	opacity: number,
 	lineWeight: number,
 	colorMode: 'dark-on-light' | 'light-on-dark' = 'dark-on-light',
+	colorRuns?: import('../types').ColorRun[],
 ): void {
 	if (lines.length <= 1 || pins.length === 0) return;
 	ctx.save();
-
-	if (colorMode === 'light-on-dark') {
-		// Luminous ivory silk thread with natural compounding
-		ctx.strokeStyle = `rgba(244, 242, 237, ${opacity})`;
-	} else {
-		// Warm charcoal cotton thread with compounded opacity
-		ctx.strokeStyle = `rgba(18, 14, 11, ${opacity})`;
-	}
-
 	ctx.lineWidth = lineWeight;
 	ctx.lineCap = 'round';
 
-	for (let i = 1; i < lines.length; i++) {
-		const from = pins[lines[i - 1]];
-		const to = pins[lines[i]];
-		if (from && to) {
-			ctx.beginPath();
-			ctx.moveTo(from.x, from.y);
-			ctx.lineTo(to.x, to.y);
-			ctx.stroke();
-		}
+	if (colorRuns && colorRuns.length > 0) {
+		drawColorRunsStrings(ctx, pins, lines, opacity, colorRuns);
+	} else {
+		drawSingleColorStrings(ctx, pins, lines, opacity, colorMode);
 	}
 	ctx.restore();
 }
