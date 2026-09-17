@@ -132,6 +132,45 @@ export function drawStrings(
 	ctx.restore();
 }
 
+function drawPinZeroBadge(
+	ctx: CanvasRenderingContext2D,
+	pinZero: Pin,
+	centerX: number,
+	centerY: number,
+	isLightOnDark: boolean,
+): void {
+	ctx.beginPath();
+	ctx.arc(pinZero.x, pinZero.y, 5.5, 0, Math.PI * 2);
+	ctx.strokeStyle = isLightOnDark ? '#f87171' : '#dc2626';
+	ctx.lineWidth = 1.8;
+	ctx.stroke();
+
+	ctx.font = 'bold 9px ui-monospace, monospace';
+	ctx.fillStyle = isLightOnDark ? '#fca5a5' : '#b91c1c';
+	ctx.textAlign = 'center';
+	ctx.textBaseline = 'middle';
+	const dx = pinZero.x - centerX;
+	const dy = pinZero.y - centerY;
+	const dist = Math.hypot(dx, dy) || 1;
+	ctx.fillText('0', pinZero.x + (dx / dist) * 12, pinZero.y + (dy / dist) * 12);
+}
+
+function drawActivePinRing(
+	ctx: CanvasRenderingContext2D,
+	active: Pin,
+	isLightOnDark: boolean,
+): void {
+	ctx.beginPath();
+	ctx.arc(active.x, active.y, 6.5, 0, Math.PI * 2);
+	ctx.strokeStyle = isLightOnDark ? '#38bdf8' : '#d97706';
+	ctx.shadowColor = isLightOnDark
+		? 'rgba(56, 189, 248, 0.9)'
+		: 'rgba(217, 119, 6, 0.8)';
+	ctx.lineWidth = 2;
+	ctx.shadowBlur = 8;
+	ctx.stroke();
+}
+
 export function drawPins(
 	ctx: CanvasRenderingContext2D,
 	pins: Pin[],
@@ -141,33 +180,25 @@ export function drawPins(
 ): void {
 	if (!showPins || pins.length === 0) return;
 	ctx.save();
-	const center = pins[0] ? pins[0].x : 350;
+	const centerX = ctx.canvas?.width ? ctx.canvas.width / 2 : 350;
+	const centerY = ctx.canvas?.height ? ctx.canvas.height / 2 : 350;
 	const isLightOnDark = colorMode === 'light-on-dark';
 
 	for (let i = 0; i < pins.length; i++) {
 		const pin = pins[i];
 		if (isLightOnDark) {
-			drawSilverPin(ctx, pin.x, pin.y, center);
+			drawSilverPin(ctx, pin.x, pin.y, centerX);
 		} else {
-			drawBrassPin(ctx, pin.x, pin.y, center);
+			drawBrassPin(ctx, pin.x, pin.y, centerX);
 		}
 	}
 
-	const active = pins[currentPin];
-	if (active) {
-		// Active pin: glowing guide ring
-		ctx.beginPath();
-		ctx.arc(active.x, active.y, 6.5, 0, Math.PI * 2);
-		if (isLightOnDark) {
-			ctx.strokeStyle = '#38bdf8';
-			ctx.shadowColor = 'rgba(56, 189, 248, 0.9)';
-		} else {
-			ctx.strokeStyle = '#d97706';
-			ctx.shadowColor = 'rgba(217, 119, 6, 0.8)';
-		}
-		ctx.lineWidth = 2;
-		ctx.shadowBlur = 8;
-		ctx.stroke();
+	if (pins[0]) {
+		drawPinZeroBadge(ctx, pins[0], centerX, centerY, isLightOnDark);
+	}
+
+	if (pins[currentPin]) {
+		drawActivePinRing(ctx, pins[currentPin], isLightOnDark);
 	}
 	ctx.restore();
 }

@@ -14,6 +14,7 @@ interface StudioModalsProps {
 		loom: LoomConfig;
 		algo: AlgorithmConfig;
 		colorRuns?: ColorRun[];
+		timeElapsedMs?: number;
 	};
 	assistantModal: {
 		isOpen: boolean;

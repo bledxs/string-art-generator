@@ -26,6 +26,7 @@ export interface ExportModalProps {
 	loom: LoomConfig;
 	algo: AlgorithmConfig;
 	colorRuns?: ColorRun[];
+	timeElapsedMs?: number;
 }
 
 export function ExportModal({
@@ -36,6 +37,7 @@ export function ExportModal({
 	loom,
 	algo,
 	colorRuns,
+	timeElapsedMs,
 }: Readonly<ExportModalProps>) {
 	const { t } = useTranslation();
 
@@ -54,7 +56,13 @@ export function ExportModal({
 	};
 
 	const handleDownloadTxt = () => {
-		const txt = generatePinSequenceText(lines, colorRuns);
+		const txt = generatePinSequenceText(
+			lines,
+			loom,
+			algo,
+			colorRuns,
+			timeElapsedMs,
+		);
 		triggerDownload(txt, 'secuencia-clavos.txt', 'text/plain');
 	};
 

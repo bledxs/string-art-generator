@@ -233,6 +233,7 @@ export function useStudioWorkbench() {
 				loom: loomConfig,
 				algo: algoConfig,
 				colorRuns: engine.progress.colorRuns,
+				timeElapsedMs: engine.progress.timeElapsedMs,
 			},
 			cropperModal: {
 				isOpen: isCropperOpen,
@@ -251,6 +252,7 @@ export function useStudioWorkbench() {
 			cropperImageSrc,
 			handleCropComplete,
 			engine.progress.colorRuns,
+			engine.progress.timeElapsedMs,
 		],
 	);
 
