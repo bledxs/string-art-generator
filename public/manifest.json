@@ -41,7 +41,7 @@
 			"name": "Create String Art",
 			"short_name": "Create",
 			"description": "Start creating string art from an image",
-			"url": "/editor",
+			"url": "/",
 			"icons": [
 				{
 					"src": "/favicon-96x96.png",
