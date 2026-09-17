@@ -20,12 +20,15 @@ export function useStudioWorkbench() {
 		pinOffsetRatio: 0.95,
 	});
 	const [algoConfig, setAlgoConfig] = useState<AlgorithmConfig>({
-		maxLines: 2400,
+		maxLines: 2200,
 		lineWeight: 0.85,
 		opacityStep: 18,
 		minDistance: 20,
 		contrast: 15,
 		brightness: 0,
+		edgeWeight: 0.25,
+		whitePenalty: 1.3,
+		autoStop: true,
 	});
 	const [selectedPreset, setSelectedPreset] = useState<PresetImage | null>(
 		SAMPLE_PRESETS[0],
@@ -115,6 +118,7 @@ export function useStudioWorkbench() {
 				CANVAS_SIZE,
 				algoConfig.contrast,
 				algoConfig.brightness,
+				algoConfig.edgeWeight ?? 0.25,
 			);
 			applyCircularMask(grey, CANVAS_SIZE, loomConfig.pinOffsetRatio);
 			engine.start(grey, CANVAS_SIZE, loomConfig, algoConfig);
@@ -132,6 +136,9 @@ export function useStudioWorkbench() {
 				contrast: rec.contrast,
 				brightness: rec.brightness,
 				minDistance: rec.minDistance,
+				edgeWeight: rec.edgeWeight ?? p.edgeWeight ?? 0.25,
+				whitePenalty: rec.whitePenalty ?? p.whitePenalty ?? 1.3,
+				autoStop: true,
 			}));
 		},
 		[],

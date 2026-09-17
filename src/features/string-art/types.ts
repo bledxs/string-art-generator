@@ -19,6 +19,9 @@ export interface AlgorithmConfig {
 	minDistance: number;
 	contrast: number;
 	brightness: number;
+	edgeWeight?: number;
+	whitePenalty?: number;
+	autoStop?: boolean;
 }
 
 export type EngineStatus = 'idle' | 'running' | 'paused' | 'completed';
@@ -30,6 +33,7 @@ export interface GenerationProgress {
 	currentPin: number;
 	lineSequence: number[];
 	timeElapsedMs: number;
+	converged?: boolean;
 }
 
 export interface PresetImage {
@@ -71,6 +75,7 @@ export type WorkerOutMessage =
 				totalLines: number;
 				lineSequence: number[];
 				timeElapsedMs: number;
+				converged?: boolean;
 			};
 	  }
 	| {

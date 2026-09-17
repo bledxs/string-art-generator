@@ -16,7 +16,7 @@ export const SAMPLE_PRESETS: PresetImage[] = [
 		title: 'Mandala Cósmico',
 		subtitle: 'Geometría circular de alta densidad',
 		url: GEOMETRIC_MANDALA_SVG,
-		recommendedLines: 2200,
+		recommendedLines: 2000,
 		recommendedPins: 240,
 	},
 	{
@@ -24,7 +24,7 @@ export const SAMPLE_PRESETS: PresetImage[] = [
 		title: 'Retrato Minimalista',
 		subtitle: 'Contraste facial para tejer rostros',
 		url: PORTRAIT_SILHOUETTE_SVG,
-		recommendedLines: 2800,
+		recommendedLines: 2200,
 		recommendedPins: 250,
 	},
 	{
@@ -32,7 +32,7 @@ export const SAMPLE_PRESETS: PresetImage[] = [
 		title: 'Cubo de Metatrón',
 		subtitle: 'Líneas isométricas de precisión',
 		url: SACRED_CUBE_SVG,
-		recommendedLines: 2000,
+		recommendedLines: 1800,
 		recommendedPins: 200,
 	},
 ];

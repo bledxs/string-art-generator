@@ -4,8 +4,10 @@ import {
 	Activity,
 	Contrast,
 	Feather,
+	Focus,
 	Layers,
 	MoveHorizontal,
+	Shield,
 } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 import { Slider } from '@/shared/ui/slider';
@@ -103,10 +105,52 @@ export function AlgorithmConfigPanel({
 				<Slider
 					value={[config.maxLines]}
 					min={500}
-					max={7000}
-					step={100}
+					max={4000}
+					step={50}
 					disabled={disabled}
 					onValueChange={(val) => updateField('maxLines', val[0])}
+				/>
+			</div>
+
+			{/* Edge Weight / Detail Emphasis */}
+			<div className='flex flex-col gap-2'>
+				<div className='flex items-center justify-between text-xs'>
+					<span className='flex items-center gap-1.5 font-medium text-foreground'>
+						<Focus className='size-3.5 text-primary' />
+						Énfasis de bordes
+					</span>
+					<span className='font-mono text-muted-foreground'>
+						{Math.round((config.edgeWeight ?? 0.25) * 100)}%
+					</span>
+				</div>
+				<Slider
+					value={[config.edgeWeight ?? 0.25]}
+					min={0}
+					max={0.8}
+					step={0.05}
+					disabled={disabled}
+					onValueChange={(val) => updateField('edgeWeight', val[0])}
+				/>
+			</div>
+
+			{/* White Background Protection */}
+			<div className='flex flex-col gap-2'>
+				<div className='flex items-center justify-between text-xs'>
+					<span className='flex items-center gap-1.5 font-medium text-foreground'>
+						<Shield className='size-3.5 text-primary' />
+						Protección de blancos
+					</span>
+					<span className='font-mono text-muted-foreground'>
+						{(config.whitePenalty ?? 1.3).toFixed(1)}x
+					</span>
+				</div>
+				<Slider
+					value={[config.whitePenalty ?? 1.3]}
+					min={1.0}
+					max={2.5}
+					step={0.1}
+					disabled={disabled}
+					onValueChange={(val) => updateField('whitePenalty', val[0])}
 				/>
 			</div>
 

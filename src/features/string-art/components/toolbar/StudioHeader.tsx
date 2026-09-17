@@ -14,6 +14,7 @@ interface StudioHeaderProps {
 	pinCount: number;
 	diameterCm: number;
 	timeElapsedMs: number;
+	converged?: boolean;
 	actionSlot?: React.ReactNode;
 	onToggleMobileSidebar?: () => void;
 }
@@ -24,6 +25,7 @@ export function StudioHeader({
 	pinCount,
 	diameterCm,
 	timeElapsedMs,
+	converged,
 	actionSlot,
 	onToggleMobileSidebar,
 }: Readonly<StudioHeaderProps>) {
@@ -90,6 +92,7 @@ export function StudioHeader({
 				pinCount={pinCount}
 				diameterCm={diameterCm}
 				timeElapsedMs={timeElapsedMs}
+				converged={converged}
 			/>
 
 			<div className='flex shrink-0 items-center gap-1 sm:gap-2'>

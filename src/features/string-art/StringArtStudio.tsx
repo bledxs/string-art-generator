@@ -40,6 +40,7 @@ export function StringArtStudio() {
 				pinCount={studio.loomConfig.pinCount}
 				diameterCm={studio.loomConfig.physicalDiameterCm}
 				timeElapsedMs={studio.engine.progress.timeElapsedMs}
+				converged={studio.engine.progress.converged}
 				actionSlot={exportAction}
 				onToggleMobileSidebar={() => setIsMobileSidebarOpen(true)}
 			/>

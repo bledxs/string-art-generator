@@ -45,6 +45,7 @@ export function useStringArtEngine() {
 					status: 'completed',
 					timeElapsedMs: data.payload.timeElapsedMs,
 					lineSequence: data.payload.lineSequence,
+					converged: data.payload.converged,
 				}));
 			}
 		};

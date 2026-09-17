@@ -36,28 +36,38 @@ export function rasterizeLine(
 }
 
 export function calculateLineScore(
-	pixels: Uint8ClampedArray,
+	residual: Int16Array,
 	lineIndices: Uint32Array,
+	opacityStep: number,
+	whitePenalty = 1.3,
 ): number {
-	if (lineIndices.length === 0) return 0;
-	let totalDarkness = 0;
-	for (let i = 0; i < lineIndices.length; i++) {
-		const idx = lineIndices[i];
-		// Pixel values are 0 (black) to 255 (white). Darkness is 255 - value.
-		totalDarkness += 255 - pixels[idx];
+	const len = lineIndices.length;
+	if (len === 0) return -Infinity;
+
+	let totalGain = 0;
+
+	for (let i = 0; i < len; i++) {
+		const r = residual[lineIndices[i]];
+		// Squared error reduction: Delta E = 2 * r - opacityStep
+		if (r > 0) {
+			totalGain += 2 * r - opacityStep;
+		} else {
+			// When r <= 0, placing thread over-darkens, apply whitePenalty
+			totalGain += Math.round((2 * r - opacityStep) * whitePenalty);
+		}
 	}
-	return totalDarkness / lineIndices.length;
+
+	return totalGain;
 }
 
 export function applyLineToPixels(
-	pixels: Uint8ClampedArray,
+	residual: Int16Array,
 	lineIndices: Uint32Array,
 	opacityStep: number,
 ): void {
-	for (let i = 0; i < lineIndices.length; i++) {
-		const idx = lineIndices[i];
-		// Thread lightens target error buffer
-		pixels[idx] = Math.min(255, pixels[idx] + opacityStep);
+	const len = lineIndices.length;
+	for (let i = 0; i < len; i++) {
+		residual[lineIndices[i]] -= opacityStep;
 	}
 }
 
