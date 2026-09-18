@@ -187,6 +187,8 @@ export const en: TranslationDictionary = {
 		zoomIn: 'Zoom in',
 		zoomOut: 'Zoom out',
 		reset: 'Reset view',
+		viewGuide: 'Guide & info',
+		viewGuideAria: 'Scroll to guide and frequently asked questions',
 	},
 	assistant: {
 		title: 'Weaving Assistant',

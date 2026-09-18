@@ -6,7 +6,10 @@ export function SeoContentEn(): React.ReactElement {
 	const faqs = siteConfig.faqs.en;
 
 	return (
-		<footer className='border-border/50 border-t bg-background/80 px-4 py-12 backdrop-blur-xs sm:px-8'>
+		<footer
+			id='seo-content'
+			className='border-border/50 border-t bg-background/80 px-4 py-12 backdrop-blur-xs sm:px-8'
+		>
 			<div className='mx-auto max-w-4xl space-y-10 text-muted-foreground text-sm leading-relaxed'>
 				<header className='space-y-3'>
 					<h1 className='font-bold font-serif text-2xl text-foreground sm:text-3xl'>

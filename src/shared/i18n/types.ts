@@ -148,6 +148,8 @@ export interface TranslationDictionary {
 		zoomIn: string;
 		zoomOut: string;
 		reset: string;
+		viewGuide: string;
+		viewGuideAria: string;
 	};
 	assistant: {
 		title: string;

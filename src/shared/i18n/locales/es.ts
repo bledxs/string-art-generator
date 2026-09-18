@@ -189,6 +189,8 @@ export const es: TranslationDictionary = {
 		zoomIn: 'Aumentar zoom',
 		zoomOut: 'Reducir zoom',
 		reset: 'Restablecer vista',
+		viewGuide: 'Guía y ayuda',
+		viewGuideAria: 'Desplazarse a la guía y preguntas frecuentes',
 	},
 	assistant: {
 		title: 'Asistente de Tejido',

@@ -48,13 +48,21 @@ export function useCanvasTransform(contentSize = 700) {
 		setTransform((p) => ({ ...p, scale: calculateZoom(p.scale, 'out') }));
 	}, []);
 
-	const handleWheel = useCallback((e: React.WheelEvent) => {
-		e.preventDefault();
-		const factor = e.deltaY < 0 ? 1.1 : 0.9;
-		setTransform((p) => ({
-			...p,
-			scale: Math.min(Math.max(p.scale * factor, 0.2), 5),
-		}));
+	useEffect(() => {
+		const el = containerRef.current;
+		if (!el) return;
+
+		const handleNativeWheel = (e: WheelEvent) => {
+			e.preventDefault();
+			const factor = e.deltaY < 0 ? 1.1 : 0.9;
+			setTransform((p) => ({
+				...p,
+				scale: Math.min(Math.max(p.scale * factor, 0.2), 5),
+			}));
+		};
+
+		el.addEventListener('wheel', handleNativeWheel, { passive: false });
+		return () => el.removeEventListener('wheel', handleNativeWheel);
 	}, []);
 
 	const handlePointerDown = (x: number, y: number) => {
@@ -80,7 +88,6 @@ export function useCanvasTransform(contentSize = 700) {
 		zoomOut,
 		resetTransform: fitToScreen,
 		fitToScreen,
-		onWheel: handleWheel,
 		onMouseDown: (e: React.MouseEvent) =>
 			e.button === 0 && handlePointerDown(e.clientX, e.clientY),
 		onMouseMove: (e: React.MouseEvent) =>

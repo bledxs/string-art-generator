@@ -14,7 +14,6 @@ interface CanvasViewportProps {
 	onTouchStart?: (e: React.TouchEvent) => void;
 	onTouchMove?: (e: React.TouchEvent) => void;
 	onTouchEnd?: () => void;
-	onWheel: (e: React.WheelEvent) => void;
 	children: React.ReactNode;
 }
 
@@ -28,7 +27,6 @@ export function CanvasViewport({
 	onTouchStart,
 	onTouchMove,
 	onTouchEnd,
-	onWheel,
 	children,
 }: Readonly<CanvasViewportProps>) {
 	return (
@@ -36,7 +34,7 @@ export function CanvasViewport({
 			ref={containerRef}
 			aria-label='Lienzo interactivo de String Art'
 			className={cn(
-				'studio-grid relative flex size-full flex-1 touch-none select-none items-center justify-center overflow-hidden bg-canvas-bg',
+				'studio-grid relative flex size-full flex-1 touch-none select-none items-center justify-center overflow-hidden overscroll-contain bg-canvas-bg',
 				isDragging ? 'cursor-grabbing' : 'cursor-grab',
 			)}
 			onMouseDown={onMouseDown}
@@ -47,7 +45,6 @@ export function CanvasViewport({
 			onTouchMove={onTouchMove}
 			onTouchEnd={onTouchEnd}
 			onTouchCancel={onTouchEnd}
-			onWheel={onWheel}
 		>
 			<div className='studio-spotlight pointer-events-none absolute inset-0 z-0' />
 			<div
