@@ -9,6 +9,8 @@ export const en: TranslationDictionary = {
 		exportAria: 'Export project',
 		exportBtn: 'Export',
 		languageAria: 'Select language',
+		sponsorAria: 'Sponsor on GitHub',
+		sponsorBtn: 'Sponsor',
 		status: {
 			idle: 'Idle',
 			running: 'Calculating...',
@@ -224,6 +226,9 @@ export const en: TranslationDictionary = {
 			'Printable schematic with numbered rim template and sequential steps.',
 		downloadBtn: 'Download',
 		generatingPdf: 'Generating PDF...',
+		sponsorTitle: 'Enjoying String Art Studio?',
+		sponsorDesc: 'Support ongoing development on GitHub Sponsors.',
+		sponsorBtn: 'Sponsor',
 	},
 	cropper: {
 		title: 'Adjust & Crop Image',

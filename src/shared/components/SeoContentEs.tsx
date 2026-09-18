@@ -115,6 +115,15 @@ export function SeoContentEs(): React.ReactElement {
 						</a>{' '}
 						•{' '}
 						<a
+							href={siteConfig.links.sponsor}
+							target='_blank'
+							rel='noreferrer'
+							className='text-rose-500 underline hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300'
+						>
+							GitHub Sponsors ❤️
+						</a>{' '}
+						•{' '}
+						<a
 							href='https://github.com/bledxs/string-art-generator/blob/main/LICENSE'
 							target='_blank'
 							rel='noreferrer'

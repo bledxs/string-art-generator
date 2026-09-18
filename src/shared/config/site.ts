@@ -101,6 +101,10 @@ export const siteConfig = {
 		],
 	},
 	author: 'String Art Studio',
+	links: {
+		github: 'https://github.com/bledxs/string-art-generator',
+		sponsor: 'https://github.com/sponsors/bledxs',
+	},
 	verification: {
 		google:
 			process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||

@@ -9,6 +9,8 @@ export interface TranslationDictionary {
 		exportAria: string;
 		exportBtn: string;
 		languageAria: string;
+		sponsorAria: string;
+		sponsorBtn: string;
 		status: {
 			idle: string;
 			running: string;
@@ -180,6 +182,9 @@ export interface TranslationDictionary {
 		pdfDesc: string;
 		downloadBtn: string;
 		generatingPdf: string;
+		sponsorTitle: string;
+		sponsorDesc: string;
+		sponsorBtn: string;
 	};
 	cropper: {
 		title: string;

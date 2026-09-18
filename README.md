@@ -9,6 +9,7 @@
 [![Biome](https://img.shields.io/badge/Linter-Biome_2.5-60a5fa?style=flat&logo=biome)](https://biomejs.dev/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Sponsor](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-ea4aaa?style=flat&logo=githubsponsors)](https://github.com/sponsors/bledxs)
 
 **Transform any image into stunning physical string art patterns with a computational Nordic Artisan Workshop loom, zero-latency computer vision, and real-time thread physics.**
 
@@ -278,6 +279,7 @@ Special thanks to all open-source contributors!
 
 **Built with ❤️ using Next.js 16.3 + React 19.3 + Biome**
 
+[💖 Sponsor on GitHub](https://github.com/sponsors/bledxs) •
 [⭐ Star on GitHub](https://github.com/bledxs/string-art-generator) •
 [🐛 Report Bug](https://github.com/bledxs/string-art-generator/issues) •
 [💡 Request Feature](https://github.com/bledxs/string-art-generator/issues/new)

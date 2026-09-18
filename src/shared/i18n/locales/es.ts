@@ -9,6 +9,8 @@ export const es: TranslationDictionary = {
 		exportAria: 'Exportar proyecto',
 		exportBtn: 'Exportar',
 		languageAria: 'Seleccionar idioma',
+		sponsorAria: 'Patrocinar en GitHub',
+		sponsorBtn: 'Patrocinar',
 		status: {
 			idle: 'Inactivo',
 			running: 'Calculando...',
@@ -226,6 +228,9 @@ export const es: TranslationDictionary = {
 			'Plano técnico con plantilla numerada de clavos e instrucciones secuenciales.',
 		downloadBtn: 'Descargar',
 		generatingPdf: 'Generando PDF...',
+		sponsorTitle: '¿Te ha sido útil este proyecto?',
+		sponsorDesc: 'Apoya el desarrollo de String Art Studio en GitHub Sponsors.',
+		sponsorBtn: 'Patrocinar',
 	},
 	cropper: {
 		title: 'Ajustar y Recortar Imagen',

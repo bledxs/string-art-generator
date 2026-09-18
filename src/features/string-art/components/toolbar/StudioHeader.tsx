@@ -1,9 +1,10 @@
 'use client';
 
-import { Moon, SlidersHorizontal, Sun } from 'lucide-react';
+import { Heart, Moon, SlidersHorizontal, Sun } from 'lucide-react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import type * as React from 'react';
+import { siteConfig } from '@/shared/config/site';
 import { LanguageSelector, useTranslation } from '@/shared/i18n';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
@@ -107,6 +108,22 @@ export function StudioHeader({
 
 			<div className='flex shrink-0 items-center gap-1.5 sm:gap-2'>
 				<LanguageSelector />
+				<Button
+					asChild
+					variant='ghost'
+					size='icon'
+					className='size-8 text-rose-500 hover:bg-rose-500/10 hover:text-rose-600 dark:text-rose-400 dark:hover:bg-rose-400/10 dark:hover:text-rose-300'
+				>
+					<a
+						href={siteConfig.links.sponsor}
+						target='_blank'
+						rel='noreferrer'
+						aria-label={t.header.sponsorAria}
+						title={t.header.sponsorBtn}
+					>
+						<Heart className='size-4 fill-rose-500/20' />
+					</a>
+				</Button>
 				{actionSlot}
 				<Button
 					variant='ghost'
