@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.0](https://github.com/bledxs/string-art-generator/compare/string-art-generator-v2.0.0...string-art-generator-v2.1.0) (2026-09-18)
+
+
+### Features
+
+* add core application layout, i18n support, SEO content, and printable templates ([a21db9e](https://github.com/bledxs/string-art-generator/commit/a21db9ea03c842e8afec1e3d1b410477829bbc84))
+* add firecrawl-seo-audit skill and lockfile ([47a92fd](https://github.com/bledxs/string-art-generator/commit/47a92fde9c33dc49e322a9547afcfc4114c0f12a))
+* add internationalization support and application status pages ([7fda89c](https://github.com/bledxs/string-art-generator/commit/7fda89ce41787a2ec7f050f50d0e188f7fc69726))
+* add seo-audit skill with evaluations and reference documentation ([4d5f312](https://github.com/bledxs/string-art-generator/commit/4d5f3126582fa16a02087c4e56d466eee946218e))
+* implement internationalization locales, SEO content components, and canvas workspace views ([a63daad](https://github.com/bledxs/string-art-generator/commit/a63daadd228b90e616dad24ea27408b47106ec16))
+* **seo:** add server-rendered H1, semantic guide, and Ubersuggest keyword topics ([8eeca34](https://github.com/bledxs/string-art-generator/commit/8eeca34eda483208299201ecdd8df95107f0d859))
+
 ## [2.0.0](https://github.com/bledxs/string-art-generator/compare/string-art-generator-v2.0.0...string-art-generator-v2.0.0) (2026-09-17)
 
 
