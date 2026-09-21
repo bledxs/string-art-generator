@@ -1,3 +1,8 @@
+import {
+	type MattingOptions,
+	processCroppedImageMatting,
+} from './imageMatting';
+
 export interface CropArea {
 	x: number;
 	y: number;
@@ -10,7 +15,9 @@ function createLoadedImage(url: string): Promise<HTMLImageElement> {
 		const img = new Image();
 		img.addEventListener('load', () => resolve(img));
 		img.addEventListener('error', (err) => reject(err));
-		img.setAttribute('crossOrigin', 'anonymous');
+		if (!url.startsWith('data:')) {
+			img.setAttribute('crossOrigin', 'anonymous');
+		}
 		img.src = url;
 	});
 }
@@ -19,6 +26,7 @@ export async function getCroppedImageDataUrl(
 	imageSrc: string,
 	pixelCrop: CropArea,
 	outputSize = 700,
+	mattingOptions?: MattingOptions,
 ): Promise<string> {
 	const image = await createLoadedImage(imageSrc);
 	const canvas = document.createElement('canvas');
@@ -38,6 +46,10 @@ export async function getCroppedImageDataUrl(
 		outputSize,
 		outputSize,
 	);
+
+	if (mattingOptions) {
+		processCroppedImageMatting(canvas, mattingOptions);
+	}
 
 	return canvas.toDataURL('image/jpeg', 0.95);
 }

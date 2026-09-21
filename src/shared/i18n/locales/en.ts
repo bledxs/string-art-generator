@@ -54,6 +54,7 @@ export const en: TranslationDictionary = {
 			contrast: 'Contrast:',
 			applyBtn: 'Apply recommendation',
 		},
+		compareCandidatesBtn: 'Compare Candidates',
 	},
 	presetsData: {
 		mandala: {
@@ -221,6 +222,11 @@ export const en: TranslationDictionary = {
 		jsonTitle: 'Full Project (JSON)',
 		jsonDesc:
 			'Complete studio state snapshot including loom, engine, and sequence.',
+		gcodeTitle: 'CNC Machine Code (G-Code)',
+		gcodeDesc:
+			'Direct motion instructions for automated string art machines (Cartesian X/Y and Aline Deco-style Polar Rotary).',
+		gcodePolar: 'Polar Rotary',
+		gcodeCartesian: 'Cartesian X/Y',
 		pdfTitle: 'Workshop Assembly PDF (A4)',
 		pdfDesc:
 			'Printable schematic with numbered rim template and sequential steps.',
@@ -236,6 +242,39 @@ export const en: TranslationDictionary = {
 		rotateBtn: 'Rotate 90°',
 		cancelBtn: 'Cancel',
 		applyBtn: 'Apply Crop',
+		cleanBgTitle: 'Isolate Subject (Clean Background)',
+		cleanBgDesc:
+			'Fades background around the subject to prevent unwanted web threads at the borders.',
+		vignetteTitle: 'Radial Edge Vignette',
+		vignetteDesc:
+			'Smoothly dissolves silhouette towards the circular rim for an artisan portrait finish.',
+		vignetteStrength: 'Vignette Strength',
+	},
+	candidatesModal: {
+		title: 'Artistic Candidate Comparison',
+		description:
+			'Evaluate 4 stylistic variations generated from your photo and pick the best look.',
+		generating: 'Calculating candidate previews in real-time...',
+		applyBtn: 'Apply this candidate',
+		selectedBadge: 'Active',
+		linesLabel: 'Lines',
+		contrastLabel: 'Contrast',
+		highFidelityTitle: 'High-Fidelity Portrait',
+		highFidelityDesc:
+			'Subtle micro-strokes with high line density capturing smooth facial transitions and true shadows.',
+		highFidelityBadge: 'Fine detail',
+		dramaticTitle: 'Dramatic Contrast',
+		dramaticDesc:
+			'Strong contour definition and high-impact shadows for striking silhouettes and posters.',
+		dramaticBadge: 'Bold impact',
+		sketchTitle: 'Minimalist Sketch',
+		sketchDesc:
+			'Rapid linear geometry with fewer passes, optimal for fast artisanal assembly.',
+		sketchBadge: 'Fast to weave',
+		invertedTitle: 'Light on Ebony',
+		invertedDesc:
+			'White thread woven on a dark board for luminous night-sky or negative space portraits.',
+		invertedBadge: 'Dark background',
 	},
 	analyzer: {
 		highDetailReasoning:

@@ -54,6 +54,7 @@ export interface TranslationDictionary {
 			contrast: string;
 			applyBtn: string;
 		};
+		compareCandidatesBtn: string;
 	};
 	presetsData: Record<
 		string,
@@ -178,6 +179,10 @@ export interface TranslationDictionary {
 		txtDesc: string;
 		jsonTitle: string;
 		jsonDesc: string;
+		gcodeTitle: string;
+		gcodeDesc: string;
+		gcodePolar: string;
+		gcodeCartesian: string;
 		pdfTitle: string;
 		pdfDesc: string;
 		downloadBtn: string;
@@ -192,6 +197,32 @@ export interface TranslationDictionary {
 		rotateBtn: string;
 		cancelBtn: string;
 		applyBtn: string;
+		cleanBgTitle: string;
+		cleanBgDesc: string;
+		vignetteTitle: string;
+		vignetteDesc: string;
+		vignetteStrength: string;
+	};
+	candidatesModal: {
+		title: string;
+		description: string;
+		generating: string;
+		applyBtn: string;
+		selectedBadge: string;
+		linesLabel: string;
+		contrastLabel: string;
+		highFidelityTitle: string;
+		highFidelityDesc: string;
+		highFidelityBadge: string;
+		dramaticTitle: string;
+		dramaticDesc: string;
+		dramaticBadge: string;
+		sketchTitle: string;
+		sketchDesc: string;
+		sketchBadge: string;
+		invertedTitle: string;
+		invertedDesc: string;
+		invertedBadge: string;
 	};
 	analyzer: {
 		highDetailReasoning: string;

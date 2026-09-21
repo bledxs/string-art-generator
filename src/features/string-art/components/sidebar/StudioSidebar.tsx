@@ -33,6 +33,7 @@ export interface StudioSidebarProps {
 		onAutoCalibrate?: (
 			rec: import('../../utils/imageAnalyzer').CalibrationRecommendation,
 		) => void;
+		onOpenCandidates?: () => void;
 	};
 	execution: {
 		status: EngineStatus;
@@ -114,6 +115,7 @@ export function StudioSidebar({
 							onCustomImageUpload={presets.onUpload}
 							onOpenCropper={presets.onOpenCropper}
 							onAutoCalibrate={presets.onAutoCalibrate}
+							onOpenCandidates={presets.onOpenCandidates}
 						/>
 					</TabsContent>
 

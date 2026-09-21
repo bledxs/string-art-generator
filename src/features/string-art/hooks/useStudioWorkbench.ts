@@ -47,6 +47,7 @@ export function useStudioWorkbench() {
 	const [scrubbedLines, setScrubbedLines] = useState<number | null>(null);
 	const [isExportOpen, setIsExportOpen] = useState(false);
 	const [isAssistantOpen, setIsAssistantOpen] = useState(false);
+	const [isCandidatesOpen, setIsCandidatesOpen] = useState(false);
 	const [isPlaying, setIsPlaying] = useState(false);
 
 	const engine = useStringArtEngine();
@@ -185,6 +186,13 @@ export function useStudioWorkbench() {
 		[],
 	);
 
+	const handleApplyCandidate = useCallback(
+		(candidateConfig: Partial<AlgorithmConfig>) => {
+			setAlgoConfig((prev) => ({ ...prev, ...candidateConfig }));
+		},
+		[],
+	);
+
 	const sidebarProps = useMemo(
 		() => ({
 			linesCount: displayedLines.length,
@@ -198,6 +206,7 @@ export function useStudioWorkbench() {
 				onUpload: handleCustomUpload,
 				onOpenCropper: handleOpenCropper,
 				onAutoCalibrate: handleAutoCalibrate,
+				onOpenCandidates: () => setIsCandidatesOpen(true),
 			},
 			execution: {
 				status: engine.status,
@@ -241,6 +250,13 @@ export function useStudioWorkbench() {
 				onClose: () => setIsCropperOpen(false),
 				onCropComplete: handleCropComplete,
 			},
+			candidatesModal: {
+				isOpen: isCandidatesOpen,
+				imageSrc,
+				currentAlgo: algoConfig,
+				onClose: () => setIsCandidatesOpen(false),
+				onApplyCandidate: handleApplyCandidate,
+			},
 		}),
 		[
 			isExportOpen,
@@ -251,6 +267,9 @@ export function useStudioWorkbench() {
 			isCropperOpen,
 			cropperImageSrc,
 			handleCropComplete,
+			isCandidatesOpen,
+			imageSrc,
+			handleApplyCandidate,
 			engine.progress.colorRuns,
 			engine.progress.timeElapsedMs,
 		],

@@ -14,6 +14,8 @@ import {
 } from '@/shared/ui/dialog';
 import { Slider } from '@/shared/ui/slider';
 import { getCroppedImageDataUrl } from '../../utils/cropImage';
+import type { MattingOptions } from '../../utils/imageMatting';
+import { CropperMattingControls } from './CropperMattingControls';
 
 interface ImageCropperModalProps {
 	isOpen: boolean;
@@ -33,6 +35,11 @@ export function ImageCropperModal({
 	const [zoom, setZoom] = useState(1);
 	const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 	const [isProcessing, setIsProcessing] = useState(false);
+	const [matting, setMatting] = useState<MattingOptions>({
+		isolateSubject: false,
+		enableRadialFeather: true,
+		featherStrength: 35,
+	});
 
 	const handleCropComplete = useCallback((_: Area, croppedPixels: Area) => {
 		setCroppedAreaPixels(croppedPixels);
@@ -45,6 +52,8 @@ export function ImageCropperModal({
 			const croppedUrl = await getCroppedImageDataUrl(
 				imageSrc,
 				croppedAreaPixels,
+				700,
+				matting,
 			);
 			onCropComplete(croppedUrl);
 			onClose();
@@ -57,7 +66,7 @@ export function ImageCropperModal({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onClose}>
-			<DialogContent className='max-w-md p-4 sm:p-6'>
+			<DialogContent className='max-h-screen max-w-md overflow-y-auto p-4 sm:p-6'>
 				<DialogHeader>
 					<div className='flex items-center gap-2'>
 						<Crop className='size-4 text-primary' />
@@ -66,7 +75,7 @@ export function ImageCropperModal({
 					<DialogDescription>{t.cropper.description}</DialogDescription>
 				</DialogHeader>
 
-				<div className='relative mt-2 h-72 w-full overflow-hidden rounded-lg bg-black'>
+				<div className='relative mt-2 h-64 w-full overflow-hidden rounded-lg bg-black'>
 					<Cropper
 						image={imageSrc}
 						crop={crop}
@@ -80,7 +89,7 @@ export function ImageCropperModal({
 					/>
 				</div>
 
-				<div className='mt-4 flex flex-col gap-2'>
+				<div className='mt-3 flex flex-col gap-1.5'>
 					<div className='flex items-center justify-between text-xs'>
 						<span className='flex items-center gap-1.5 font-medium text-foreground'>
 							<ZoomIn className='size-3.5 text-primary' />
@@ -99,7 +108,9 @@ export function ImageCropperModal({
 					/>
 				</div>
 
-				<div className='mt-4 flex items-center justify-between gap-2'>
+				<CropperMattingControls options={matting} onChange={setMatting} />
+
+				<div className='mt-2 flex items-center justify-between gap-2'>
 					<Button
 						variant='ghost'
 						size='sm'

@@ -1,6 +1,6 @@
 'use client';
 
-import { Crop, Image as ImageIcon, Upload } from 'lucide-react';
+import { Crop, Image as ImageIcon, Sparkles, Upload } from 'lucide-react';
 import { useTranslation } from '@/shared/i18n';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
@@ -11,6 +11,7 @@ interface ActiveImageCardProps {
 	title: string;
 	onOpenCropper: () => void;
 	onTriggerUpload: () => void;
+	onOpenCandidates?: () => void;
 }
 
 export function ActiveImageCard({
@@ -19,6 +20,7 @@ export function ActiveImageCard({
 	title,
 	onOpenCropper,
 	onTriggerUpload,
+	onOpenCandidates,
 }: Readonly<ActiveImageCardProps>) {
 	const { t } = useTranslation();
 
@@ -50,7 +52,7 @@ export function ActiveImageCard({
 					<span className='mt-0.5 truncate text-muted-foreground text-xs'>
 						{isCustom ? t.presets.customSubtitle : t.presets.presetSubtitle}
 					</span>
-					<div className='mt-2 flex items-center gap-2'>
+					<div className='mt-2 flex flex-wrap items-center gap-1.5'>
 						<Button
 							type='button'
 							variant='outline'
@@ -71,6 +73,18 @@ export function ActiveImageCard({
 							<Upload className='size-3' />
 							{t.presets.changeBtn}
 						</Button>
+						{onOpenCandidates && (
+							<Button
+								type='button'
+								variant='outline'
+								size='sm'
+								onClick={onOpenCandidates}
+								className='h-7 shrink-0 gap-1 border-primary/40 bg-primary/5 px-2 text-primary text-xs hover:bg-primary/15'
+							>
+								<Sparkles className='size-3 text-primary' />
+								{t.presets.compareCandidatesBtn}
+							</Button>
+						)}
 					</div>
 				</div>
 			</div>

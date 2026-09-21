@@ -54,6 +54,7 @@ export const es: TranslationDictionary = {
 			contrast: 'Contraste:',
 			applyBtn: 'Aplicar recomendación',
 		},
+		compareCandidatesBtn: 'Comparar Candidatos',
 	},
 	presetsData: {
 		mandala: {
@@ -223,6 +224,11 @@ export const es: TranslationDictionary = {
 		jsonTitle: 'Proyecto Completo (JSON)',
 		jsonDesc:
 			'Estado integral del estudio con configuraciones del bastidor, motor y secuencia.',
+		gcodeTitle: 'Código de Máquina CNC (G-Code)',
+		gcodeDesc:
+			'Instrucciones para máquinas automáticas de tejer (Cartesiana X/Y y Rotativa Polar tipo Aline Deco).',
+		gcodePolar: 'Rotativa Polar',
+		gcodeCartesian: 'Cartesiana X/Y',
 		pdfTitle: 'PDF Taller de Armado (A4)',
 		pdfDesc:
 			'Plano técnico con plantilla numerada de clavos e instrucciones secuenciales.',
@@ -238,6 +244,39 @@ export const es: TranslationDictionary = {
 		rotateBtn: 'Rotar 90°',
 		cancelBtn: 'Cancelar',
 		applyBtn: 'Aplicar Recorte',
+		cleanBgTitle: 'Aislar Sujeto (Fondo Limpio)',
+		cleanBgDesc:
+			'Aclara el fondo alrededor del sujeto para evitar líneas innecesarias en los bordes.',
+		vignetteTitle: 'Difuminado Radial en Bordes',
+		vignetteDesc:
+			'Desvanece suavemente la silueta hacia el borde circular para un acabado artesanal.',
+		vignetteStrength: 'Fuerza del difuminado',
+	},
+	candidatesModal: {
+		title: 'Comparador de Candidatos Estéticos',
+		description:
+			'Evalúa 4 variaciones estilísticas generadas a partir de tu imagen y elige la mejor.',
+		generating: 'Calculando candidatos en tiempo real...',
+		applyBtn: 'Aplicar este candidato',
+		selectedBadge: 'Activo',
+		linesLabel: 'Líneas',
+		contrastLabel: 'Contraste',
+		highFidelityTitle: 'Retrato de Alta Fidelidad',
+		highFidelityDesc:
+			'Trazos suaves y sutiles con alta densidad de líneas para capturar transiciones y sombras realistas.',
+		highFidelityBadge: 'Detalle fino',
+		dramaticTitle: 'Contraste Expresivo',
+		dramaticDesc:
+			'Bordes marcados y gradientes intensos con alto impacto visual y sombras profundas.',
+		dramaticBadge: 'Impacto visual',
+		sketchTitle: 'Boceto Minimalista',
+		sketchDesc:
+			'Estructura lineal rápida con menos pasadas de hilo, ideal para armados ágiles.',
+		sketchBadge: 'Rápido de tejer',
+		invertedTitle: 'Luz sobre Ébano',
+		invertedDesc:
+			'Trazado inverso con hilo blanco sobre bastidor oscuro para retratos nocturnos brillantes.',
+		invertedBadge: 'Fondo oscuro',
 	},
 	analyzer: {
 		highDetailReasoning:

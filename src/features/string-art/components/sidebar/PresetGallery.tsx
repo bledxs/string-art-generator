@@ -17,6 +17,7 @@ interface PresetGalleryProps {
 	onCustomImageUpload: (dataUrl: string) => void;
 	onOpenCropper: () => void;
 	onAutoCalibrate?: (rec: CalibrationRecommendation) => void;
+	onOpenCandidates?: () => void;
 }
 
 export function PresetGallery({
@@ -26,6 +27,7 @@ export function PresetGallery({
 	onCustomImageUpload,
 	onOpenCropper,
 	onAutoCalibrate,
+	onOpenCandidates,
 }: Readonly<PresetGalleryProps>) {
 	const { t } = useTranslation();
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -60,6 +62,7 @@ export function PresetGallery({
 				title={title}
 				onOpenCropper={onOpenCropper}
 				onTriggerUpload={() => fileInputRef.current?.click()}
+				onOpenCandidates={onOpenCandidates}
 			/>
 
 			{/* Intelligent Auto-Calibration Card */}

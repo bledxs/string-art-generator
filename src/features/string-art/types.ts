@@ -31,6 +31,18 @@ export interface ColorRun {
 	lineCount?: number;
 }
 
+export type GCodeKinematics = 'polar' | 'cartesian';
+
+export interface GCodeOptions {
+	kinematics?: GCodeKinematics;
+	feedrate?: number;
+	zClearance?: number;
+	zWork?: number;
+	originAtCenter?: boolean;
+	axisLetter?: string;
+	includeComments?: boolean;
+}
+
 export interface AlgorithmConfig {
 	maxLines: number;
 	lineWeight: number;

@@ -2,6 +2,7 @@
 
 import type { AlgorithmConfig, ColorRun, LoomConfig, Pin } from '../types';
 import { WeavingAssistantModal } from './player/WeavingAssistantModal';
+import { CandidateComparisonModal } from './sidebar/CandidateComparisonModal';
 import { ImageCropperModal } from './sidebar/ImageCropperModal';
 import { ExportModal } from './toolbar/ExportModal';
 
@@ -38,18 +39,27 @@ interface StudioModalsProps {
 		onClose: () => void;
 		onCropComplete: (dataUrl: string) => void;
 	};
+	candidatesModal: {
+		isOpen: boolean;
+		imageSrc: string | null;
+		currentAlgo: AlgorithmConfig;
+		onClose: () => void;
+		onApplyCandidate: (config: Partial<AlgorithmConfig>) => void;
+	};
 }
 
 export function StudioModals({
 	exportModal,
 	assistantModal,
 	cropperModal,
+	candidatesModal,
 }: Readonly<StudioModalsProps>) {
 	return (
 		<>
 			<ExportModal {...exportModal} />
 			<WeavingAssistantModal {...assistantModal} />
 			<ImageCropperModal {...cropperModal} />
+			<CandidateComparisonModal {...candidatesModal} />
 		</>
 	);
 }
