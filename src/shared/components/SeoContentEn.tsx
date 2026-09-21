@@ -18,14 +18,14 @@ export function SeoContentEn(): React.ReactElement {
 					<p>
 						Welcome to <strong>String Art Studio</strong>, the professional and
 						free digital workbench for turning any portrait or graphic into
-						realistic <em>string art patterns</em> and physical knit art
-						instructions.
+						realistic <em>string art patterns</em>, custom <em>thread art</em>,
+						and step-by-step knit art instructions.
 					</p>
 				</header>
 
 				<section className='space-y-2'>
 					<h2 className='font-semibold text-foreground text-lg'>
-						What is an online string art generator?
+						What is an online string art generator and thread art maker?
 					</h2>
 					<p>
 						A string art generator transforms a raster photograph into an

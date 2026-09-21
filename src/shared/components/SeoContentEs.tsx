@@ -18,21 +18,23 @@ export function SeoContentEs(): React.ReactElement {
 					<p>
 						Bienvenido a <strong>String Art Studio</strong>, la herramienta
 						digital profesional y gratuita para crear{' '}
-						<em>manualidades con hilos</em> y diseños de{' '}
-						<em>hilorama personalizado</em> a partir de cualquier imagen.
+						<em>manualidades con hilos</em>, cuadros de <em>hilografía</em> y
+						diseños de <em>hilorama personalizado</em> a partir de cualquier
+						imagen. La alternativa 100% libre y en el navegador a software de
+						pago como AlineDeco.
 					</p>
 				</header>
 
 				<section className='space-y-2'>
 					<h2 className='font-semibold text-foreground text-lg'>
-						¿Qué es un generador de patrones de hilorama?
+						¿Qué es un generador de patrones de hilorama e hilografía?
 					</h2>
 					<p>
-						Un generador de hilorama transforma una fotografía digital en una
-						secuencia matemática óptima de cuerdas entrelazadas entre clavos
-						perimetrales. Nuestro motor calcula la trayectoria con física de
-						hilo en tiempo real y rasterización de Bresenham con preservación de
-						luces.
+						Un generador de hilorama o hilografía transforma una fotografía
+						digital en una secuencia matemática óptima de cuerdas entrelazadas
+						entre clavos perimetrales. Nuestro motor calcula la trayectoria con
+						física de hilo en tiempo real y rasterización de Bresenham con
+						preservación de luces.
 					</p>
 				</section>
 

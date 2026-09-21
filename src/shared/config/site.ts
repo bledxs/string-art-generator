@@ -31,6 +31,10 @@ export const siteConfig = {
 		'string art generator',
 		'string art pattern maker',
 		'photo to string art',
+		'hilografia',
+		'hilograma generador',
+		'alinedeco gratis',
+		'alternativa alinedeco',
 	],
 	en: {
 		title:
@@ -50,6 +54,8 @@ export const siteConfig = {
 			'string art pdf export',
 			'multi color string art',
 			'thread art simulation',
+			'thread art generator',
+			'string art maker',
 			'generador de hilorama',
 		],
 	},
@@ -76,6 +82,12 @@ export const siteConfig = {
 				answer:
 					'Sí, String Art Studio incluye soporte para capas de color CMYK, RGBW y tonos Sepia con cálculo independiente de pasadas por hilo.',
 			},
+			{
+				question:
+					'¿Es String Art Studio gratis o requiere suscripción como AlineDeco?',
+				answer:
+					'String Art Studio es 100% gratuito y de código abierto. Funciona directamente en tu navegador sin registros, sin límites de patrones y sin licencias de pago como otros programas de hilorama (AlineDeco, Spatar).',
+			},
 		],
 		en: [
 			{
@@ -97,6 +109,12 @@ export const siteConfig = {
 				question: 'Can I create multi-color string art?',
 				answer:
 					'Yes, String Art Studio supports multi-layer color palettes including CMYK, RGBW, and Warm Sepia with automated layer-by-layer thread planning.',
+			},
+			{
+				question:
+					'Is String Art Studio completely free to use compared to other tools?',
+				answer:
+					'Yes, String Art Studio is 100% free and open source. You can generate unlimited thread art and string art patterns, preview real-time thread simulation, and export PDF instructions without subscriptions or paid licenses.',
 			},
 		],
 	},
