@@ -1,4 +1,5 @@
 import type { TranslationDictionary } from '../types';
+import { statusPagesEs } from './statusPages';
 
 export const es: TranslationDictionary = {
 	header: {
@@ -284,41 +285,5 @@ export const es: TranslationDictionary = {
 		smoothReasoning:
 			'Trazos amplios y geometría fluida. Se recomienda hilo de cuerpo medio con protección de blancos para evitar sobre-densidad.',
 	},
-	statusPages: {
-		notFound: {
-			badge: '404 · Coordenada no encontrada',
-			title: 'Patrón no encontrado en el bastidor',
-			description:
-				'El clavo o la coordenada que buscas no forma parte del diseño actual. Es posible que el enlace haya expirado o la dirección sea incorrecta.',
-			homeBtn: 'Volver al Estudio',
-		},
-		error: {
-			badge: 'Error de Renderizado',
-			title: 'Se ha enredado un hilo en el bastidor',
-			description:
-				'Ocurrió un error inesperado al calcular o renderizar el patrón. No te preocupes, el estado del estudio se puede recuperar.',
-			retryBtn: 'Desenredar y reintentar',
-			homeBtn: 'Reiniciar Estudio',
-			detailsSummary: 'Detalles técnicos del error',
-		},
-		forbidden: {
-			badge: '403 · Acceso Restringido',
-			title: 'Bastidor protegido o sin permisos',
-			description:
-				'No dispones de las credenciales o permisos requeridos para acceder a esta área o diseño de taller.',
-			homeBtn: 'Volver al Estudio',
-		},
-		unauthorized: {
-			badge: '401 · Autenticación Requerida',
-			title: 'Sesión de taller requerida',
-			description:
-				'Debes identificarte o iniciar sesión para acceder a este proyecto o recurso de hilorama.',
-			homeBtn: 'Volver al Estudio',
-		},
-		loading: {
-			title: 'Preparando bastidor y tensando hilos...',
-			description:
-				'Configurando el lienzo circular y calculando las coordenadas geométricas.',
-		},
-	},
+	statusPages: statusPagesEs,
 };

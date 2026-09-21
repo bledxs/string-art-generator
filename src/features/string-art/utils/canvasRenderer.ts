@@ -184,8 +184,7 @@ export function drawPins(
 	const centerY = ctx.canvas?.height ? ctx.canvas.height / 2 : 350;
 	const isLightOnDark = colorMode === 'light-on-dark';
 
-	for (let i = 0; i < pins.length; i++) {
-		const pin = pins[i];
+	for (const pin of pins) {
 		if (isLightOnDark) {
 			drawSilverPin(ctx, pin.x, pin.y, centerX);
 		} else {

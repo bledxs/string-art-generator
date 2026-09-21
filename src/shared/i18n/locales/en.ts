@@ -1,4 +1,5 @@
 import type { TranslationDictionary } from '../types';
+import { statusPagesEn } from './statusPages';
 
 export const en: TranslationDictionary = {
 	header: {
@@ -282,41 +283,5 @@ export const en: TranslationDictionary = {
 		smoothReasoning:
 			'Broad strokes and fluid geometry. Recommending medium-weight thread with white protection to prevent excessive density.',
 	},
-	statusPages: {
-		notFound: {
-			badge: '404 · Coordinate Not Found',
-			title: 'Pattern not found on the loom',
-			description:
-				'The pin coordinate or pattern path you are looking for does not exist in this workshop. The link might have moved or expired.',
-			homeBtn: 'Back to Studio',
-		},
-		error: {
-			badge: 'Rendering Error',
-			title: 'A thread got tangled on the loom',
-			description:
-				'An unexpected issue occurred while calculating or rendering the string art pattern. Your previous work is safe.',
-			retryBtn: 'Untangle and Retry',
-			homeBtn: 'Reset Studio',
-			detailsSummary: 'Technical error details',
-		},
-		forbidden: {
-			badge: '403 · Restricted Access',
-			title: 'Protected Loom or Missing Permissions',
-			description:
-				'You do not have the required artisan clearance to access this workshop area or design.',
-			homeBtn: 'Back to Studio',
-		},
-		unauthorized: {
-			badge: '401 · Authentication Required',
-			title: 'Workshop Session Required',
-			description:
-				'Please identify yourself or log in to access this project or string art workspace.',
-			homeBtn: 'Back to Studio',
-		},
-		loading: {
-			title: 'Preparing loom and tensioning threads...',
-			description:
-				'Setting up circular canvas and calculating geometric coordinates.',
-		},
-	},
+	statusPages: statusPagesEn,
 };

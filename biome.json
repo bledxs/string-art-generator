@@ -84,7 +84,14 @@
 				"useAsConstAssertion": "error",
 				"useImportType": "error",
 				"useExportType": "error",
-				"useNodejsImportProtocol": "error"
+				"useNodejsImportProtocol": "error",
+				"noExcessiveLinesPerFile": {
+					"level": "error",
+					"options": {
+						"maxLines": 300
+					}
+				},
+				"useForOf": "warn"
 			},
 			"nursery": {
 				"noUnsafeTypeAssertion": "error",

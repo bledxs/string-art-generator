@@ -55,8 +55,7 @@ function findBestNextPin(
 	let bestPin = pins[0];
 	let bestRaster: Uint32Array = new Uint32Array(0);
 
-	for (let i = 0; i < pins.length; i++) {
-		const candidate = pins[i];
+	for (const candidate of pins) {
 		const dist = Math.abs(candidate.id - currentPin.id);
 		if (Math.min(dist, pins.length - dist) < 8) continue;
 
