@@ -20,6 +20,8 @@ export interface ColorLayer {
 	color: string;
 	linesCount: number;
 	opacityStep?: number;
+	dmcCode?: string;
+	gutermannCode?: string;
 }
 
 export interface ColorRun {
@@ -29,6 +31,8 @@ export interface ColorRun {
 	startIndex: number;
 	endIndex: number;
 	lineCount?: number;
+	dmcCode?: string;
+	gutermannCode?: string;
 }
 
 export type GCodeKinematics = 'polar' | 'cartesian';

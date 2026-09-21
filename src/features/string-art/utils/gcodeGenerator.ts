@@ -123,12 +123,15 @@ function generateSpoolChangeComment(
 	runIndex: number,
 	totalRuns: number,
 ): string {
+	const codes = [run.dmcCode, run.gutermannCode].filter(Boolean).join(' / ');
+	const refSuffix = codes ? ` [${codes}]` : '';
+
 	return [
-		`; --------------------------------------------------`,
-		`; SPOOL CHANGE (${runIndex + 1}/${totalRuns}): ${run.name.toUpperCase()} (${run.color})`,
+		'; --------------------------------------------------',
+		`; SPOOL CHANGE (${runIndex + 1}/${totalRuns}): ${run.name.toUpperCase()} (${run.color})${refSuffix}`,
 		`; Lines: ${run.startIndex} to ${run.endIndex}`,
-		`; --------------------------------------------------`,
-		`M0 (MSG, Load thread ${run.name} - ${run.color})`,
+		'; --------------------------------------------------',
+		`M0 (MSG, Load thread ${run.name}${refSuffix} - ${run.color})`,
 	].join('\n');
 }
 

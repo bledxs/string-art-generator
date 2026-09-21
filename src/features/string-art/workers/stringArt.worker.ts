@@ -455,6 +455,8 @@ function runGenerationLoop(
 				startIndex: layerStartIndex,
 				endIndex: lineSequence.length,
 				lineCount: lineSequence.length - layerStartIndex,
+				dmcCode: l.dmcCode,
+				gutermannCode: l.gutermannCode,
 			});
 		}
 	}
@@ -497,6 +499,8 @@ function runGenerationLoop(
 				startIndex: layerStartIndex,
 				endIndex: lineSequence.length,
 				lineCount: lineSequence.length - layerStartIndex,
+				dmcCode: activeLayer.dmcCode,
+				gutermannCode: activeLayer.gutermannCode,
 			};
 			const progressMsg: WorkerOutMessage = {
 				type: 'PROGRESS_BATCH',

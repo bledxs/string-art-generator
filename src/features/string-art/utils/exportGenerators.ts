@@ -243,8 +243,11 @@ function formatMultiSpoolSequence(
 		const runLines = lines.slice(startIdx, endIdx + 1);
 		const count = run.lineCount ?? Math.max(0, runLines.length - 1);
 
+		const codes = [run.dmcCode, run.gutermannCode].filter(Boolean).join(' / ');
+		const refSuffix = codes ? ` [${codes}]` : '';
+
 		out += `==================================================\n`;
-		out += `SPOOL ${r + 1}/${colorRuns.length}: ${run.name.toUpperCase()} (${run.color})\n`;
+		out += `SPOOL ${r + 1}/${colorRuns.length}: ${run.name.toUpperCase()} (${run.color})${refSuffix}\n`;
 		out += `Range: Steps ${globalStep} to ${globalStep + Math.max(0, runLines.length - 2)} (${count} lines)\n`;
 		out += `[Attach ${run.name} thread to Pin ${lines[startIdx]} and begin]\n`;
 		out += `==================================================\n\n`;

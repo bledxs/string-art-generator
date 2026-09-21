@@ -98,6 +98,11 @@ export function WeavingAssistantModal({
 								<span className='font-medium text-foreground'>
 									{activeRunName}
 								</span>
+								{(activeRun.dmcCode || activeRun.gutermannCode) && (
+									<span className='rounded border border-border/60 bg-muted/60 px-1.5 py-0.5 font-mono text-muted-foreground text-xs'>
+										{activeRun.dmcCode ?? activeRun.gutermannCode}
+									</span>
+								)}
 							</div>
 						</div>
 					)}
