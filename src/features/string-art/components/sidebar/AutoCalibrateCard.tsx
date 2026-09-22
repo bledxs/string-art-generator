@@ -4,8 +4,7 @@ import { Sparkles, Wand2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from '@/shared/i18n';
 import { Badge } from '@/shared/ui/badge';
-import { Button } from '@/shared/ui/button';
-import { BorderBeam } from '@/shared/ui/magicui';
+import { BorderBeam, RainbowButton } from '@/shared/ui/magicui';
 import {
 	type CalibrationRecommendation,
 	computeEdgeDensity,
@@ -140,16 +139,14 @@ export function AutoCalibrateCard({
 				</div>
 			</div>
 
-			<Button
-				variant='secondary'
-				size='sm'
+			<RainbowButton
 				disabled={disabled}
 				onClick={() => onApply(recommendation)}
-				className='mt-3 w-full gap-1.5 font-semibold text-xs'
+				className='mt-3 h-8 w-full rounded-md px-3 font-semibold text-xs'
 			>
 				<Wand2 className='size-3.5 text-primary' />
 				{t.presets.autoCalibrate.applyBtn}
-			</Button>
+			</RainbowButton>
 		</div>
 	);
 }

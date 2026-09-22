@@ -2,7 +2,7 @@
 
 import { Play, RotateCcw, Sliders, Square } from 'lucide-react';
 import { useTranslation } from '@/shared/i18n';
-import { Button } from '@/shared/ui/button';
+import { Button, ShimmerButton } from '@/shared/ui';
 import type { EngineStatus } from '../../types';
 
 interface SidebarActionsProps {
@@ -24,15 +24,10 @@ export function SidebarActions({
 
 	if (status === 'idle') {
 		return (
-			<Button
-				variant='default'
-				size='lg'
-				onClick={onStart}
-				className='w-full gap-2 font-medium'
-			>
+			<ShimmerButton onClick={onStart} className='w-full'>
 				<Play className='size-4 fill-current' />
 				{t.actions.generate}
-			</Button>
+			</ShimmerButton>
 		);
 	}
 

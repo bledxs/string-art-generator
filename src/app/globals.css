@@ -174,3 +174,49 @@ body {
 .animate-shine {
 	animation: shine var(--duration, 8s) infinite linear;
 }
+
+@keyframes spin-around {
+	0% {
+		transform: translateZ(0) rotate(0);
+	}
+	15%,
+	35% {
+		transform: translateZ(0) rotate(90deg);
+	}
+	65%,
+	85% {
+		transform: translateZ(0) rotate(270deg);
+	}
+	100% {
+		transform: translateZ(0) rotate(360deg);
+	}
+}
+
+@keyframes shimmer-slide {
+	to {
+		transform: translate(calc(100cqw - 100%), 0);
+	}
+}
+
+@keyframes rainbow {
+	0% {
+		background-position: 0%;
+	}
+	100% {
+		background-position: 200%;
+	}
+}
+
+@keyframes shimmer-sweep {
+	0% {
+		transform: translateX(-150%) skewX(-20deg);
+	}
+	45%,
+	100% {
+		transform: translateX(180%) skewX(-20deg);
+	}
+}
+
+.animate-shimmer-sweep {
+	animation: shimmer-sweep 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
