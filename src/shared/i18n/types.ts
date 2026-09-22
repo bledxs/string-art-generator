@@ -82,6 +82,13 @@ export interface TranslationDictionary {
 		diameterTitle: string;
 		diameterRectTitle: string;
 		diameterDesc: string;
+		templateTitle: string;
+		templateDesc: string;
+		downloadPdf: string;
+		downloadSvg: string;
+		pinSpacing: string;
+		scaleNotice: string;
+		templateNotice: string;
 	};
 	color: {
 		title: string;
@@ -185,6 +192,8 @@ export interface TranslationDictionary {
 		gcodeCartesian: string;
 		pdfTitle: string;
 		pdfDesc: string;
+		templateTitle: string;
+		templateDesc: string;
 		downloadBtn: string;
 		generatingPdf: string;
 		sponsorTitle: string;

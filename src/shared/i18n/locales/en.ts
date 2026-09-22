@@ -1,4 +1,5 @@
 import type { TranslationDictionary } from '../types';
+import { exportModalEn } from './modalLocales';
 import { statusPagesEn } from './statusPages';
 
 export const en: TranslationDictionary = {
@@ -91,6 +92,15 @@ export const en: TranslationDictionary = {
 		diameterRectTitle: 'Physical width',
 		diameterDesc:
 			'Accurately estimates required thread meters and real physical scale.',
+		templateTitle: 'Drilling Template',
+		templateDesc:
+			'Download 1:1 scale blueprint with exact nail positions for printing or laser cutting.',
+		downloadPdf: 'Download PDF (1:1 Scale)',
+		downloadSvg: 'Download SVG (Laser / CNC)',
+		pinSpacing: 'Pin spacing',
+		scaleNotice:
+			'Print at 100% scale (do not fit to page). Includes 50 mm calibration bar.',
+		templateNotice: 'Technical drilling blueprint',
 	},
 	color: {
 		title: 'Color Palette & Spools',
@@ -210,33 +220,7 @@ export const en: TranslationDictionary = {
 		startPin: 'First pin:',
 		lastPin: 'Last pin:',
 	},
-	exportModal: {
-		title: 'Export Project for Assembly',
-		description:
-			'Download vector blueprints, pin number sequences, and workshop files.',
-		svgTitle: 'High-Precision SVG Vector',
-		svgDesc:
-			'Scalable vector threads with exact coordinates ready for web or plotter.',
-		txtTitle: 'Numeric Pin Sequence (TXT)',
-		txtDesc:
-			'Ordered list of numbered pin indices for step-by-step manual assembly.',
-		jsonTitle: 'Full Project (JSON)',
-		jsonDesc:
-			'Complete studio state snapshot including loom, engine, and sequence.',
-		gcodeTitle: 'CNC Machine Code (G-Code)',
-		gcodeDesc:
-			'Direct motion instructions for automated string art machines (Cartesian X/Y and Aline Deco-style Polar Rotary).',
-		gcodePolar: 'Polar Rotary',
-		gcodeCartesian: 'Cartesian X/Y',
-		pdfTitle: 'Workshop Assembly PDF (A4)',
-		pdfDesc:
-			'Printable schematic with numbered rim template and sequential steps.',
-		downloadBtn: 'Download',
-		generatingPdf: 'Generating PDF...',
-		sponsorTitle: 'Enjoying String Art Studio?',
-		sponsorDesc: 'Support ongoing development on GitHub Sponsors.',
-		sponsorBtn: 'Sponsor',
-	},
+	exportModal: exportModalEn,
 	cropper: {
 		title: 'Adjust & Crop Image',
 		description: 'Adjust crop area and orientation for optimal loom fitting.',

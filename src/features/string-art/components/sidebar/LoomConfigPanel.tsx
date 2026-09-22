@@ -5,6 +5,7 @@ import { useTranslation } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 import { Slider } from '@/shared/ui/slider';
 import type { LoomConfig } from '../../types';
+import { LoomTemplateDownloadCard } from './LoomTemplateDownloadCard';
 
 interface LoomConfigPanelProps {
 	config: LoomConfig;
@@ -201,6 +202,9 @@ export function LoomConfigPanel({
 					{t.loom.diameterDesc}
 				</span>
 			</div>
+
+			{/* Printable Loom Template */}
+			<LoomTemplateDownloadCard loom={config} disabled={disabled} />
 		</div>
 	);
 }

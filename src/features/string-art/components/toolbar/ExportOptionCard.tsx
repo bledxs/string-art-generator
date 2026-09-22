@@ -31,6 +31,12 @@ const colorStyles = {
 		badge:
 			'border-purple-500/30 bg-purple-500/10 text-purple-600 dark:text-purple-400',
 	},
+	rose: {
+		hoverBorder: 'hover:border-rose-500/40 hover:bg-rose-500/10',
+		iconBg:
+			'border-rose-500/20 bg-rose-500/10 text-rose-600 dark:text-rose-400 group-hover:bg-rose-500/20',
+		badge: 'border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-400',
+	},
 };
 
 export interface ExportOptionCardProps {

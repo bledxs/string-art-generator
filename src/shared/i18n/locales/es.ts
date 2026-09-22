@@ -1,4 +1,5 @@
 import type { TranslationDictionary } from '../types';
+import { exportModalEs } from './modalLocales';
 import { statusPagesEs } from './statusPages';
 
 export const es: TranslationDictionary = {
@@ -91,6 +92,15 @@ export const es: TranslationDictionary = {
 		diameterRectTitle: 'Ancho mayor físico',
 		diameterDesc:
 			'Permite estimar con exactitud los metros de hilo y la escala real.',
+		templateTitle: 'Plantilla de Perforado',
+		templateDesc:
+			'Descarga el plano a escala 1:1 con las marcas exactas de clavos para imprimir o corte láser.',
+		downloadPdf: 'Descargar PDF (Escala 1:1)',
+		downloadSvg: 'Descargar SVG (Láser / CNC)',
+		pinSpacing: 'Separación entre clavos',
+		scaleNotice:
+			'Imprimir al 100% sin ajustar página. Incluye regla de calibración de 50 mm.',
+		templateNotice: 'Plano técnico para clavado',
 	},
 	color: {
 		title: 'Paleta y Bobinas de Color',
@@ -212,33 +222,7 @@ export const es: TranslationDictionary = {
 		startPin: 'Primer clavo:',
 		lastPin: 'Último clavo:',
 	},
-	exportModal: {
-		title: 'Exportar Proyecto para Armado',
-		description:
-			'Descarga archivos vectoriales, secuencias numéricas y formatos de intercambio.',
-		svgTitle: 'Vector SVG de Alta Precisión',
-		svgDesc:
-			'Trazos vectoriales exactos con coordenadas escalables listos para plotter o web.',
-		txtTitle: 'Secuencia Numérica de Clavos (TXT)',
-		txtDesc:
-			'Lista ordenada de índices de clavos para guiar el tejido manual paso a paso.',
-		jsonTitle: 'Proyecto Completo (JSON)',
-		jsonDesc:
-			'Estado integral del estudio con configuraciones del bastidor, motor y secuencia.',
-		gcodeTitle: 'Código de Máquina CNC (G-Code)',
-		gcodeDesc:
-			'Instrucciones para máquinas automáticas de tejer (Cartesiana X/Y y Rotativa Polar tipo Aline Deco).',
-		gcodePolar: 'Rotativa Polar',
-		gcodeCartesian: 'Cartesiana X/Y',
-		pdfTitle: 'PDF Taller de Armado (A4)',
-		pdfDesc:
-			'Plano técnico con plantilla numerada de clavos e instrucciones secuenciales.',
-		downloadBtn: 'Descargar',
-		generatingPdf: 'Generando PDF...',
-		sponsorTitle: '¿Te ha sido útil este proyecto?',
-		sponsorDesc: 'Apoya el desarrollo de String Art Studio en GitHub Sponsors.',
-		sponsorBtn: 'Patrocinar',
-	},
+	exportModal: exportModalEs,
 	cropper: {
 		title: 'Ajustar y Recortar Imagen',
 		description: 'Ajusta el encuadre y rota la imagen para el bastidor.',

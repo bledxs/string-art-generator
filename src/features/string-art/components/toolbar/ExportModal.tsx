@@ -1,6 +1,13 @@
 'use client';
 
-import { Cpu, Download, FileCode, FileImage, FileText } from 'lucide-react';
+import {
+	Cpu,
+	Download,
+	FileCode,
+	FileImage,
+	FileText,
+	Printer,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from '@/shared/i18n';
 import {
@@ -24,9 +31,19 @@ import {
 	triggerDownload,
 } from '../../utils/exportGenerators';
 import { generateGCode } from '../../utils/gcodeGenerator';
+import {
+	calculatePhysicalLoomMetrics,
+	generateLoomTemplatePdf,
+	generateLoomTemplateSvg,
+	triggerBlobDownload,
+} from '../../utils/templateGenerator';
 import { ExportGCodeAction } from './ExportGCodeAction';
 import { ExportOptionCard } from './ExportOptionCard';
 import { ExportSponsorCallout } from './ExportSponsorCallout';
+import {
+	ExportTemplateAction,
+	type TemplateFormat,
+} from './ExportTemplateAction';
 
 export interface ExportModalProps {
 	isOpen: boolean;
@@ -51,6 +68,20 @@ export function ExportModal({
 }: Readonly<ExportModalProps>) {
 	const { t } = useTranslation();
 	const [kinematics, setKinematics] = useState<GCodeKinematics>('polar');
+	const [templateFormat, setTemplateFormat] = useState<TemplateFormat>('pdf');
+
+	const handleDownloadTemplate = () => {
+		const metrics = calculatePhysicalLoomMetrics(loom);
+		const prefix = `loom-template-${loom.shape}-${metrics.pinCount}p-${loom.physicalDiameterCm}cm`;
+		if (templateFormat === 'pdf') {
+			const blob = generateLoomTemplatePdf(loom);
+			triggerBlobDownload(blob, `${prefix}.pdf`);
+		} else {
+			const svg = generateLoomTemplateSvg(loom);
+			const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+			triggerBlobDownload(blob, `${prefix}.svg`);
+		}
+	};
 
 	const handleDownloadSvg = () => {
 		const svg = generateSvgString(
@@ -142,6 +173,21 @@ export function ExportModal({
 						icon={<FileCode className='size-5' />}
 						theme='blue'
 						onClick={handleDownloadJson}
+					/>
+
+					<ExportOptionCard
+						title={t.exportModal.templateTitle}
+						description={t.exportModal.templateDesc}
+						extension={`.${templateFormat.toUpperCase()}`}
+						icon={<Printer className='size-5' />}
+						theme='rose'
+						onClick={handleDownloadTemplate}
+						actionSlot={
+							<ExportTemplateAction
+								format={templateFormat}
+								onSelectFormat={setTemplateFormat}
+							/>
+						}
 					/>
 
 					<ExportSponsorCallout />
