@@ -29,6 +29,11 @@ export const exportModalEn: TranslationDictionary['exportModal'] = {
 	sponsorTitle: 'Enjoying String Art Studio?',
 	sponsorDesc: 'Support ongoing development on GitHub Sponsors.',
 	sponsorBtn: 'Sponsor',
+	formatLabel: 'Format:',
+	posterLabel: 'Poster',
+	paperLabel: 'Paper:',
+	templatePosterDesc:
+		'Tiled poster split into {sheets} even sheets ({cols}×{rows}) to assemble at home.',
 };
 
 export const exportModalEs: TranslationDictionary['exportModal'] = {
@@ -60,4 +65,9 @@ export const exportModalEs: TranslationDictionary['exportModal'] = {
 	sponsorTitle: '¿Te ha sido útil este proyecto?',
 	sponsorDesc: 'Apoya el desarrollo de String Art Studio en GitHub Sponsors.',
 	sponsorBtn: 'Patrocinar',
+	formatLabel: 'Formato:',
+	posterLabel: 'Póster',
+	paperLabel: 'Papel:',
+	templatePosterDesc:
+		'Póster dividido en {sheets} hojas pares ({cols}×{rows}) para armar en casa.',
 };

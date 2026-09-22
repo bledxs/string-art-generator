@@ -78,9 +78,14 @@ function renderTiledHeader(
 	doc.setFont('helvetica', 'bold');
 	doc.setFontSize(12);
 	doc.setTextColor(BRAND_COLORS.primary);
-	doc.text('STRING ART STUDIO — TILED LOOM TEMPLATE', 30, 28);
+	doc.text(
+		'STRING ART STUDIO — TILED LOOM TEMPLATE / PLANTILLA DIVIDIDA',
+		30,
+		28,
+	);
 
-	const shape = metrics.shape === 'circle' ? 'Circle' : 'Rect';
+	const shape =
+		metrics.shape === 'circle' ? 'Circle / Círculo' : 'Rect / Rectángulo';
 	const dim =
 		metrics.shape === 'circle'
 			? `Ø ${(metrics.widthMm / 10).toFixed(0)} cm`
@@ -90,7 +95,7 @@ function renderTiledHeader(
 	doc.setFontSize(8.5);
 	doc.setTextColor(BRAND_COLORS.text);
 	doc.text(
-		`${shape} ${dim} · ${metrics.pinCount} Pins · Sheet ${sheet.sheetIndex} of ${sheet.totalSheets} (Row ${sheet.row + 1}/${sheet.rows}, Col ${sheet.col + 1}/${sheet.cols})`,
+		`${shape} ${dim} · ${metrics.pinCount} Pins/Clavos · Sheet/Hoja ${sheet.sheetIndex}/${sheet.totalSheets} (Row/Fila ${sheet.row + 1}/${sheet.rows}, Col ${sheet.col + 1}/${sheet.cols})`,
 		30,
 		42,
 	);
@@ -248,15 +253,20 @@ function renderTiledFooter(doc: jsPDF, pageW: number, pageH: number): void {
 	doc.setFont('helvetica', 'bold');
 	doc.setFontSize(6.5);
 	doc.setTextColor(BRAND_COLORS.primary);
-	doc.text('50 mm CALIBRATION BAR (100% SCALE)', cx, calY + 8, {
-		align: 'center',
-	});
+	doc.text(
+		'50 mm CALIBRATION SCALE BAR / REGLA DE CALIBRACIÓN (100%)',
+		cx,
+		calY + 8,
+		{
+			align: 'center',
+		},
+	);
 
 	doc.setFont('helvetica', 'normal');
-	doc.setFontSize(6);
+	doc.setFontSize(5.5);
 	doc.setTextColor(BRAND_COLORS.muted);
 	doc.text(
-		'Trim along seam lines, align (+) crosses, and tape on back. String Art Studio (www.stringartgenerator.app)',
+		'Trim along seams, align (+) crosses, and tape on back / Recortar uniones, alinear cruces (+) y unir por detrás.',
 		cx,
 		calY + 18,
 		{ align: 'center' },

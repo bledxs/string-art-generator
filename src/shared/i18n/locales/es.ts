@@ -110,6 +110,11 @@ export const es: TranslationDictionary = {
 		paperLegal: 'Oficio (Legal)',
 		sheetsCount: 'hojas',
 		downloadPosterPdf: 'Descargar PDF Dividido',
+		tilingGridLabel: 'División par:',
+		tilingPdfTitle: 'PDF Dividido',
+		tilingNotice:
+			'Auto-ajuste par para {dim} cm. Une las {sheets} hojas con las marcas (+).',
+		templateSvgLaser: 'SVG Láser',
 	},
 	color: {
 		title: 'Paleta y Bobinas de Color',

@@ -110,6 +110,11 @@ export const en: TranslationDictionary = {
 		paperLegal: 'Legal (Oficio)',
 		sheetsCount: 'sheets',
 		downloadPosterPdf: 'Download Tiled PDF',
+		tilingGridLabel: 'Even Grid:',
+		tilingPdfTitle: 'Tiled PDF',
+		tilingNotice:
+			'Even auto-fit for {dim} cm. Join the {sheets} sheets using the (+) marks.',
+		templateSvgLaser: 'SVG Laser',
 	},
 	color: {
 		title: 'Color Palette & Spools',

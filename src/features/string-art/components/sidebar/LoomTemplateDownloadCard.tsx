@@ -120,7 +120,7 @@ export function LoomTemplateDownloadCard({
 					</div>
 
 					<div className='flex items-center justify-between font-mono text-muted-foreground text-xs'>
-						<span>División par / Grid:</span>
+						<span>{t.loom.tilingGridLabel}</span>
 						<span className='font-semibold text-amber-600 dark:text-amber-400'>
 							{grid.totalSheets} {t.loom.sheetsCount} ({grid.cols}×{grid.rows})
 						</span>
@@ -145,7 +145,7 @@ export function LoomTemplateDownloadCard({
 						disabled={disabled}
 						onClick={handleDownloadSinglePdf}
 						className='h-8 w-full gap-1.5 px-2 text-xs'
-						title='PDF'
+						title={t.loom.downloadPdf}
 					>
 						<FileDown className='size-3.5 shrink-0 text-rose-500' />
 						<span>PDF 1:1</span>
@@ -158,7 +158,7 @@ export function LoomTemplateDownloadCard({
 						disabled={disabled}
 						onClick={handleDownloadTiledPdf}
 						className='h-8 w-full gap-1.5 px-2 font-semibold text-xs'
-						title='PDF Dividido'
+						title={t.loom.tilingPdfTitle}
 					>
 						<Layers className='size-3.5 shrink-0' />
 						<span>PDF ({grid.totalSheets}p)</span>
@@ -172,16 +172,18 @@ export function LoomTemplateDownloadCard({
 					disabled={disabled}
 					onClick={handleDownloadSvg}
 					className='h-8 w-full gap-1.5 px-2 text-xs'
-					title='SVG'
+					title={t.loom.templateSvgLaser}
 				>
 					<FileCode className='size-3.5 shrink-0 text-amber-500' />
-					<span>SVG Láser</span>
+					<span>{t.loom.templateSvgLaser}</span>
 				</Button>
 			</div>
 
 			<span className='text-muted-foreground/80 text-xs leading-tight'>
 				{mode === 'tiled'
-					? `Auto-ajuste par para ${loom.physicalDiameterCm} cm. Une las ${grid.totalSheets} hojas con las marcas (+).`
+					? t.loom.tilingNotice
+							.replace('{dim}', String(loom.physicalDiameterCm))
+							.replace('{sheets}', String(grid.totalSheets))
 					: t.loom.scaleNotice}
 			</span>
 		</div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/shared/i18n';
 import type { PaperSize } from '../../utils/templateGenerator';
 
 export type TemplateFormat = 'pdf' | 'poster' | 'svg';
@@ -19,10 +20,14 @@ export function ExportTemplateAction({
 	onSelectPaper,
 	sheetsCount,
 }: Readonly<ExportTemplateActionProps>) {
+	const { t } = useTranslation();
+
 	return (
 		<div className='flex flex-col gap-1.5 rounded-lg border border-rose-500/20 bg-rose-500/5 px-2.5 py-1.5 text-xs'>
 			<div className='flex items-center justify-between'>
-				<span className='font-medium text-muted-foreground'>Formato:</span>
+				<span className='font-medium text-muted-foreground'>
+					{t.exportModal.formatLabel}
+				</span>
 				<div className='flex gap-1'>
 					<button
 						type='button'
@@ -44,7 +49,7 @@ export function ExportTemplateAction({
 								: 'text-muted-foreground hover:text-foreground'
 						}`}
 					>
-						Póster {sheetsCount ? `(${sheetsCount}p)` : ''}
+						{t.exportModal.posterLabel} {sheetsCount ? `(${sheetsCount}p)` : ''}
 					</button>
 					<button
 						type='button'
@@ -61,7 +66,9 @@ export function ExportTemplateAction({
 			</div>
 			{format === 'poster' && (
 				<div className='flex items-center justify-between border-rose-500/10 border-t pt-1'>
-					<span className='text-muted-foreground text-xs'>Papel:</span>
+					<span className='text-muted-foreground text-xs'>
+						{t.exportModal.paperLabel}
+					</span>
 					<div className='flex gap-1'>
 						{(['a4', 'letter', 'legal'] as const).map((p) => (
 							<button

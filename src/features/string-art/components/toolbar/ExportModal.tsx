@@ -189,7 +189,10 @@ export function ExportModal({
 						title={t.exportModal.templateTitle}
 						description={
 							templateFormat === 'poster'
-								? `Póster dividido en ${templateGrid.totalSheets} hojas pares (${templateGrid.cols}×${templateGrid.rows}) para armar en casa.`
+								? t.exportModal.templatePosterDesc
+										.replace('{sheets}', String(templateGrid.totalSheets))
+										.replace('{cols}', String(templateGrid.cols))
+										.replace('{rows}', String(templateGrid.rows))
 								: t.exportModal.templateDesc
 						}
 						extension={

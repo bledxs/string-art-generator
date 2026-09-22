@@ -98,6 +98,10 @@ export interface TranslationDictionary {
 		paperLegal: string;
 		sheetsCount: string;
 		downloadPosterPdf: string;
+		tilingGridLabel: string;
+		tilingPdfTitle: string;
+		tilingNotice: string;
+		templateSvgLaser: string;
 	};
 	color: {
 		title: string;
@@ -208,6 +212,10 @@ export interface TranslationDictionary {
 		sponsorTitle: string;
 		sponsorDesc: string;
 		sponsorBtn: string;
+		formatLabel: string;
+		posterLabel: string;
+		paperLabel: string;
+		templatePosterDesc: string;
 	};
 	cropper: {
 		title: string;

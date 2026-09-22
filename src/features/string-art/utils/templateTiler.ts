@@ -140,8 +140,9 @@ export function getTileSheetName(
 	sheet: TileSheetInfo,
 	metrics: PhysicalLoomMetrics,
 ): string {
-	const shapeLabel = metrics.shape === 'circle' ? 'Circle' : 'Rect';
-	return `${shapeLabel} Ø${(metrics.widthMm / 10).toFixed(0)}cm — Sheet ${sheet.sheetIndex}/${sheet.totalSheets} (Row ${sheet.row + 1}, Col ${sheet.col + 1})`;
+	const shapeLabel =
+		metrics.shape === 'circle' ? 'Circle/Círculo' : 'Rect/Rectángulo';
+	return `${shapeLabel} Ø${(metrics.widthMm / 10).toFixed(0)}cm — Sheet/Hoja ${sheet.sheetIndex}/${sheet.totalSheets} (Row/Fila ${sheet.row + 1}, Col ${sheet.col + 1})`;
 }
 
 export function drawMiniMap(
