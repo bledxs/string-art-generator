@@ -158,3 +158,19 @@ body {
 ::-webkit-scrollbar-corner {
 	background: transparent;
 }
+
+@keyframes shine {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 100% 100%;
+	}
+	to {
+		background-position: 0% 0%;
+	}
+}
+
+.animate-shine {
+	animation: shine var(--duration, 8s) infinite linear;
+}

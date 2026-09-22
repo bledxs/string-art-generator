@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from '@/shared/i18n';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
+import { BorderBeam } from '@/shared/ui/magicui';
 import {
 	type CalibrationRecommendation,
 	computeEdgeDensity,
@@ -81,7 +82,14 @@ export function AutoCalibrateCard({
 	})();
 
 	return (
-		<div className='rounded-xl border border-primary/20 bg-primary/5 p-3 shadow-xs'>
+		<div className='relative overflow-hidden rounded-xl border border-primary/20 bg-primary/5 p-3 shadow-xs'>
+			<BorderBeam
+				size={80}
+				duration={6}
+				colorFrom='var(--primary)'
+				colorTo='#ec4899'
+				borderWidth={1.5}
+			/>
 			<div className='flex items-center justify-between'>
 				<span className='flex items-center gap-1.5 font-medium text-foreground text-xs'>
 					<Wand2 className='size-3.5 shrink-0 text-primary' />
