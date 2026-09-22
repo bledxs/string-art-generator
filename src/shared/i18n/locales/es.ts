@@ -101,6 +101,15 @@ export const es: TranslationDictionary = {
 		scaleNotice:
 			'Imprimir al 100% sin ajustar página. Incluye regla de calibración de 50 mm.',
 		templateNotice: 'Plano técnico para clavado',
+		tilingModeTitle: 'Formato de Impresión',
+		tilingSingle: '1 Hoja (Plotter 1:1)',
+		tilingPoster: 'Dividida en Hojas Pares (Póster)',
+		paperTitle: 'Tamaño de Papel',
+		paperA4: 'A4',
+		paperLetter: 'Carta (Letter)',
+		paperLegal: 'Oficio (Legal)',
+		sheetsCount: 'hojas',
+		downloadPosterPdf: 'Descargar PDF Dividido',
 	},
 	color: {
 		title: 'Paleta y Bobinas de Color',

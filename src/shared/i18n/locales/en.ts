@@ -101,6 +101,15 @@ export const en: TranslationDictionary = {
 		scaleNotice:
 			'Print at 100% scale (do not fit to page). Includes 50 mm calibration bar.',
 		templateNotice: 'Technical drilling blueprint',
+		tilingModeTitle: 'Print Format',
+		tilingSingle: '1 Sheet (Plotter 1:1)',
+		tilingPoster: 'Tiled Poster (Even Sheets)',
+		paperTitle: 'Paper Size',
+		paperA4: 'A4',
+		paperLetter: 'Letter',
+		paperLegal: 'Legal (Oficio)',
+		sheetsCount: 'sheets',
+		downloadPosterPdf: 'Download Tiled PDF',
 	},
 	color: {
 		title: 'Color Palette & Spools',

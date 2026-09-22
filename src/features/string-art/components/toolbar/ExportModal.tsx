@@ -32,9 +32,12 @@ import {
 } from '../../utils/exportGenerators';
 import { generateGCode } from '../../utils/gcodeGenerator';
 import {
+	calculateLoomTilingGrid,
 	calculatePhysicalLoomMetrics,
 	generateLoomTemplatePdf,
 	generateLoomTemplateSvg,
+	generateTiledLoomTemplatePdf,
+	type PaperSize,
 	triggerBlobDownload,
 } from '../../utils/templateGenerator';
 import { ExportGCodeAction } from './ExportGCodeAction';
@@ -69,6 +72,9 @@ export function ExportModal({
 	const { t } = useTranslation();
 	const [kinematics, setKinematics] = useState<GCodeKinematics>('polar');
 	const [templateFormat, setTemplateFormat] = useState<TemplateFormat>('pdf');
+	const [templatePaper, setTemplatePaper] = useState<PaperSize>('a4');
+
+	const templateGrid = calculateLoomTilingGrid(loom, templatePaper);
 
 	const handleDownloadTemplate = () => {
 		const metrics = calculatePhysicalLoomMetrics(loom);
@@ -76,6 +82,10 @@ export function ExportModal({
 		if (templateFormat === 'pdf') {
 			const blob = generateLoomTemplatePdf(loom);
 			triggerBlobDownload(blob, `${prefix}.pdf`);
+		} else if (templateFormat === 'poster') {
+			const blob = generateTiledLoomTemplatePdf(loom, templatePaper);
+			const filename = `loom-poster-${templateGrid.cols}x${templateGrid.rows}-${templatePaper}-${loom.shape}-${metrics.pinCount}p-${loom.physicalDiameterCm}cm.pdf`;
+			triggerBlobDownload(blob, filename);
 		} else {
 			const svg = generateLoomTemplateSvg(loom);
 			const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
@@ -177,8 +187,16 @@ export function ExportModal({
 
 					<ExportOptionCard
 						title={t.exportModal.templateTitle}
-						description={t.exportModal.templateDesc}
-						extension={`.${templateFormat.toUpperCase()}`}
+						description={
+							templateFormat === 'poster'
+								? `Póster dividido en ${templateGrid.totalSheets} hojas pares (${templateGrid.cols}×${templateGrid.rows}) para armar en casa.`
+								: t.exportModal.templateDesc
+						}
+						extension={
+							templateFormat === 'poster'
+								? `.PDF (${templateGrid.totalSheets}p)`
+								: `.${templateFormat.toUpperCase()}`
+						}
 						icon={<Printer className='size-5' />}
 						theme='rose'
 						onClick={handleDownloadTemplate}
@@ -186,6 +204,9 @@ export function ExportModal({
 							<ExportTemplateAction
 								format={templateFormat}
 								onSelectFormat={setTemplateFormat}
+								paper={templatePaper}
+								onSelectPaper={setTemplatePaper}
+								sheetsCount={templateGrid.totalSheets}
 							/>
 						}
 					/>

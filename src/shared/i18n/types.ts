@@ -89,6 +89,15 @@ export interface TranslationDictionary {
 		pinSpacing: string;
 		scaleNotice: string;
 		templateNotice: string;
+		tilingModeTitle: string;
+		tilingSingle: string;
+		tilingPoster: string;
+		paperTitle: string;
+		paperA4: string;
+		paperLetter: string;
+		paperLegal: string;
+		sheetsCount: string;
+		downloadPosterPdf: string;
 	};
 	color: {
 		title: string;
