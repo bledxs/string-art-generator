@@ -1,5 +1,25 @@
 import type { LoomConfig } from '../types';
 
+export const MM_TO_POINTS = 2.83465;
+
+export const BRAND_COLORS = {
+	primary: '#1c1917',
+	accent: '#b45309',
+	secondary: '#fef3c7',
+	badgeText: '#92400e',
+	muted: '#78716c',
+	text: '#292524',
+	boxBg: '#fefce8',
+	boxBorder: '#fef08a',
+};
+
+export function getLoomSkillLevel(pinCount: number): string {
+	if (pinCount <= 120) return 'Principiante / Beginner';
+	if (pinCount <= 220) return 'Intermedio / Intermediate';
+	if (pinCount <= 320) return 'Avanzado / Master Artisan';
+	return 'Gran Maestro / Master Weaver';
+}
+
 export interface PhysicalLoomMetrics {
 	shape: 'circle' | 'rectangle';
 	pinCount: number;
@@ -13,12 +33,12 @@ export interface PhysicalLoomMetrics {
 	nVert?: number;
 }
 
-export interface PhysicalPin {
+export interface TemplatePinPoint {
 	id: number;
 	x: number;
 	y: number;
-	nx: number;
-	ny: number;
+	lx: number;
+	ly: number;
 }
 
 export function calculatePhysicalLoomMetrics(
@@ -78,101 +98,65 @@ export function calculatePhysicalLoomMetrics(
 	};
 }
 
-export function calculatePhysicalPins(
-	metrics: PhysicalLoomMetrics,
-	cx: number,
-	cy: number,
-): PhysicalPin[] {
-	if (metrics.shape === 'circle') {
-		return calculateCircularPhysicalPins(
-			metrics.pinCount,
-			metrics.radiusMm,
-			cx,
-			cy,
-		);
-	}
-	return calculateRectangularPhysicalPins(metrics, cx, cy);
-}
-
-function calculateCircularPhysicalPins(
+export function getCircularPinPoints(
 	pinCount: number,
-	radius: number,
 	cx: number,
 	cy: number,
-): PhysicalPin[] {
-	const pins: PhysicalPin[] = [];
+	radius: number,
+): TemplatePinPoint[] {
+	const points: TemplatePinPoint[] = [];
 	const angleStep = (2 * Math.PI) / pinCount;
-
 	for (let i = 0; i < pinCount; i++) {
 		const angle = i * angleStep - Math.PI / 2;
-		const nx = Math.cos(angle);
-		const ny = Math.sin(angle);
-		pins.push({
+		const x = cx + radius * Math.cos(angle);
+		const y = cy + radius * Math.sin(angle);
+		const labelDist = radius + (i === 0 ? 22 : 18);
+		points.push({
 			id: i,
-			x: cx + radius * nx,
-			y: cy + radius * ny,
-			nx,
-			ny,
+			x,
+			y,
+			lx: cx + labelDist * Math.cos(angle),
+			ly: cy + labelDist * Math.sin(angle),
 		});
 	}
-	return pins;
+	return points;
 }
 
-function calculateRectangularPhysicalPins(
+export function getRectangularPinPoints(
 	metrics: PhysicalLoomMetrics,
 	cx: number,
 	cy: number,
-): PhysicalPin[] {
-	const pins: PhysicalPin[] = [];
-	const halfW = metrics.widthMm / 2;
-	const halfH = metrics.heightMm / 2;
-	const x0 = cx - halfW;
-	const x1 = cx + halfW;
-	const y0 = cy - halfH;
-	const y1 = cy + halfH;
+): TemplatePinPoint[] {
+	const halfW = (metrics.widthMm * MM_TO_POINTS) / 2;
+	const halfH = (metrics.heightMm * MM_TO_POINTS) / 2;
 	const nH = metrics.nHoriz ?? 10;
 	const nV = metrics.nVert ?? 10;
-
+	const pins: TemplatePinPoint[] = [];
 	let id = 0;
-	// 1. Top Edge: Left -> Right
+
+	// Top Edge
 	for (let i = 0; i < nH; i++) {
-		pins.push({
-			id: id++,
-			x: x0 + ((i + 0.5) / nH) * metrics.widthMm,
-			y: y0,
-			nx: 0,
-			ny: -1,
-		});
+		const x = cx - halfW + ((i + 0.5) / nH) * (halfW * 2);
+		const y = cy - halfH;
+		pins.push({ id: id++, x, y, lx: x, ly: y - (id === 1 ? 20 : 16) });
 	}
-	// 2. Right Edge: Top -> Bottom
+	// Right Edge
 	for (let i = 0; i < nV; i++) {
-		pins.push({
-			id: id++,
-			x: x1,
-			y: y0 + ((i + 0.5) / nV) * metrics.heightMm,
-			nx: 1,
-			ny: 0,
-		});
+		const x = cx + halfW;
+		const y = cy - halfH + ((i + 0.5) / nV) * (halfH * 2);
+		pins.push({ id: id++, x, y, lx: x + 16, ly: y });
 	}
-	// 3. Bottom Edge: Right -> Left
+	// Bottom Edge
 	for (let i = 0; i < nH; i++) {
-		pins.push({
-			id: id++,
-			x: x1 - ((i + 0.5) / nH) * metrics.widthMm,
-			y: y1,
-			nx: 0,
-			ny: 1,
-		});
+		const x = cx + halfW - ((i + 0.5) / nH) * (halfW * 2);
+		const y = cy + halfH;
+		pins.push({ id: id++, x, y, lx: x, ly: y + 16 });
 	}
-	// 4. Left Edge: Bottom -> Top
+	// Left Edge
 	for (let i = 0; i < nV; i++) {
-		pins.push({
-			id: id++,
-			x: x0,
-			y: y1 - ((i + 0.5) / nV) * metrics.heightMm,
-			nx: -1,
-			ny: 0,
-		});
+		const x = cx - halfW;
+		const y = cy + halfH - ((i + 0.5) / nV) * (halfH * 2);
+		pins.push({ id: id++, x, y, lx: x - 16, ly: y });
 	}
 	return pins;
 }
