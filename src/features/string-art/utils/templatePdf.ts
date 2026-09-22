@@ -12,43 +12,61 @@ import {
 	type TemplatePinPoint,
 } from './templateMetrics';
 
+const TOP_CLEARANCE = 160;
+const FOOTER_RESERVED = 165;
+
 export function generateLoomTemplatePdf(loom: LoomConfig): Blob {
 	const metrics = calculatePhysicalLoomMetrics(loom);
-	const [pageW, pageH] = determinePdfPageSize(metrics);
+	const [pageW, pageH, cx, cy, radius, halfH] = computePdfLayout(metrics);
+
 	const doc = new jsPDF({
 		orientation: pageW > pageH ? 'landscape' : 'portrait',
 		unit: 'pt',
 		format: [pageW, pageH],
 	});
 
-	const cx = pageW / 2;
-	const cy = pageH / 2;
-	const radius = (metrics.widthMm * MM_TO_POINTS) / 2;
-
-	drawPdfHeader(doc, metrics, cx, pageW);
-	drawPdfLoomFrame(doc, metrics, cx, cy, radius);
+	drawPdfHeader(doc, metrics, cx);
+	drawPdfLoomFrame(doc, metrics, cx, cy, radius, halfH);
 	drawPdfPins(doc, metrics, cx, cy, radius);
-	drawPdfCalibrationAndFooter(doc, metrics, cx, cy, radius);
+	drawPdfBottomWorkshopZone(doc, cx, cy + halfH, pageW);
 
 	return doc.output('blob');
 }
 
-function determinePdfPageSize(metrics: PhysicalLoomMetrics): [number, number] {
+function computePdfLayout(
+	metrics: PhysicalLoomMetrics,
+): [number, number, number, number, number, number] {
+	const radius = (metrics.widthMm * MM_TO_POINTS) / 2;
+	const halfH =
+		metrics.shape === 'circle' ? radius : (metrics.heightMm * MM_TO_POINTS) / 2;
+
+	const minH = TOP_CLEARANCE + halfH * 2 + FOOTER_RESERVED;
 	const w = metrics.widthMm;
 	const h = metrics.heightMm;
-	if (w <= 180 && h <= 180) return [210 * MM_TO_POINTS, 297 * MM_TO_POINTS];
-	if (w <= 260 && h <= 260) return [297 * MM_TO_POINTS, 420 * MM_TO_POINTS];
-	if (w <= 385 && h <= 385) return [420 * MM_TO_POINTS, 594 * MM_TO_POINTS];
-	const padW = Math.max(595.28, (w + 40) * MM_TO_POINTS);
-	const padH = Math.max(841.89, (h + 80) * MM_TO_POINTS);
-	return [padW, padH];
+
+	let pageW = Math.max(595.28, (w + 40) * MM_TO_POINTS);
+	let pageH = minH;
+
+	if (w <= 180 && h <= 180 && minH <= 841.89) {
+		pageW = 210 * MM_TO_POINTS;
+		pageH = 297 * MM_TO_POINTS;
+	} else if (w <= 260 && h <= 260 && minH <= 1190.55) {
+		pageW = 297 * MM_TO_POINTS;
+		pageH = 420 * MM_TO_POINTS;
+	} else if (w <= 385 && h <= 385 && minH <= 1683.78) {
+		pageW = 420 * MM_TO_POINTS;
+		pageH = 594 * MM_TO_POINTS;
+	}
+
+	const cx = pageW / 2;
+	const cy = TOP_CLEARANCE + halfH;
+	return [pageW, pageH, cx, cy, radius, halfH];
 }
 
 function drawPdfHeader(
 	doc: jsPDF,
 	metrics: PhysicalLoomMetrics,
 	cx: number,
-	pageW: number,
 ): void {
 	// 1. Title
 	doc.setFont('helvetica', 'bold');
@@ -58,7 +76,7 @@ function drawPdfHeader(
 		metrics.shape === 'circle'
 			? `String Art Studio — ${metrics.pinCount} Pins Loom Template`
 			: `String Art Studio — ${metrics.pinCount} Pins Rectangular Loom`;
-	doc.text(title, cx, 40, { align: 'center' });
+	doc.text(title, cx, 38, { align: 'center' });
 
 	// 2. Badge
 	const level = getLoomSkillLevel(metrics.pinCount);
@@ -83,26 +101,7 @@ function drawPdfHeader(
 		metrics.shape === 'circle'
 			? `${metrics.pinCount} Pins (0 to ${metrics.pinCount - 1}) | Circle: ${metrics.widthMm.toFixed(0)}mm (${(metrics.widthMm / 10).toFixed(1)}cm) | Clockwise`
 			: `${metrics.pinCount} Pins (0 to ${metrics.pinCount - 1}) | Frame (${metrics.aspectRatio}): ${metrics.widthMm.toFixed(0)}×${metrics.heightMm.toFixed(0)}mm | Clockwise`;
-	doc.text(subtitle, cx, 95, { align: 'center' });
-
-	// 4. Instructions Box
-	const boxW = Math.min(pageW - 60, 540);
-	const boxX = cx - boxW / 2;
-	doc.setFillColor(BRAND_COLORS.boxBg);
-	doc.setDrawColor(BRAND_COLORS.boxBorder);
-	doc.roundedRect(boxX, 108, boxW, 26, 5, 5, 'FD');
-	doc.setFont('helvetica', 'bold');
-	doc.setFontSize(8.5);
-	doc.setTextColor(BRAND_COLORS.accent);
-	doc.text('Instructions:', boxX + 10, 120);
-	doc.setFont('helvetica', 'normal');
-	doc.setFontSize(7.5);
-	doc.setTextColor(BRAND_COLORS.text);
-	doc.text(
-		'1. Print at 100% scale (no fit-to-page). 2. Fix to board. 3. Align Pin 0 at 12:00. 4. Hammer pins. 5. Follow Studio guide!',
-		boxX + 70,
-		120,
-	);
+	doc.text(subtitle, cx, 98, { align: 'center' });
 }
 
 function drawPdfLoomFrame(
@@ -111,6 +110,7 @@ function drawPdfLoomFrame(
 	cx: number,
 	cy: number,
 	radius: number,
+	halfH: number,
 ): void {
 	doc.setDrawColor(BRAND_COLORS.primary);
 	doc.setLineWidth(2);
@@ -118,7 +118,6 @@ function drawPdfLoomFrame(
 		doc.circle(cx, cy, radius, 'S');
 	} else {
 		const halfW = (metrics.widthMm * MM_TO_POINTS) / 2;
-		const halfH = (metrics.heightMm * MM_TO_POINTS) / 2;
 		doc.rect(cx - halfW, cy - halfH, halfW * 2, halfH * 2, 'S');
 	}
 
@@ -176,18 +175,35 @@ function renderPdfSinglePin(
 	}
 }
 
-function drawPdfCalibrationAndFooter(
+function drawPdfBottomWorkshopZone(
 	doc: jsPDF,
-	metrics: PhysicalLoomMetrics,
 	cx: number,
-	cy: number,
-	radius: number,
+	bottomOfLoomY: number,
+	pageW: number,
 ): void {
-	const halfH =
-		metrics.shape === 'circle' ? radius : (metrics.heightMm * MM_TO_POINTS) / 2;
-	const calY = cy + halfH + 34;
+	// 1. Instructions Box (placed below loom with guaranteed breathing room)
+	const boxW = Math.min(pageW - 60, 540);
+	const boxX = cx - boxW / 2;
+	const boxY = bottomOfLoomY + 24;
 
-	// 50 mm Calibration Bar
+	doc.setFillColor(BRAND_COLORS.boxBg);
+	doc.setDrawColor(BRAND_COLORS.boxBorder);
+	doc.roundedRect(boxX, boxY, boxW, 28, 5, 5, 'FD');
+	doc.setFont('helvetica', 'bold');
+	doc.setFontSize(8.5);
+	doc.setTextColor(BRAND_COLORS.accent);
+	doc.text('Instructions:', boxX + 10, boxY + 17);
+	doc.setFont('helvetica', 'normal');
+	doc.setFontSize(7.5);
+	doc.setTextColor(BRAND_COLORS.text);
+	doc.text(
+		'1. Print at 100% scale (no fit-to-page). 2. Fix to board. 3. Align Pin 0 at 12:00. 4. Hammer pins. 5. Follow Studio guide!',
+		boxX + 70,
+		boxY + 17,
+	);
+
+	// 2. 50 mm Calibration Bar
+	const calY = boxY + 44;
 	const calWidth = 50 * MM_TO_POINTS;
 	const calX0 = cx - calWidth / 2;
 	doc.setDrawColor(BRAND_COLORS.primary);
@@ -216,7 +232,7 @@ function drawPdfCalibrationAndFooter(
 		{ align: 'center' },
 	);
 
-	// Footer
+	// 3. Footer
 	const footerY = calY + 36;
 	doc.setFont('helvetica', 'bold');
 	doc.setFontSize(9);
