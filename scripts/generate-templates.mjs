@@ -164,46 +164,11 @@ function generateTemplate(config) {
 			},
 		);
 
-	// Instructions box
-	const instructionsY = 105;
-	const instructionsBoxWidth = config.pageWidth - 100;
-
 	// Dynamic font sizes based on page size
-	const instructionTitleSize =
-		config.pageSize === 'A4' ? 8 : config.pageSize === 'A3' ? 9 : 10;
-	const instructionTextSize =
-		config.pageSize === 'A4' ? 7 : config.pageSize === 'A3' ? 8 : 9;
 	const footerTitleSize =
 		config.pageSize === 'A4' ? 9 : config.pageSize === 'A3' ? 10 : 11;
 	const footerTextSize =
 		config.pageSize === 'A4' ? 7.5 : config.pageSize === 'A3' ? 8.5 : 9.5;
-
-	doc
-		.save()
-		.roundedRect(50, instructionsY, instructionsBoxWidth, 26, 5)
-		.fillAndStroke('#fefce8', '#fef08a');
-
-	doc
-		.fontSize(instructionTitleSize)
-		.font('Helvetica-Bold')
-		.fillColor(COLORS.accent)
-		.text('Instructions:', 60, instructionsY + 5, { lineBreak: false });
-
-	doc
-		.fontSize(instructionTextSize)
-		.font('Helvetica')
-		.fillColor(COLORS.text)
-		.text(
-			'1. Print at 100% scale (no fit-to-page). 2. Fix to wooden board. 3. Align Pin 0 at 12:00. 4. Hammer pins. 5. Follow Studio guide!',
-			60,
-			instructionsY + 15,
-			{
-				width: instructionsBoxWidth - 20,
-				align: 'left',
-				lineBreak: false,
-			},
-		);
-	doc.restore();
 
 	// Draw outer circle with primary color
 	doc
@@ -280,8 +245,99 @@ function generateTemplate(config) {
 		}
 	}
 
-	// Footer (positioned below circle + labels with more spacing)
-	const footerY = centerY + radius + 50;
+	// Workshop Zone (Instructions box + 50 mm Calibration Scale Bar + Footer)
+	const instructionTitleSize =
+		config.pageSize === 'A4' ? 8.5 : config.pageSize === 'A3' ? 9.5 : 10.5;
+	const instructionTextSize =
+		config.pageSize === 'A4' ? 7.5 : config.pageSize === 'A3' ? 8.5 : 9.5;
+
+	const instructionsY = centerY + radius + 24;
+	const instructionsBoxWidth = Math.min(config.pageWidth - 100, 540);
+	const instructionsX = centerX - instructionsBoxWidth / 2;
+
+	doc
+		.save()
+		.roundedRect(instructionsX, instructionsY, instructionsBoxWidth, 28, 5)
+		.fillAndStroke('#fefce8', '#fef08a');
+
+	doc
+		.fontSize(instructionTitleSize)
+		.font('Helvetica-Bold')
+		.fillColor(COLORS.accent)
+		.text('Instructions:', instructionsX + 10, instructionsY + 7, {
+			lineBreak: false,
+		});
+
+	doc
+		.fontSize(instructionTextSize)
+		.font('Helvetica')
+		.fillColor(COLORS.text)
+		.text(
+			'1. Print at 100% scale (no fit-to-page). 2. Fix to wooden board. 3. Align Pin 0 at 12:00. 4. Hammer pins. 5. Follow Studio guide!',
+			instructionsX + 70,
+			instructionsY + 7,
+			{
+				width: instructionsBoxWidth - 80,
+				align: 'left',
+				lineBreak: false,
+			},
+		);
+	doc.restore();
+
+	// 50 mm Calibration Scale Bar
+	const calY = instructionsY + 44;
+	const calWidth = 50 * MM_TO_POINTS;
+	const calX0 = centerX - calWidth / 2;
+
+	doc.save();
+	doc.lineWidth(1.2).strokeColor(COLORS.primary);
+	doc
+		.moveTo(calX0, calY)
+		.lineTo(calX0 + calWidth, calY)
+		.stroke();
+
+	for (const mm of [0, 10, 20, 30, 40, 50]) {
+		const tx = calX0 + mm * MM_TO_POINTS;
+		const tickH = mm % 25 === 0 ? 5 : 3;
+		doc
+			.moveTo(tx, calY)
+			.lineTo(tx, calY - tickH)
+			.stroke();
+	}
+
+	doc
+		.fontSize(7)
+		.font('Helvetica-Bold')
+		.fillColor(COLORS.primary)
+		.text(
+			'50 mm CALIBRATION SCALE BAR / REGLA DE CALIBRACIÓN',
+			centerX - 150,
+			calY + 9,
+			{
+				width: 300,
+				align: 'center',
+				lineBreak: false,
+			},
+		);
+
+	doc
+		.fontSize(6.5)
+		.font('Helvetica')
+		.fillColor(COLORS.muted)
+		.text(
+			'Measure with physical ruler. Ensure print scaling is 100% (Do NOT scale to fit page).',
+			centerX - 200,
+			calY + 18,
+			{
+				width: 400,
+				align: 'center',
+				lineBreak: false,
+			},
+		);
+	doc.restore();
+
+	// Footer (positioned below calibration bar)
+	const footerY = calY + 36;
 
 	doc
 		.fontSize(footerTitleSize)
