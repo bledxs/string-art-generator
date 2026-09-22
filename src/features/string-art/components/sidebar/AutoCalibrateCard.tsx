@@ -4,7 +4,7 @@ import { Sparkles, Wand2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from '@/shared/i18n';
 import { Badge } from '@/shared/ui/badge';
-import { BorderBeam, RainbowButton } from '@/shared/ui/magicui';
+import { BorderBeam, NumberTicker, RainbowButton } from '@/shared/ui/magicui';
 import {
 	type CalibrationRecommendation,
 	computeEdgeDensity,
@@ -109,17 +109,19 @@ export function AutoCalibrateCard({
 					<span className='truncate text-muted-foreground text-xs'>
 						{t.presets.autoCalibrate.pins}
 					</span>
-					<span className='ml-1 font-bold text-foreground'>
-						{recommendation.pinCount}
-					</span>
+					<NumberTicker
+						value={recommendation.pinCount}
+						className='ml-1 font-bold text-foreground'
+					/>
 				</div>
 				<div className='flex min-w-0 items-center justify-between rounded-md border bg-card/60 px-2 py-1'>
 					<span className='truncate text-muted-foreground text-xs'>
 						{t.presets.autoCalibrate.lines}
 					</span>
-					<span className='ml-1 font-bold text-foreground'>
-						{recommendation.maxLines}
-					</span>
+					<NumberTicker
+						value={recommendation.maxLines}
+						className='ml-1 font-bold text-foreground'
+					/>
 				</div>
 				<div className='flex min-w-0 items-center justify-between rounded-md border bg-card/60 px-2 py-1'>
 					<span className='truncate text-muted-foreground text-xs'>

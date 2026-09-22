@@ -3,6 +3,7 @@
 import { Check } from 'lucide-react';
 import { useTranslation } from '@/shared/i18n';
 import { Badge } from '@/shared/ui/badge';
+import { NumberTicker } from '@/shared/ui/magicui';
 
 interface ProjectStatsProps {
 	linesCount: number;
@@ -40,7 +41,10 @@ export function ProjectStats({
 			</Badge>
 			<Badge variant='accent'>
 				{t.header.stats.pins}:{' '}
-				<span className='ml-1 font-bold text-foreground'>{pinCount}</span>
+				<NumberTicker
+					value={pinCount}
+					className='ml-1 font-bold text-foreground'
+				/>
 			</Badge>
 			<Badge variant='accent'>~{estimatedMeters}m</Badge>
 			{timeElapsedMs > 0 && (
