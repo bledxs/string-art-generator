@@ -1,6 +1,7 @@
 'use client';
 
 import type * as React from 'react';
+import { Particles } from '@/shared/ui/magicui';
 import { cn } from '@/shared/utils/cn';
 import type { CanvasTransform } from '../../hooks/useCanvasTransform';
 
@@ -47,6 +48,13 @@ export function CanvasViewport({
 			onTouchCancel={onTouchEnd}
 		>
 			<div className='studio-spotlight pointer-events-none absolute inset-0 z-0' />
+			<Particles
+				className='pointer-events-none absolute inset-0 z-0'
+				quantity={50}
+				size={0.6}
+				color='#f59e0b'
+				ease={50}
+			/>
 			<div
 				className='relative z-10 flex items-center justify-center transition-transform duration-75 ease-out will-change-transform'
 				style={{
