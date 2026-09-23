@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 				languages: {
 					es: `${siteConfig.url}`,
 					en: `${siteConfig.url}/en`,
+					'x-default': `${siteConfig.url}`,
 				},
 			},
 		},
@@ -26,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 				languages: {
 					es: `${siteConfig.url}`,
 					en: `${siteConfig.url}/en`,
+					'x-default': `${siteConfig.url}`,
 				},
 			},
 		},
@@ -38,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 				languages: {
 					es: `${siteConfig.url}/plantillas`,
 					en: `${siteConfig.url}/en/templates`,
+					'x-default': `${siteConfig.url}/plantillas`,
 				},
 			},
 		},
@@ -50,6 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 				languages: {
 					es: `${siteConfig.url}/plantillas`,
 					en: `${siteConfig.url}/en/templates`,
+					'x-default': `${siteConfig.url}/plantillas`,
 				},
 			},
 		},
