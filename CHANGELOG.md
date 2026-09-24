@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.2.0](https://github.com/bledxs/string-art-generator/compare/string-art-generator-v2.1.0...string-art-generator-v2.2.0) (2026-09-23)
+
+
+### Features
+
+* add CNC G-code export, candidate comparison, and background isolation ([d7a974b](https://github.com/bledxs/string-art-generator/commit/d7a974b1f2353f8e7743de161fbbcb52b8f70d69))
+* add site configuration and bilingual SEO content components ([c9e1546](https://github.com/bledxs/string-art-generator/commit/c9e1546d011bec435f51ea0f44e8387b8d14495f))
+* calibrate CMYK layer sequence and add commercial thread references ([d4b7d93](https://github.com/bledxs/string-art-generator/commit/d4b7d93d3932e119bb46987c080b7289fe6f7d43))
+* **loom:** add auto-tiling even poster printing for A4, Letter and Legal up to 150cm ([761918d](https://github.com/bledxs/string-art-generator/commit/761918d6689e55b6904def00e526b49bb59b8a07))
+* **loom:** add dynamic printable template generator in pdf and svg ([06f68f9](https://github.com/bledxs/string-art-generator/commit/06f68f9e8c80b7ba8a4e5477011e55b3d471c996))
+* **loom:** harmonize dynamic template styling with pre-generated artisan templates ([d4cef64](https://github.com/bledxs/string-art-generator/commit/d4cef64e91f3c571a689263d1633fa492d1ae311))
+* **seo:** add x-default hreflang alternates to sitemap ([19d195d](https://github.com/bledxs/string-art-generator/commit/19d195d1ef385edaadc8b066938c22bf332e9c05))
+* **templates:** relocate instructions and add calibration bar below circle in generate-templates script ([f21b88c](https://github.com/bledxs/string-art-generator/commit/f21b88c05aac20c629f630f568e188d1ac31bf49))
+* **ui:** add magicui border-beam and shine-border components ([316a427](https://github.com/bledxs/string-art-generator/commit/316a427485e8f6a26cfdbbfb311a501902abd04a))
+* **ui:** add number-ticker component with project stats integration ([b570c17](https://github.com/bledxs/string-art-generator/commit/b570c17681cde2c6b74196f464737ed49e2402c6))
+* **ui:** add particles and dot-pattern interactive background components ([3725e55](https://github.com/bledxs/string-art-generator/commit/3725e55f320e7f0d96976eabc5aff65ac6831fe6))
+* **ui:** add shimmer and rainbow button components with auto-calibration integration ([729306d](https://github.com/bledxs/string-art-generator/commit/729306dc7f18736d853749f64554539ec8a3c637))
+
+
+### Bug Fixes
+
+* **i18n:** localize all tiled poster template strings in ES and EN ([c877c05](https://github.com/bledxs/string-art-generator/commit/c877c054a208f31f960f1767c73ee2ebf40f99c4))
+* **loom:** relocate template instructions below loom frame to prevent circular overlap ([793e2a5](https://github.com/bledxs/string-art-generator/commit/793e2a56cb3aa18752facd8f4619c7c15f5e36e5))
+
 ## [2.1.0](https://github.com/bledxs/string-art-generator/compare/string-art-generator-v2.0.0...string-art-generator-v2.1.0) (2026-09-18)
 
 
